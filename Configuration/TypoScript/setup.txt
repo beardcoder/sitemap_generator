@@ -1,0 +1,67 @@
+plugin.tx_sitemapgenerator {
+	view {
+		templateRootPath = {$plugin.tx_sitemapgenerator.view.templateRootPath}
+		partialRootPath = {$plugin.tx_sitemapgenerator.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_sitemapgenerator.view.layoutRootPath}
+	}
+
+	persistence {
+		storagePid = {$plugin.tx_sitemapgenerator.persistence.storagePid}
+	}
+
+	settings {
+		urlEntries {
+			pages = 1
+			pages {
+				rootPageId = 1
+			}
+
+			news = 1
+			news {
+				table = tx_news_domain_model_news
+				lastmod = tstamp
+				url {
+					pid = 9
+					arguments {
+						tx_news_pi1 {
+							controller = News
+							action = detail
+							news = {field:uid}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+lib.tx_sitemapgenerator = USER
+lib.tx_sitemapgenerator {
+	userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+	extensionName = SitemapGenerator
+	pluginName = Pi1
+	vendorName = Markussom
+	controller = Sitemap
+	action = List
+
+	view < plugin.tx_sitemapgenerator.view
+	persistence < plugin.tx_sitemapgenerator.persistence
+	settings < plugin.tx_sitemapgenerator.settings
+}
+
+[globalVar = TSFE:type = 1449874941]
+	config {
+		disableAllHeaderCode = 1
+		xhtml_cleaning = none
+		admPanel = 0
+		metaCharset = utf-8
+		additionalHeaders = Content-Type:text/xml;charset=utf-8
+		disablePrefixComment = 1
+	}
+
+	sitemapgeneratorPage = PAGE
+	sitemapgeneratorPage {
+		typeNum = 1449874941
+		10 < lib.tx_sitemapgenerator
+	}
+[global]
