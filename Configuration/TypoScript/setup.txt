@@ -9,27 +9,24 @@ plugin.tx_sitemapgenerator {
 		storagePid = {$plugin.tx_sitemapgenerator.persistence.storagePid}
 	}
 
-	settings {
-		urlEntries {
-			pages = 1
-			pages {
-				rootPageId = 1
-			}
+	urlEntries {
+		pages = 1
+		pages {
+			rootPageId = 1
+		}
 
-			news = 1
-			news {
-				table = tx_news_domain_model_news
-				lastmod = tstamp
-				url {
-					pid = 9
-					arguments {
-						tx_news_pi1 {
-							controller = News
-							action = detail
-							news = {field:uid}
-						}
-					}
-				}
+		news = 1
+		news {
+			table = tx_news_domain_model_news
+			lastmod = tstamp
+			url = TEXT
+			url {
+				typolink.parameter = 9
+				typolink.additionalParams = &tx_news_pi1[controller]=News&tx_news_pi1[action]=detail&tx_news_pi1[news]={field:uid}
+				typolink.additionalParams.insertData = 1
+				typolink.useCacheHash = 1
+				typolink.returnLast = url
+				typolink.forceAbsoluteUrl = 1
 			}
 		}
 	}
