@@ -72,7 +72,7 @@ class SitemapRepository
             $this->settings['urlEntries']['pages']['rootPageId'],
             '*',
             'sorting',
-            $this->pageRepo->enableFields('pages')
+            $this->pageRepo->enableFields('pages') . 'AND exclude_from_sitemap!=1'
         );
         $pages = array_merge($pages, [$startPage]);
         $urlEntries = [];
