@@ -17,6 +17,7 @@ plugin.tx_sitemapgenerator {
 
 		news = 1
 		news {
+			active = 0
 			table = tx_news_domain_model_news
 			lastmod = tstamp
 			url = TEXT
