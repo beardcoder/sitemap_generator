@@ -67,6 +67,7 @@ class SitemapRepository
 
     /**
      * SitemapRepository constructor.
+     * @SuppressWarnings(superglobals)
      */
     public function __construct()
     {
@@ -141,11 +142,12 @@ class SitemapRepository
 
     /**
      * @param array $typoScriptUrlEntry
+     * @SuppressWarnings(superglobals)
      * @return array
      */
     protected function mapToEntries(array $typoScriptUrlEntry)
     {
-        if ($typoScriptUrlEntry['table']) {
+        if ($typoScriptUrlEntry['table'] && $typoScriptUrlEntry['active'] == 1) {
             $result = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
                 '*',
                 $typoScriptUrlEntry['table'],
