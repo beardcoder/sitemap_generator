@@ -15,9 +15,11 @@
 namespace Markussom\SitemapGenerator\Domain\Repository;
 
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
+use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * Class SitemapRepository
@@ -49,11 +51,35 @@ class SitemapRepository
     protected $uriBuilder = null;
 
     /**
+     * @var ContentObjectRenderer
+     */
+    protected $contentObject;
+
+    /**
+     * @var TypoScriptParser
+     */
+    protected $typoScriptParser;
+
+    /**
+     * @var array
+     */
+    protected $pluginConfig = [];
+
+    /**
      * SitemapRepository constructor.
      */
     public function __construct()
     {
         $this->configManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+
+        $this->contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+        $this->typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
+
+        $this->pluginConfig = $this->typoScriptParser->getVal(
+            'plugin.tx_sitemapgenerator',
+            $GLOBALS['TSFE']->tmpl->setup
+        );
+
 
         $this->settings = $this->configManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
@@ -66,10 +92,9 @@ class SitemapRepository
      */
     public function findAllPages()
     {
-        $this->generateEntriesFromTypoScript();
-        $startPage = $this->pageRepo->getPage($this->settings['urlEntries']['pages']['rootPageId']);
+        $startPage = $this->pageRepo->getPage($this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId']);
         $pages = $this->pageRepo->getMenu(
-            $this->settings['urlEntries']['pages']['rootPageId'],
+            $this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId'],
             '*',
             'sorting',
             $this->pageRepo->enableFields('pages') . 'AND exclude_from_sitemap!=1'
@@ -103,10 +128,12 @@ class SitemapRepository
      */
     public function generateEntriesFromTypoScript()
     {
-        $urlEntries = $this->settings['urlEntries'];
+        $urlEntries = $this->pluginConfig[1]['urlEntries.'];
         $entries = [];
         foreach ($urlEntries as $urlEntry) {
-            $entries = $this->mapToEntries($urlEntry);
+            if (is_array($urlEntry)) {
+                $entries = $this->mapToEntries($urlEntry);
+            }
         }
         return $entries;
 
@@ -130,15 +157,7 @@ class SitemapRepository
             if ($GLOBALS['TYPO3_DB']->sql_num_rows($result)) {
                 while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result)) {
                     $urlEntry = new UrlEntry();
-                    $arguments = $typoScriptUrlEntry['url']['arguments'];
-                    $this->replaceRecursiveFieldData($arguments, $row);
-                    $uri = $this->uriBuilder
-                        ->reset()
-                        ->setTargetPageUid($typoScriptUrlEntry['url']['pid'])
-                        ->setArguments($arguments)
-                        ->setCreateAbsoluteUri(true)
-                        ->build();
-                    $urlEntry->setLoc($uri);
+                    $urlEntry->setLoc($this->generateUrlFromTypoScript($row));
                     if ($typoScriptUrlEntry['lastmod']) {
                         $urlEntry->setLastmod(date('Y-m-d', $row[$typoScriptUrlEntry['lastmod']]));
                     }
@@ -152,23 +171,20 @@ class SitemapRepository
     }
 
     /**
-     * @param $arguments
      * @param $row
+     * @return string
+     * @SuppressWarnings(superglobals)
      */
-    public function replaceRecursiveFieldData(
-        &$arguments,
-        $row
-    ) {
-        foreach ($arguments as $key => $argument) {
-            if (is_array($argument)) {
-                $this->replaceRecursiveFieldData($arguments[$key], $row);
-            } else {
-                if (strstr($argument, '{field:')) {
-                    $field = str_replace('{field:', '', $argument);
-                    $field = str_replace('}', '', $field);
-                    $arguments[$key] = $row[$field];
-                }
+    public function generateUrlFromTypoScript($row)
+    {
+        $url = '';
+        $entriesConfiguration = $this->pluginConfig[1]['urlEntries.'];
+        foreach ($entriesConfiguration as $item) {
+            if (!empty($item['table'])) {
+                $this->contentObject->start($row, $item['table']);
+                $url = $this->contentObject->cObjGetSingle($item['url'], $item['url.']);
             }
         }
+        return $url;
     }
 }
