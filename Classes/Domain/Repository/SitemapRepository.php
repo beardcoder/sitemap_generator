@@ -108,6 +108,9 @@ class SitemapRepository
                 $uri = $this->uriBuilder->reset()->setTargetPageUid($page['uid'])->setCreateAbsoluteUri(true)->build();
                 $urlEntry->setLoc($uri);
                 $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
+                if ($page['sitemap_priority']) {
+                    $urlEntry->setPriority($page['sitemap_priority']);
+                }
                 $urlEntries[] = $urlEntry;
             }
         }
@@ -162,6 +165,12 @@ class SitemapRepository
                     $urlEntry->setLoc($this->generateUrlFromTypoScript($row));
                     if ($typoScriptUrlEntry['lastmod']) {
                         $urlEntry->setLastmod(date('Y-m-d', $row[$typoScriptUrlEntry['lastmod']]));
+                    }
+                    if ($typoScriptUrlEntry['changefreq']) {
+                        $urlEntry->setChangefreq($row[$typoScriptUrlEntry['changefreq']]);
+                    }
+                    if ($typoScriptUrlEntry['priority']) {
+                        $urlEntry->setPriority($row[$typoScriptUrlEntry['priority']]);
                     }
                     $urlEntries[] = $urlEntry;
                 }
