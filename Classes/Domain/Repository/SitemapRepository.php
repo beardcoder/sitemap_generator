@@ -109,7 +109,7 @@ class SitemapRepository
                 $urlEntry->setLoc($uri);
                 $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
                 if ($page['sitemap_priority']) {
-                    $urlEntry->setPriority($page['sitemap_priority']);
+                    $urlEntry->setPriority('0.' . $page['sitemap_priority']);
                 }
                 $urlEntries[] = $urlEntry;
             }
