@@ -32,6 +32,7 @@ class SitemapController extends ActionController
 
     /**
      * Initializes the current action
+     * Set xml format for FLUID
      *
      * @return void
      */
@@ -41,6 +42,8 @@ class SitemapController extends ActionController
     }
 
     /**
+     * List action
+     *
      * @return void
      */
     public function listAction()

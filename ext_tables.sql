@@ -3,4 +3,5 @@
 #
 CREATE TABLE pages (
 	exclude_from_sitemap int(11) DEFAULT '0' NOT NULL,
+	sitemap_priority int(3) DEFAULT '5' NOT NULL,
 );
