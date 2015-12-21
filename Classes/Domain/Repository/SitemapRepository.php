@@ -94,19 +94,8 @@ class SitemapRepository
     public function findAllPages()
     {
         $pages = $this->getPages();
-        $urlEntries = [];
-        foreach ($pages as $page) {
-            if ($page['doktype'] == 1) {
-                $urlEntry = new UrlEntry();
-                $uri = $this->uriBuilder->reset()->setTargetPageUid($page['uid'])->setCreateAbsoluteUri(true)->build();
-                $urlEntry->setLoc($uri);
-                $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
-                if ($page['sitemap_priority']) {
-                    $urlEntry->setPriority('0.' . $page['sitemap_priority']);
-                }
-                $urlEntries[] = $urlEntry;
-            }
-        }
+        $urlEntries = $this->getEntriesFromPages($pages);
+
         return $urlEntries;
     }
 
@@ -193,6 +182,8 @@ class SitemapRepository
     }
 
     /**
+     * Get pages from Database
+     *
      * @return array
      */
     private function getPages()
@@ -205,5 +196,27 @@ class SitemapRepository
             $this->pageRepo->enableFields('pages') . 'AND exclude_from_sitemap!=1'
         );
         return array_merge($startPage, $pages);
+    }
+
+    /**
+     * @param $pages
+     * @return array
+     */
+    private function getEntriesFromPages($pages)
+    {
+        $urlEntries = '';
+        foreach ($pages as $page) {
+            if ($page['doktype'] == 1) {
+                $urlEntry = new UrlEntry();
+                $uri = $this->uriBuilder->reset()->setTargetPageUid($page['uid'])->setCreateAbsoluteUri(true)->build();
+                $urlEntry->setLoc($uri);
+                $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
+                if ($page['sitemap_priority']) {
+                    $urlEntry->setPriority('0.' . $page['sitemap_priority']);
+                }
+                $urlEntries[] = $urlEntry;
+            }
+        }
+        return $urlEntries;
     }
 }
