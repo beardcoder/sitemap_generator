@@ -72,7 +72,6 @@ class SitemapRepository
     public function __construct()
     {
         $this->configManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-
         $this->contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $this->typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
 
@@ -80,7 +79,6 @@ class SitemapRepository
             'plugin.tx_sitemapgenerator',
             $GLOBALS['TSFE']->tmpl->setup
         );
-
 
         $this->settings = $this->configManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
@@ -133,7 +131,7 @@ class SitemapRepository
     protected function mapToEntries(array $typoScriptUrlEntry)
     {
         if ($typoScriptUrlEntry['table'] && $typoScriptUrlEntry['active'] == 1) {
-            $result = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+            $result = $this->getDatabaseConnection()->exec_SELECTquery(
                 '*',
                 $typoScriptUrlEntry['table'],
                 'pid!=0' . $typoScriptUrlEntry['additionalWhere'] . $this->pageRepo->enableFields(
@@ -141,8 +139,8 @@ class SitemapRepository
                 )
             );
             $urlEntries = [];
-            if ($GLOBALS['TYPO3_DB']->sql_num_rows($result)) {
-                while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($result)) {
+            if ($this->getDatabaseConnection()->sql_num_rows($result)) {
+                while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($result)) {
                     $urlEntry = new UrlEntry();
                     $urlEntry->setLoc($this->generateUrlFromTypoScript($row));
                     if ($typoScriptUrlEntry['lastmod']) {
@@ -218,5 +216,16 @@ class SitemapRepository
             }
         }
         return $urlEntries;
+    }
+
+    /**
+     * Returns the database connection
+     *
+     * @SuppressWarnings(superglobals)
+     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     */
+    protected function getDatabaseConnection()
+    {
+        return $GLOBALS['TYPO3_DB'];
     }
 }
