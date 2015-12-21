@@ -93,14 +93,7 @@ class SitemapRepository
      */
     public function findAllPages()
     {
-        $startPage = $this->pageRepo->getPage($this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId']);
-        $pages = $this->pageRepo->getMenu(
-            $this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId'],
-            '*',
-            'sorting',
-            $this->pageRepo->enableFields('pages') . 'AND exclude_from_sitemap!=1'
-        );
-        $pages = array_merge($pages, [$startPage]);
+        $pages = $this->getPages();
         $urlEntries = [];
         foreach ($pages as $page) {
             if ($page['doktype'] == 1) {
@@ -197,5 +190,20 @@ class SitemapRepository
             }
         }
         return $url;
+    }
+
+    /**
+     * @return array
+     */
+    private function getPages()
+    {
+        $startPage = $this->pageRepo->getPage($this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId']);
+        $pages = $this->pageRepo->getMenu(
+            $this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId'],
+            '*',
+            'sorting',
+            $this->pageRepo->enableFields('pages') . 'AND exclude_from_sitemap!=1'
+        );
+        return array_merge($startPage, $pages);
     }
 }
