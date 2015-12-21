@@ -18,7 +18,6 @@ use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * Class SitemapRepository
@@ -45,9 +44,10 @@ class SitemapRepository
     protected $uriBuilder = null;
 
     /**
-     * @var ContentObjectRenderer
+     * @var \Markussom\SitemapGenerator\Service\UrlService
+     * @inject
      */
-    protected $contentObject;
+    protected $urlService = null;
 
     /**
      * @var TypoScriptParser
@@ -65,7 +65,6 @@ class SitemapRepository
      */
     public function __construct()
     {
-        $this->contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $this->typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
 
         $this->pluginConfig = $this->typoScriptParser->getVal(
@@ -125,7 +124,7 @@ class SitemapRepository
             if ($this->getDatabaseConnection()->sql_num_rows($records)) {
                 while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
                     $urlEntry = new UrlEntry();
-                    $urlEntry->setLoc($this->generateUrlFromTypoScript($row));
+                    $urlEntry->setLoc($this->urlService->generateUrlFromTypoScript($row, $this->pluginConfig));
                     if ($typoScriptUrlEntry['lastmod']) {
                         $urlEntry->setLastmod(date('Y-m-d', $row[$typoScriptUrlEntry['lastmod']]));
                     }
@@ -142,24 +141,6 @@ class SitemapRepository
         }
         return [];
 
-    }
-
-    /**
-     * @param $row
-     * @return string
-     * @SuppressWarnings(superglobals)
-     */
-    public function generateUrlFromTypoScript($row)
-    {
-        $url = '';
-        $entriesConfiguration = $this->pluginConfig[1]['urlEntries.'];
-        foreach ($entriesConfiguration as $item) {
-            if (!empty($item['table'])) {
-                $this->contentObject->start($row, $item['table']);
-                $url = $this->contentObject->cObjGetSingle($item['url'], $item['url.']);
-            }
-        }
-        return $url;
     }
 
     /**
