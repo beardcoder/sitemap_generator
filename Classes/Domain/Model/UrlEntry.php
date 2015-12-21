@@ -20,6 +20,8 @@ namespace Markussom\SitemapGenerator\Domain\Model;
  */
 class UrlEntry
 {
+
+    const EXCLUDE_FROM_SITEMAP = 'exclude_from_sitemap';
     /**
      * @var string
      */
