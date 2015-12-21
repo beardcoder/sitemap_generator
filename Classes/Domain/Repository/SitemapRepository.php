@@ -18,7 +18,6 @@ use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
@@ -38,11 +37,6 @@ class SitemapRepository
      * @var ConfigurationManager
      */
     protected $configManager = null;
-
-    /**
-     * @var array
-     */
-    protected $settings = [];
 
     /**
      * @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder
@@ -71,18 +65,12 @@ class SitemapRepository
      */
     public function __construct()
     {
-        $this->configManager = GeneralUtility::makeInstance(ConfigurationManager::class);
         $this->contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $this->typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
 
         $this->pluginConfig = $this->typoScriptParser->getVal(
             'plugin.tx_sitemapgenerator',
             $GLOBALS['TSFE']->tmpl->setup
-        );
-
-        $this->settings = $this->configManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-            'SitemapGenerator'
         );
     }
 
