@@ -119,16 +119,11 @@ class SitemapRepository
     protected function mapToEntries(array $typoScriptUrlEntry)
     {
         if ($typoScriptUrlEntry['table'] && $typoScriptUrlEntry['active'] == 1) {
-            $result = $this->getDatabaseConnection()->exec_SELECTquery(
-                '*',
-                $typoScriptUrlEntry['table'],
-                'pid!=0' . $typoScriptUrlEntry['additionalWhere'] . $this->pageRepo->enableFields(
-                    $typoScriptUrlEntry['table']
-                )
-            );
+
+            $records = $this->getRecordsFromDatabase($typoScriptUrlEntry);
             $urlEntries = [];
-            if ($this->getDatabaseConnection()->sql_num_rows($result)) {
-                while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($result)) {
+            if ($this->getDatabaseConnection()->sql_num_rows($records)) {
+                while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
                     $urlEntry = new UrlEntry();
                     $urlEntry->setLoc($this->generateUrlFromTypoScript($row));
                     if ($typoScriptUrlEntry['lastmod']) {
@@ -215,5 +210,22 @@ class SitemapRepository
     protected function getDatabaseConnection()
     {
         return $GLOBALS['TYPO3_DB'];
+    }
+
+    /**
+     * Get records from database
+     *
+     * @param $typoScriptUrlEntry
+     * @return bool|\mysqli_result|object
+     */
+    private function getRecordsFromDatabase($typoScriptUrlEntry)
+    {
+        return $this->getDatabaseConnection()->exec_SELECTquery(
+            '*',
+            $typoScriptUrlEntry['table'],
+            'pid!=0' . $typoScriptUrlEntry['additionalWhere'] . $this->pageRepo->enableFields(
+                $typoScriptUrlEntry['table']
+            )
+        );
     }
 }
