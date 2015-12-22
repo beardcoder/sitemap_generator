@@ -7,7 +7,7 @@
 			<f:for each="{urlEntries}" as="urlEntry">
 				<url>
 					<loc>
-						{urlEntry.loc}
+						{urlEntry.loc -> f:format.htmlentities()}
 					</loc>
 					<f:if condition="{urlEntry.lastmod}">
 						<lastmod>
