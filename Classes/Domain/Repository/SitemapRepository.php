@@ -16,6 +16,7 @@ namespace Markussom\SitemapGenerator\Domain\Repository;
 
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
@@ -150,14 +151,11 @@ class SitemapRepository
      */
     private function getPages()
     {
-        $startPage = $this->pageRepo->getPage($this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId']);
-        $pages = $this->pageRepo->getMenu(
-            $this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId'],
-            '*',
-            'sorting',
-            $this->pageRepo->enableFields('pages') . 'AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1'
-        );
-        return array_merge([$startPage], $pages);
+        $rootPageId = $this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId'];
+        $rootPage = $this->pageRepo->getPage($rootPageId);
+        $pages = $this->getSubPagesRecursive($rootPageId);
+
+        return array_merge([$rootPage], $pages);
     }
 
     /**
@@ -218,5 +216,35 @@ class SitemapRepository
                 $typoScriptUrlEntry['table']
             )
         );
+    }
+
+    /**
+     * @param int $startPageId
+     * @return array
+     */
+    private function getSubPages($startPageId)
+    {
+        return $this->pageRepo->getMenu(
+            $startPageId,
+            '*',
+            'sorting',
+            $this->pageRepo->enableFields('pages') . 'AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1'
+        );
+    }
+
+    /**
+     * @param $rootPageId
+     * @return array
+     */
+    private function getSubPagesRecursive($rootPageId)
+    {
+        $pages = $this->getSubPages($rootPageId);
+        foreach ($pages as $page) {
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $pages,
+                $this->getSubPagesRecursive($page['uid'])
+            );
+        }
+        return $pages;
     }
 }
