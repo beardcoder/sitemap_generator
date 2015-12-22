@@ -164,7 +164,7 @@ class SitemapRepository
      */
     public function getEntriesFromPages($pages)
     {
-        $urlEntries = '';
+        $urlEntries = [];
         foreach ($pages as $page) {
             if ($page['doktype'] == 1) {
                 $urlEntry = new UrlEntry();
