@@ -173,12 +173,10 @@ class SitemapRepository
                 $uri = $this->uriBuilder->reset()->setTargetPageUid($page['uid'])->setCreateAbsoluteUri(true)->build();
                 $urlEntry->setLoc($uri);
                 $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
-                // @todo add isset
-                if ($page['sitemap_priority']) {
+                if (isset($page['sitemap_priority'])) {
                     $urlEntry->setPriority('0.' . $page['sitemap_priority']);
                 }
-                // @todo add isset
-                if ($page['sitemap_changefreq']) {
+                if (isset($page['sitemap_changefreq'])) {
                     $urlEntry->setChangefreq($page['sitemap_changefreq']);
                 }
                 $urlEntries[] = $urlEntry;
