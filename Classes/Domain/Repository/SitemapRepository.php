@@ -204,6 +204,13 @@ class SitemapRepository
      */
     private function getRecordsFromDatabase($typoScriptUrlEntry)
     {
+        if (
+            !isset($GLOBALS['TCA'][$typoScriptUrlEntry['table']])
+            || !is_array($GLOBALS['TCA'][$typoScriptUrlEntry['table']['ctrl']])
+        ) {
+            return false;
+        }
+
         return $this->getDatabaseConnection()->exec_SELECTquery(
             '*',
             $typoScriptUrlEntry['table'],
