@@ -28,12 +28,16 @@ class SitemapControllerTest extends FunctionalTestCase
     /**
      * @var array
      */
-    protected $testExtensionsToLoad = ['typo3conf/ext/sitemap_generator'];
+    protected $testExtensionsToLoad = [
+        'typo3conf/ext/sitemap_generator/Tests/Functional/Fixtures/Extensions/news_fixture',
+        'typo3conf/ext/sitemap_generator',
+    ];
 
     public function setUp()
     {
         parent::setUp();
         $this->importDataSet(__DIR__ . '/../Fixtures/pages.xml');
+        $this->importDataSet(__DIR__ . '/../Fixtures/news.xml');
     }
 
     /**
@@ -56,5 +60,27 @@ class SitemapControllerTest extends FunctionalTestCase
             0
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/pages.xml', $response->getContent());
+    }
+
+    /**
+     * @test
+     */
+    public function news()
+    {
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'typo3conf/ext/sitemap_generator/Tests/Functional/Fixtures/Frontend/NewsRenderer.ts',
+            ]
+        );
+        $response = $this->getFrontendResponse(
+            1,
+            0,
+            0,
+            0,
+            true,
+            0
+        );
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/news.xml', $response->getContent());
     }
 }
