@@ -157,7 +157,7 @@ class SitemapRepository
             'sorting',
             $this->pageRepo->enableFields('pages') . 'AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1'
         );
-        return array_merge($startPage, $pages);
+        return array_merge([$startPage], $pages);
     }
 
     /**
