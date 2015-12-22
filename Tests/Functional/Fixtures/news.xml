@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+	<news>
+		<uid>1</uid>
+		<pid>3</pid>
+		<title>First news</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<tstamp>1450797120</tstamp>
+		<sitemap_priority>5</sitemap_priority>
+	</news>
+	<news>
+		<uid>2</uid>
+		<pid>3</pid>
+		<title>Second news</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<tstamp>0</tstamp>
+		<sitemap_priority>8</sitemap_priority>
+		<sitemap_changefreq>never</sitemap_changefreq>
+	</news>
+	<news>
+		<uid>3</uid>
+		<pid>3</pid>
+		<title>Hidden news</title>
+		<hidden>1</hidden>
+		<deleted>0</deleted>
+		<tstamp>0</tstamp>
+	</news>
+	<news>
+		<uid>4</uid>
+		<pid>3</pid>
+		<title>Deleted news</title>
+		<hidden>0</hidden>
+		<deleted>1</deleted>
+		<tstamp>0</tstamp>
+	</news>
+	<news>
+		<uid>5</uid>
+		<pid>10</pid>
+		<title>News outside storagePid</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<tstamp>0</tstamp>
+	</news>
+	<news>
+		<uid>6</uid>
+		<pid>10</pid>
+		<title>Another hidden news outside storagePid</title>
+		<hidden>1</hidden>
+		<deleted>0</deleted>
+		<tstamp>0</tstamp>
+	</news>
+</dataset>
