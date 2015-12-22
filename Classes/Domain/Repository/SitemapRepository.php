@@ -164,7 +164,7 @@ class SitemapRepository
      * @param $pages
      * @return array
      */
-    private function getEntriesFromPages($pages)
+    public function getEntriesFromPages($pages)
     {
         $urlEntries = '';
         foreach ($pages as $page) {
