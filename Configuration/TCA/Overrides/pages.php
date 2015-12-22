@@ -5,7 +5,7 @@ $languageFilePrefix = 'LLL:EXT:sitemap_generator/Resources/Private/Language/Data
 
 $tca = [
     'columns' => [
-        'exclude_from_sitemap' => [
+        \Markussom\SitemapGenerator\Domain\Model\UrlEntry::EXCLUDE_FROM_SITEMAP => [
             'exclude' => 0,
             'label' => $languageFilePrefix . 'sitemap_generator.tca.pages.exclude_from_sitemap',
             'config' => [
@@ -42,7 +42,7 @@ $tca = [
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
     'pages',
     'miscellaneous',
-    'exclude_from_sitemap, sitemap_priority'
+    \Markussom\SitemapGenerator\Domain\Model\UrlEntry::EXCLUDE_FROM_SITEMAP . ', sitemap_priority'
 );
 
 \TYPO3\CMS\Core\Utility\ArrayUtility::mergeRecursiveWithOverrule($GLOBALS['TCA']['pages'], $tca);
