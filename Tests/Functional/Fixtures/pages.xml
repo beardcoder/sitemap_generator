@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+	<pages>
+		<uid>1</uid>
+		<pid>0</pid>
+		<title>Root</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<tstamp>1450797120</tstamp>
+		<doktype>1</doktype>
+		<sitemap_priority>0</sitemap_priority>
+	</pages>
+	<pages>
+		<uid>2</uid>
+		<pid>1</pid>
+		<title>Dummy 1-2</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<tstamp>0</tstamp>
+		<doktype>1</doktype>
+		<sitemap_priority>8</sitemap_priority>
+		<sitemap_changefreq>always</sitemap_changefreq>
+	</pages>
+	<pages>
+		<uid>3</uid>
+		<pid>2</pid>
+		<title>Dummy 1-2-3</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<doktype>255</doktype>
+	</pages>
+	<pages>
+		<uid>4</uid>
+		<pid>3</pid>
+		<title>Dummy 1-2-3-4</title>
+		<hidden>1</hidden>
+		<deleted>0</deleted>
+		<doktype>1</doktype>
+	</pages>
+	<pages>
+		<uid>5</uid>
+		<pid>2</pid>
+		<title>Dummy 1-2-5</title>
+		<hidden>0</hidden>
+		<deleted>1</deleted>
+		<doktype>1</doktype>
+		<sitemap_priority>0</sitemap_priority>
+	</pages>
+	<pages>
+		<uid>6</uid>
+		<pid>2</pid>
+		<title>Dummy 1-2-6</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<doktype>1</doktype>
+	</pages>
+	<pages>
+		<uid>7</uid>
+		<pid>1</pid>
+		<title>Dummy 1-7</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<doktype>1</doktype>
+		<sitemap_priority>5</sitemap_priority>
+		<sitemap_changefreq>never</sitemap_changefreq>
+		<exclude_from_sitemap>1</exclude_from_sitemap>
+	</pages>
+	<pages>
+		<uid>8</uid>
+		<pid>0</pid>
+		<title>Root 2</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<doktype>1</doktype>
+		<sitemap_priority>0</sitemap_priority>
+	</pages>
+	<pages>
+		<uid>9</uid>
+		<pid>8</pid>
+		<title>Dummy 8-9</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<doktype>1</doktype>
+		<sitemap_priority>5</sitemap_priority>
+	</pages>
+	<pages>
+		<uid>10</uid>
+		<pid>9</pid>
+		<title>Dummy 8-9-10</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<doktype>255</doktype>
+		<sitemap_priority>5</sitemap_priority>
+	</pages>
+</dataset>
