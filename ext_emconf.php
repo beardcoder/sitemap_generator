@@ -2,7 +2,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Sitemap Generator',
-    'description' => '',
+    'description' => 'Easy to use Sitemap Generator for pages and records.',
     'category' => 'plugin',
     'author' => 'Markus Sommer',
     'author_email' => 'markussom@posteo.de',
