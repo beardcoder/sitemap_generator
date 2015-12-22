@@ -79,6 +79,9 @@ class SitemapRepository
      */
     public function findAllPages()
     {
+        if (empty($this->pluginConfig['1']['urlEntries.']['pages'])) {
+            return [];
+        }
         $pages = $this->getPages();
         $urlEntries = $this->getEntriesFromPages($pages);
 
