@@ -9,6 +9,36 @@
 			<trans-unit id="sitemap_generator.tca.pages.sitemap_priority">
 				<source>Sitemap priority</source>
 			</trans-unit>
+			<trans-unit id="sitemap_generator.tca.pages.please_choose">
+				<source>Please choose</source>
+			</trans-unit>
+			<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq">
+				<source>Sitemap change frequenz</source>
+			</trans-unit>
+			<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq">
+				<source>Sitemap change frequenz</source>
+			</trans-unit>
+			<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.always">
+				<source>always</source>
+			</trans-unit>
+			<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.hourly">
+				<source>hourly</source>
+			</trans-unit>
+			<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.daily">
+				<source>daily</source>
+			</trans-unit>
+			<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.weekly">
+				<source>weekly</source>
+			</trans-unit>
+			<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.monthly">
+				<source>monthly</source>
+			</trans-unit>
+			<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.yearly">
+				<source>yearly</source>
+			</trans-unit>
+			<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.never">
+				<source>never</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

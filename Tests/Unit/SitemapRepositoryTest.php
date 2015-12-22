@@ -83,6 +83,7 @@ class SitemapRepositoryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
                 'pid ' => 1,
                 'tstamp' => 1450744802,
                 'sitemap_priority' => 8,
+                'sitemap_changefreq' => 'daily',
                 'doktype' => 1,
             ]
         ];
@@ -92,6 +93,7 @@ class SitemapRepositoryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
         $resultTwo = new UrlEntry();
         $resultTwo->setLastmod('2015-12-22');
         $resultTwo->setPriority(0.8);
+        $resultTwo->setChangefreq('daily');
 
         $result = $this->subject->getEntriesFromPages($pages);
         $this->assertEquals([$resultOne, $resultTwo], $result);
