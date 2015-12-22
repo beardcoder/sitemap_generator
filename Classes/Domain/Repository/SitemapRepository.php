@@ -136,7 +136,7 @@ class SitemapRepository
                         $urlEntry->setChangefreq($row[$typoScriptUrlEntry['changefreq']]);
                     }
                     if ($typoScriptUrlEntry['priority']) {
-                        $urlEntry->setPriority($row[$typoScriptUrlEntry['priority']]);
+                        $urlEntry->setPriority(sprintf('%01.1f', $row[$typoScriptUrlEntry['priority']] / 10));
                     }
                     $urlEntries[] = $urlEntry;
                 }
@@ -175,7 +175,7 @@ class SitemapRepository
                 $urlEntry->setLoc($uri);
                 $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
                 if (isset($page['sitemap_priority'])) {
-                    $urlEntry->setPriority('0.' . $page['sitemap_priority']);
+                    $urlEntry->setPriority(sprintf('%01.1f', $page['sitemap_priority'] / 10));
                 }
                 if (isset($page['sitemap_changefreq'])) {
                     $urlEntry->setChangefreq($page['sitemap_changefreq']);
