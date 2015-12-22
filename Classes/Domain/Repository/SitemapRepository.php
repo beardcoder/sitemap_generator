@@ -204,7 +204,7 @@ class SitemapRepository
     {
         if (
             !isset($GLOBALS['TCA'][$typoScriptUrlEntry['table']])
-            || !is_array($GLOBALS['TCA'][$typoScriptUrlEntry['table']['ctrl']])
+            || !is_array($GLOBALS['TCA'][$typoScriptUrlEntry['table']]['ctrl'])
         ) {
             return false;
         }
