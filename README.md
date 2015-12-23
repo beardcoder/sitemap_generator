@@ -1,5 +1,8 @@
 # EXT:sitemap_generator
 
+## Build Status
+[![Build Status](https://travis-ci.org/markussom/sitemap_generator.svg?branch=travis-ci)](https://travis-ci.org/markussom/sitemap_generator)
+
 ## Installation
 
 - Include TypoScript to root page
