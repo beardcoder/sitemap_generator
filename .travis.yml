@@ -12,6 +12,13 @@ env:
 
 sudo: false
 
+notifications:
+  email:
+    recipients:
+      - info@creativeworkspace.de
+    on_success: always
+    on_failure: always
+
 addons:
   apt:
     packages:
