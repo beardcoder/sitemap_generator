@@ -15,10 +15,9 @@
 namespace Markussom\SitemapGenerator\Domain\Repository;
 
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
-use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 
 /**
  * Class SitemapRepository
@@ -32,11 +31,6 @@ class SitemapRepository
      * @inject
      */
     protected $pageRepo = null;
-
-    /**
-     * @var ConfigurationManager
-     */
-    protected $configManager = null;
 
     /**
      * @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder
@@ -62,6 +56,7 @@ class SitemapRepository
 
     /**
      * SitemapRepository constructor.
+     *
      * @SuppressWarnings(superglobals)
      */
     public function __construct()
@@ -75,6 +70,8 @@ class SitemapRepository
     }
 
     /**
+     * Find all pages
+     *
      * @return array
      */
     public function findAllPages()
@@ -89,6 +86,8 @@ class SitemapRepository
     }
 
     /**
+     * Find all entries
+     *
      * @return array
      */
     public function findAllEntries()
@@ -99,6 +98,8 @@ class SitemapRepository
     }
 
     /**
+     * Generate entries from TypoScript
+     *
      * @return array
      */
     public function generateEntriesFromTypoScript()
@@ -115,8 +116,11 @@ class SitemapRepository
     }
 
     /**
+     * Map to entries
+     *
      * @param array $typoScriptUrlEntry
      * @SuppressWarnings(superglobals)
+     *
      * @return array
      */
     protected function mapToEntries(array $typoScriptUrlEntry)
@@ -163,6 +167,7 @@ class SitemapRepository
 
     /**
      * @param $pages
+     *
      * @return array
      */
     public function getEntriesFromPages($pages)
@@ -190,6 +195,7 @@ class SitemapRepository
      * Returns the database connection
      *
      * @SuppressWarnings(superglobals)
+     *
      * @return \TYPO3\CMS\Core\Database\DatabaseConnection
      */
     protected function getDatabaseConnection()
@@ -201,12 +207,13 @@ class SitemapRepository
      * Get records from database
      *
      * @param $typoScriptUrlEntry
+     * @SuppressWarnings(superglobals)
+     *
      * @return bool|\mysqli_result|object
      */
     private function getRecordsFromDatabase($typoScriptUrlEntry)
     {
-        if (
-            !isset($GLOBALS['TCA'][$typoScriptUrlEntry['table']])
+        if (!isset($GLOBALS['TCA'][$typoScriptUrlEntry['table']])
             || !is_array($GLOBALS['TCA'][$typoScriptUrlEntry['table']]['ctrl'])
         ) {
             return false;
@@ -222,6 +229,8 @@ class SitemapRepository
     }
 
     /**
+     * Get sub pages
+     *
      * @param int $startPageId
      * @return array
      */
@@ -236,6 +245,8 @@ class SitemapRepository
     }
 
     /**
+     * Get sub pages recursive
+     *
      * @param $rootPageId
      * @return array
      */
