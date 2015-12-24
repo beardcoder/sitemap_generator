@@ -31,6 +31,10 @@ cache:
 before_install:
   - composer self-update
   - composer --version
+  - pip install --user codecov
+
+after_success:
+  - codecov
 
 before_script:
   - composer require typo3/cms="$TYPO3_VERSION"
