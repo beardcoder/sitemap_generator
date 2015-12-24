@@ -2,6 +2,7 @@
 
 ## Build Status
 [![Build Status](https://travis-ci.org/markussom/sitemap_generator.svg?branch=travis-ci)](https://travis-ci.org/markussom/sitemap_generator)
+[![Code Climate](https://codeclimate.com/github/markussom/sitemap_generator/badges/gpa.svg)](https://codeclimate.com/github/markussom/sitemap_generator)
 
 ## Installation
 
