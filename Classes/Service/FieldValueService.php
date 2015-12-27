@@ -21,8 +21,13 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  * Class UrlService
  * @package Markussom\SitemapGenerator\Service
  */
-class UrlService
+class FieldValueService
 {
+
+    /**
+     * @var ContentObjectRenderer
+     */
+    protected $contentObject = null;
     /**
      * SitemapRepository constructor.
      * @SuppressWarnings(superglobals)
@@ -33,25 +38,32 @@ class UrlService
     }
 
     /**
-     * @param $row
-     * @param $pluginConfig
+     * Uses the page's cObj instance to resolve the field's value.
+     *
+     * @param string $fieldName The name of the field to get.
+     * @param $typoScriptUrlEntry
+     * @param array $row
      * @SuppressWarnings(superglobals)
      *
-     * @return string
+     * @return string The field's value.
      */
-    public function generateUrlFromTypoScript(
-        $row,
-        $pluginConfig
+    public function getFieldValue(
+        $fieldName,
+        $typoScriptUrlEntry,
+        $row
     ) {
-        $url = '';
-        $entriesConfiguration = $pluginConfig[1]['urlEntries.'];
-        foreach ($entriesConfiguration as $item) {
-            if (!empty($item['table'])) {
-                $this->contentObject->start($row, $item['table']);
-                $url = $this->contentObject->cObjGetSingle($item['url'], $item['url.']);
-            }
+        $fieldValue = '';
+        // support for cObject if the value is a configuration
+        if (is_array($typoScriptUrlEntry[$fieldName . '.'])) {
+            $this->contentObject->start($row, $typoScriptUrlEntry['table']);
+            $fieldValue = $this->contentObject->cObjGetSingle(
+                $typoScriptUrlEntry[$fieldName],
+                $typoScriptUrlEntry[$fieldName . '.']
+            );
+        } else {
+            $fieldValue = $row[$typoScriptUrlEntry[$fieldName]];
         }
-        return $url;
-    }
 
+        return $fieldValue;
+    }
 }
