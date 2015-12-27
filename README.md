@@ -65,14 +65,37 @@ $TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT'] = [
         'defaultToHTMLsuffixOnPrev' => 0,
         'acceptHTMLsuffix' => 1,
         'index' => [
-            'print' => [
-                'keyValues' => [
-                    'type' => 98,
-                ],
-            ],
             'sitemap.xml' => [
                 'keyValues' => [
                     'type' => 1449874941,
+                ]
+            ]
+        ]
+    ]
+];
+
+```
+
+## Google News-Sitemap
+https://support.google.com/news/publisher/answer/74288?hl=en
+
+### Activate for tx_news
+
+```
+plugin.tx_sitemapgenerator.googleNewsUrlEntry = 1
+```
+
+### RealURL for beautiful sitemap_news.xml url
+
+```php
+$TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT'] = [
+    'fileName' => [
+        'defaultToHTMLsuffixOnPrev' => 0,
+        'acceptHTMLsuffix' => 1,
+        'index' => [
+            'sitemap_news.xml' => [
+                'keyValues' => [
+                    'type' => 1451160842,
                 ]
             ]
         ]
