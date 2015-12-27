@@ -15,9 +15,9 @@
 namespace Markussom\SitemapGenerator\Domain\Repository;
 
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
+use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 
 /**
  * Class SitemapRepository
@@ -39,10 +39,10 @@ class SitemapRepository
     protected $uriBuilder = null;
 
     /**
-     * @var \Markussom\SitemapGenerator\Service\UrlService
+     * @var \Markussom\SitemapGenerator\Service\FieldValueService
      * @inject
      */
-    protected $urlService = null;
+    protected $fieldValueService = null;
 
     /**
      * @var TypoScriptParser
@@ -132,15 +132,26 @@ class SitemapRepository
             if ($this->getDatabaseConnection()->sql_num_rows($records)) {
                 while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
                     $urlEntry = new UrlEntry();
-                    $urlEntry->setLoc($this->urlService->generateUrlFromTypoScript($row, $this->pluginConfig));
+                    $urlEntry->setLoc(
+                        $this->fieldValueService->getFieldValue('url', $typoScriptUrlEntry, $row)
+                    );
                     if ($typoScriptUrlEntry['lastmod']) {
-                        $urlEntry->setLastmod(date('Y-m-d', $row[$typoScriptUrlEntry['lastmod']]));
+                        $urlEntry->setLastmod(
+                            date('Y-m-d', $this->fieldValueService->getFieldValue('lastmod', $typoScriptUrlEntry, $row))
+                        );
                     }
                     if ($typoScriptUrlEntry['changefreq']) {
-                        $urlEntry->setChangefreq($row[$typoScriptUrlEntry['changefreq']]);
+                        $urlEntry->setChangefreq(
+                            $this->fieldValueService->getFieldValue('changefreq', $typoScriptUrlEntry, $row)
+                        );
                     }
                     if ($typoScriptUrlEntry['priority']) {
-                        $urlEntry->setPriority(sprintf('%01.1f', $row[$typoScriptUrlEntry['priority']] / 10));
+                        $urlEntry->setPriority(
+                            sprintf(
+                                '%01.1f',
+                                $this->fieldValueService->getFieldValue('priority', $typoScriptUrlEntry, $row) / 10
+                            )
+                        );
                     }
                     $urlEntries[] = $urlEntry;
                 }
