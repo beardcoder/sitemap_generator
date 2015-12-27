@@ -7,6 +7,7 @@
 		<hidden>0</hidden>
 		<deleted>0</deleted>
 		<tstamp>1450797120</tstamp>
+		<datetime>1450797120</datetime>
 		<sitemap_priority>5</sitemap_priority>
 	</news>
 	<news>
@@ -16,6 +17,7 @@
 		<hidden>0</hidden>
 		<deleted>0</deleted>
 		<tstamp>0</tstamp>
+		<datetime>0</datetime>
 		<sitemap_priority>8</sitemap_priority>
 		<sitemap_changefreq>never</sitemap_changefreq>
 	</news>

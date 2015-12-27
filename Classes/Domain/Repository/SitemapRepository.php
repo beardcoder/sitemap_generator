@@ -14,10 +14,12 @@
 
 namespace Markussom\SitemapGenerator\Domain\Repository;
 
+use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
  * Class SitemapRepository
@@ -163,6 +165,51 @@ class SitemapRepository
     }
 
     /**
+     * Map to entries
+     *
+     * @param array $typoScriptUrlEntry
+     * @SuppressWarnings(superglobals)
+     *
+     * @return array
+     */
+    protected function mapGoogleNewsEntries(array $typoScriptUrlEntry)
+    {
+        $records = $this->getRecordsFromDatabase($typoScriptUrlEntry);
+        $urlEntries = [];
+        if ($this->getDatabaseConnection()->sql_num_rows($records)) {
+            while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
+                $urlEntry = new GoogleNewsUrlEntry();
+                $urlEntry->setLoc($this->fieldValueService->getFieldValue('url', $typoScriptUrlEntry, $row));
+                $urlEntry->setName($row[$typoScriptUrlEntry['name']]);
+                $urlEntry->setTitle($row[$typoScriptUrlEntry['title']]);
+
+                if ($typoScriptUrlEntry['language']) {
+                    $urlEntry->setLanguage(
+                        $this->fieldValueService->getFieldValue('language', $typoScriptUrlEntry, $row)
+                    );
+                }
+                if ($typoScriptUrlEntry['access']) {
+                    $urlEntry->setAccess($this->fieldValueService->getFieldValue('access', $typoScriptUrlEntry, $row));
+                }
+                if ($typoScriptUrlEntry['genres']) {
+                    $urlEntry->setGenres($this->fieldValueService->getFieldValue('genres', $typoScriptUrlEntry, $row));
+                }
+                if ($typoScriptUrlEntry['publicationDate']) {
+                    $urlEntry->setPublicationDate(date('Y-m-d', $row[$typoScriptUrlEntry['publicationDate']]));
+                }
+                if ($typoScriptUrlEntry['keywords']) {
+                    $urlEntry->setKeywords($row[$typoScriptUrlEntry['keywords']]);
+                }
+                if ($typoScriptUrlEntry['stockTickers']) {
+                    $urlEntry->setStockTickers($row[$typoScriptUrlEntry['stockTickers']]);
+                }
+                $urlEntries[] = $urlEntry;
+            }
+        }
+        return $urlEntries;
+    }
+
+    /**
      * Get pages from Database
      *
      * @return array
@@ -271,5 +318,21 @@ class SitemapRepository
             );
         }
         return $pages;
+    }
+
+    /**
+     * @return bool|\mysqli_result|object
+     */
+    public function findAllGoogleNewsEntries()
+    {
+        if (!isset($this->pluginConfig[1]['googleNewsUrlEntry'])
+            || !MathUtility::canBeInterpretedAsInteger($this->pluginConfig[1]['googleNewsUrlEntry'])
+            || intval($this->pluginConfig[1]['googleNewsUrlEntry']) === 0
+        ) {
+            return false;
+        }
+
+        $entries = $this->mapGoogleNewsEntries($this->pluginConfig[1]['googleNewsUrlEntry.']);
+        return $entries;
     }
 }
