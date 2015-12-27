@@ -32,7 +32,7 @@ plugin.tx_sitemapgenerator {
 		}
 	}
 
-	googleNewsUrlEntry = 1
+	googleNewsUrlEntry = 0
 	googleNewsUrlEntry {
 		table = tx_news_domain_model_news
 		name = title

@@ -60,6 +60,10 @@ class SitemapController extends ActionController
     public function googleNewsListAction()
     {
         $urlEntries = $this->sitemapRepo->findAllGoogleNewsEntries();
-        $this->view->assign('urlEntries', $urlEntries);
+        if (is_array($urlEntries)) {
+            $this->view->assign('urlEntries', $urlEntries);
+        } else {
+            $this->view->assign('urlEntries', []);
+        }
     }
 }
