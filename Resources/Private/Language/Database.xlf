@@ -39,6 +39,9 @@
 			<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.never">
 				<source>never</source>
 			</trans-unit>
+			<trans-unit id="sitemap_generator.extmng.activate_goggle_news_sitemap">
+				<source>Google News-Sitemap</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

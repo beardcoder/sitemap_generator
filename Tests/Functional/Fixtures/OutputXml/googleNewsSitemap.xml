@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+  <url>
+    <loc>
+      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=1&amp;cHash=0471b9a8a60c70dca61afecb0636dd7d
+    </loc>
+    <news:news>
+      <news:publication>
+        <news:name>First news</news:name>
+        <news:language>de</news:language>
+      </news:publication>
+      <news:publication_date>2015-12-22</news:publication_date>
+      <news:title>First news</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>
+      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=2&amp;cHash=10cbe193da7caa9639219cbab4c0c8d4
+    </loc>
+    <news:news>
+      <news:publication>
+        <news:name>Second news</news:name>
+        <news:language>de</news:language>
+      </news:publication>
+      <news:publication_date>1970-01-01</news:publication_date>
+      <news:title>Second news</news:title>
+    </news:news>
+  </url>
+  <url>
+    <loc>
+      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=5&amp;cHash=a05246c48c6771f6ce664e36b6d384b0
+    </loc>
+    <news:news>
+      <news:publication>
+        <news:name>News outside storagePid</news:name>
+        <news:language>de</news:language>
+      </news:publication>
+      <news:publication_date>1970-01-01</news:publication_date>
+      <news:title>News outside storagePid</news:title>
+    </news:news>
+  </url>
+</urlset>
+

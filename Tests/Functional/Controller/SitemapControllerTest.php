@@ -15,8 +15,6 @@ namespace Markussom\SitemapGenerator\Tests\Functional\Controller;
  */
 
 use TYPO3\CMS\Core\Tests\FunctionalTestCase;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Install\Service\SqlSchemaMigrationService;
 
 /**
  * Class SitemapControllerTest
@@ -82,5 +80,30 @@ class SitemapControllerTest extends FunctionalTestCase
             0
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/news.xml', $response->getContent());
+    }
+
+    /**
+     * @test
+     */
+    public function googleNewsSitemap()
+    {
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'typo3conf/ext/sitemap_generator/Tests/Functional/Fixtures/Frontend/GoogleNewsSitemap.ts',
+            ]
+        );
+        $response = $this->getFrontendResponse(
+            1,
+            0,
+            0,
+            0,
+            true,
+            0
+        );
+        $this->assertXmlStringEqualsXmlFile(
+            __DIR__ . '/../Fixtures/OutputXml/googleNewsSitemap.xml',
+            $response->getContent()
+        );
     }
 }

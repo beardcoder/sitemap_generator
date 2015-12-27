@@ -1,0 +1,2 @@
+	# cat=basic/enable/1; type=boolean; label=LLL:EXT:sitemap_generator/Resources/Private/Language/Database.xlf:sitemap_generator.extmng.activate_goggle_news_sitemap
+goggleNewsSitemap = 0

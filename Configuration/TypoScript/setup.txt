@@ -31,6 +31,29 @@ plugin.tx_sitemapgenerator {
 			}
 		}
 	}
+
+	googleNewsUrlEntry = 1
+	googleNewsUrlEntry {
+		table = tx_news_domain_model_news
+		name = title
+		language = TEXT
+		language.value = de
+		access =
+		genres = tags
+		publicationDate = datetime
+		title = title
+		keywords = keywords
+		stockTickers =
+		url = TEXT
+		url {
+			typolink.parameter = 9
+			typolink.additionalParams = &tx_news_pi1[controller]=News&tx_news_pi1[action]=detail&tx_news_pi1[news]={field:uid}
+			typolink.additionalParams.insertData = 1
+			typolink.useCacheHash = 1
+			typolink.returnLast = url
+			typolink.forceAbsoluteUrl = 1
+		}
+	}
 }
 
 lib.tx_sitemapgenerator = USER
@@ -40,7 +63,8 @@ lib.tx_sitemapgenerator {
 	pluginName = Pi1
 	vendorName = Markussom
 	controller = Sitemap
-	action = List
+	action = list
+	switchableControllerActions.Sitemap.1 = list
 
 	view < plugin.tx_sitemapgenerator.view
 	persistence < plugin.tx_sitemapgenerator.persistence
@@ -61,5 +85,24 @@ lib.tx_sitemapgenerator {
 	sitemapgeneratorPage {
 		typeNum = 1449874941
 		10 < lib.tx_sitemapgenerator
+	}
+[global]
+
+[globalVar = TSFE:type = 1451160842]
+	config {
+		disableAllHeaderCode = 1
+		xhtml_cleaning = none
+		admPanel = 0
+		metaCharset = utf-8
+		additionalHeaders = Content-Type:text/xml;charset=utf-8
+		disablePrefixComment = 1
+	}
+
+	sitemapgeneratorPage = PAGE
+	sitemapgeneratorPage {
+		typeNum = 1451160842
+		10 < lib.tx_sitemapgenerator
+		10.action = googleNewsList
+		10.switchableControllerActions.Sitemap.1 = googleNewsList
 	}
 [global]
