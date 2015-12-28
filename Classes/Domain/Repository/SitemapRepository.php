@@ -114,7 +114,6 @@ class SitemapRepository
             }
         }
         return $entries;
-
     }
 
     /**
@@ -128,7 +127,6 @@ class SitemapRepository
     protected function mapToEntries(array $typoScriptUrlEntry)
     {
         if ($typoScriptUrlEntry['table'] && $typoScriptUrlEntry['active'] == 1) {
-
             $records = $this->getRecordsFromDatabase($typoScriptUrlEntry);
             $urlEntries = [];
             if ($this->getDatabaseConnection()->sql_num_rows($records)) {
@@ -161,7 +159,6 @@ class SitemapRepository
             return $urlEntries;
         }
         return [];
-
     }
 
     /**
