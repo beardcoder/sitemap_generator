@@ -4,18 +4,10 @@
 <f:if condition="{urlEntries}">
 <f:then>
   <f:for each="{urlEntries}" as="urlEntry"><url>
-    <loc>
-      {urlEntry.loc -> f:format.htmlentities()}
-    </loc>
-    <f:if condition="{urlEntry.lastmod}"><lastmod>
-      {urlEntry.lastmod}
-    </lastmod></f:if>
-    <priority>
-      {urlEntry.priority}
-    </priority>
-    <f:if condition="{urlEntry.changefreq}"><changefreq>
-      {urlEntry.changefreq}
-    </changefreq></f:if>
+    <loc>{urlEntry.loc -> f:format.htmlentities()}</loc>
+    <f:if condition="{urlEntry.lastmod}"><lastmod>{urlEntry.lastmod}</lastmod></f:if>
+    <f:if condition="{urlEntry.changefreq}"><changefreq>{urlEntry.changefreq}</changefreq></f:if>
+    <priority>{urlEntry.priority}</priority>
   </url>
   </f:for>
 </f:then>
