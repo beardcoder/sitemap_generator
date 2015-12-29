@@ -2,6 +2,8 @@
   <f:layout name="Default"/>
 <f:section name="main"><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
                                xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+<f:if condition="{urlEntries}">
+<f:then>
   <f:for each="{urlEntries}" as="urlEntry"><url>
     <loc>
       {urlEntry.loc -> f:format.htmlentities()}
@@ -18,8 +20,14 @@
       <f:if condition="{urlEntry.keywords}"><news:keywords>{urlEntry.keywords}</news:keywords></f:if>
       <f:if condition="{urlEntry.stockTickers}"><news:stock_tickers>{urlEntry.stockTickers}</news:stock_tickers></f:if>
     </news:news>
-    </url>
+  </url>
   </f:for>
+</f:then>
+<f:else>
+  <message>No entries found</message>
+</f:else>
+</f:if>
+
 </urlset>
 </f:section>
 </html>

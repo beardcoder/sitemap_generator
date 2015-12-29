@@ -49,6 +49,9 @@ class SitemapController extends ActionController
     public function listAction()
     {
         $urlEntries = $this->sitemapRepo->findAllEntries();
+        if (!is_array($urlEntries)) {
+            return;
+        }
         $this->view->assign('urlEntries', $urlEntries);
     }
 
@@ -60,10 +63,9 @@ class SitemapController extends ActionController
     public function googleNewsListAction()
     {
         $urlEntries = $this->sitemapRepo->findAllGoogleNewsEntries();
-        if (is_array($urlEntries)) {
-            $this->view->assign('urlEntries', $urlEntries);
-        } else {
-            $this->view->assign('urlEntries', []);
+        if (!is_array($urlEntries)) {
+            return;
         }
+        $this->view->assign('urlEntries', $urlEntries);
     }
 }
