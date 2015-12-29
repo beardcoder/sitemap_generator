@@ -1,39 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>
-      http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=1&amp;cHash=54ddfe781be719e9eca580c22438ec64
-    </loc>
-    <lastmod>
-      2015-12-22
-    </lastmod>
-    <priority>
-      0.5
-    </priority>
+    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=1&amp;cHash=54ddfe781be719e9eca580c22438ec64</loc>
+    <lastmod>2015-12-22</lastmod>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>
-      http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=2&amp;cHash=de4a7b3c8a7f3518ab91fa19489d04e4
-    </loc>
-    <lastmod>
-      1970-01-01
-    </lastmod>
-    <priority>
-      0.8
-    </priority>
-    <changefreq>
-      never
-    </changefreq>
+    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=2&amp;cHash=de4a7b3c8a7f3518ab91fa19489d04e4</loc>
+    <lastmod>1970-01-01</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>
-      http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=5&amp;cHash=dae67ed7560a1d921d71a6434292d966
-    </loc>
-    <lastmod>
-      1970-01-01
-    </lastmod>
-    <priority>
-      0.5
-    </priority>
+    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=5&amp;cHash=dae67ed7560a1d921d71a6434292d966</loc>
+    <lastmod>1970-01-01</lastmod>
+    <priority>0.5</priority>
   </url>
 </urlset>
