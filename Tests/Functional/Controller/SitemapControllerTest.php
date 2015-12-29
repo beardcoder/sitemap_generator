@@ -195,17 +195,9 @@ class SitemapControllerTest extends FunctionalTestCase
             true,
             0
         );
-
-        libxml_use_internal_errors(true);
-        $doc = new \DOMDocument('1.0', 'utf-8');
-        $doc->loadXML($response);
-
-        $errors = libxml_get_errors();
-        var_dump($errors);
-        $result = false;
-        if (empty($errors)) {
-            $result = true;
-        }
+        $xml = new \DOMDocument();
+        $xml->loadXML($response->getContent());
+        $result = $xml->schemaValidate(__DIR__ . '/../Fixtures/sitemap.xsd');
 
         $this->assertEquals(
             $result,
