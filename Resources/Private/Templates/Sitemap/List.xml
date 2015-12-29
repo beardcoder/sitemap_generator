@@ -1,6 +1,8 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
   <f:layout name="Default"/>
 <f:section name="main"><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<f:if condition="{urlEntries}">
+<f:then>
   <f:for each="{urlEntries}" as="urlEntry"><url>
     <loc>
       {urlEntry.loc -> f:format.htmlentities()}
@@ -16,6 +18,12 @@
     </changefreq></f:if>
   </url>
   </f:for>
+</f:then>
+<f:else>
+  <message>No entries found</message>
+</f:else>
+</f:if>
+
 </urlset>
   </f:section>
 </html>

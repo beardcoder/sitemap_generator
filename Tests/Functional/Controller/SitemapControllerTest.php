@@ -63,6 +63,28 @@ class SitemapControllerTest extends FunctionalTestCase
     /**
      * @test
      */
+    public function emptyPages()
+    {
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'typo3conf/ext/sitemap_generator/Tests/Functional/Fixtures/Frontend/EmptyPagesRenderer.ts',
+            ]
+        );
+        $response = $this->getFrontendResponse(
+            1,
+            0,
+            0,
+            0,
+            true,
+            0
+        );
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/emptyPages.xml', $response->getContent());
+    }
+
+    /**
+     * @test
+     */
     public function news()
     {
         $this->setUpFrontendRootPage(
@@ -80,6 +102,28 @@ class SitemapControllerTest extends FunctionalTestCase
             0
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/news.xml', $response->getContent());
+    }
+
+    /**
+     * @test
+     */
+    public function emptyNews()
+    {
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'typo3conf/ext/sitemap_generator/Tests/Functional/Fixtures/Frontend/EmptyNewsRenderer.ts',
+            ]
+        );
+        $response = $this->getFrontendResponse(
+            1,
+            0,
+            0,
+            0,
+            true,
+            0
+        );
+        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/emptyNews.xml', $response->getContent());
     }
 
     /**
@@ -103,6 +147,31 @@ class SitemapControllerTest extends FunctionalTestCase
         );
         $this->assertXmlStringEqualsXmlFile(
             __DIR__ . '/../Fixtures/OutputXml/googleNewsSitemap.xml',
+            $response->getContent()
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function emptyGoogleNewsSitemap()
+    {
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'typo3conf/ext/sitemap_generator/Tests/Functional/Fixtures/Frontend/EmptyGoogleNewsSitemap.ts',
+            ]
+        );
+        $response = $this->getFrontendResponse(
+            1,
+            0,
+            0,
+            0,
+            true,
+            0
+        );
+        $this->assertXmlStringEqualsXmlFile(
+            __DIR__ . '/../Fixtures/OutputXml/emptyGoogleNewsSitemap.xml',
             $response->getContent()
         );
     }
