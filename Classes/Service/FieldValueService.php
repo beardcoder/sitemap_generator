@@ -28,6 +28,7 @@ class FieldValueService
      * @var ContentObjectRenderer
      */
     protected $contentObject = null;
+
     /**
      * SitemapRepository constructor.
      * @SuppressWarnings(superglobals)
@@ -52,18 +53,15 @@ class FieldValueService
         $typoScriptUrlEntry,
         $row
     ) {
-        $fieldValue = '';
         // support for cObject if the value is a configuration
         if (is_array($typoScriptUrlEntry[$fieldName . '.'])) {
             $this->contentObject->start($row, $typoScriptUrlEntry['table']);
-            $fieldValue = $this->contentObject->cObjGetSingle(
+            return $this->contentObject->cObjGetSingle(
                 $typoScriptUrlEntry[$fieldName],
                 $typoScriptUrlEntry[$fieldName . '.']
             );
-        } else {
-            $fieldValue = $row[$typoScriptUrlEntry[$fieldName]];
         }
 
-        return $fieldValue;
+        return $row[$typoScriptUrlEntry[$fieldName]];
     }
 }
