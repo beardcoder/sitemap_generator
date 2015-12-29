@@ -175,4 +175,41 @@ class SitemapControllerTest extends FunctionalTestCase
             $response->getContent()
         );
     }
+
+    /**
+     * @test
+     */
+    public function validateXml()
+    {
+        $this->setUpFrontendRootPage(
+            1,
+            [
+                'typo3conf/ext/sitemap_generator/Tests/Functional/Fixtures/Frontend/ValidateRenderer.ts',
+            ]
+        );
+        $response = $this->getFrontendResponse(
+            1,
+            0,
+            0,
+            0,
+            true,
+            0
+        );
+
+        libxml_use_internal_errors(true);
+        $doc = new \DOMDocument('1.0', 'utf-8');
+        $doc->loadXML($response);
+
+        $errors = libxml_get_errors();
+        var_dump($errors);
+        $result = false;
+        if (empty($errors)) {
+            $result = true;
+        }
+
+        $this->assertEquals(
+            $result,
+            true
+        );
+    }
 }
