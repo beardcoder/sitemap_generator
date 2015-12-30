@@ -21,41 +21,57 @@ namespace Markussom\SitemapGenerator\Domain\Model;
 class GoogleNewsUrlEntry extends UrlEntry
 {
     /**
+     * Name
+     *
      * @var string
      */
     protected $name = '';
 
     /**
+     * Language
+     *
      * @var string
      */
     protected $language = 'en';
 
     /**
+     * Access
+     *
      * @var string
      */
     protected $access = '';
 
     /**
+     * Genres
+     *
      * @var string
      */
     protected $genres = '';
 
     /**
+     * Publication date
+     *
      * @var string
      */
     protected $publicationDate = '';
 
     /**
+     * Title
+     *
      * @var string
      */
     protected $title = '';
 
     /**
+     * Keywords
+     *
      * @var string
      */
     protected $keywords = '';
 
     /**
+     * Stock tickers
+     *
      * @var string
      */
     protected $stockTickers = '';
