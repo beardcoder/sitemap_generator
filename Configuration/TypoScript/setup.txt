@@ -5,10 +5,6 @@ plugin.tx_sitemapgenerator {
 		layoutRootPath = {$plugin.tx_sitemapgenerator.view.layoutRootPath}
 	}
 
-	persistence {
-		storagePid = {$plugin.tx_sitemapgenerator.persistence.storagePid}
-	}
-
 	urlEntries {
 		pages = 1
 		pages {

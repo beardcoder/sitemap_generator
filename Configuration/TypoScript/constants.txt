@@ -7,9 +7,4 @@ plugin.tx_sitemapgenerator {
 		# cat=plugin.tx_sitemapgenerator/file; type=string; label=Path to template layouts (FE)
 		layoutRootPath = EXT:sitemap_generator/Resources/Private/Layouts/
 	}
-
-	persistence {
-		# cat=plugin.tx_sitemapgenerator//a; type=string; label=Default storage PID
-		storagePid =
-	}
 }

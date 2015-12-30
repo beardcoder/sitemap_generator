@@ -29,10 +29,6 @@ plugin.tx_sitemapgenerator {
 		layoutRootPath = EXT:sitemap_generator/Resources/Private/Layouts/
 	}
 
-	persistence {
-		storagePid = 3
-	}
-
 	urlEntries {
 		pages = 0
 		pages {
