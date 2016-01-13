@@ -277,7 +277,7 @@ class SitemapRepository
         return $this->getDatabaseConnection()->exec_SELECTquery(
             '*',
             $typoScriptUrlEntry['table'],
-            'pid!=0' . $typoScriptUrlEntry['additionalWhere'] . $this->pageRepo->enableFields(
+            'pid!=0 ' . $typoScriptUrlEntry['additionalWhere'] . $this->pageRepo->enableFields(
                 $typoScriptUrlEntry['table']
             )
         );
