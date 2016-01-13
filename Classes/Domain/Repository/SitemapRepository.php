@@ -110,7 +110,7 @@ class SitemapRepository
         $entries = [];
         foreach ($urlEntries as $urlEntry) {
             if (is_array($urlEntry)) {
-                $entries = $this->mapToEntries($urlEntry);
+                $entries = array_merge($entries, $this->mapToEntries($urlEntry));
             }
         }
         return $entries;
