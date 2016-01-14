@@ -52,5 +52,22 @@ plugin.tx_sitemapgenerator {
 				typolink.forceAbsoluteUrl = 1
 			}
 		}
+		events = 1
+		events {
+			active = 1
+			table = events
+			lastmod = tstamp
+			priority = sitemap_priority
+			changefreq = sitemap_changefreq
+			url = TEXT
+			url {
+				typolink.parameter = 2
+				typolink.additionalParams = &tx_events[controller]=Events&tx_events[action]=detail&tx_events[events]={field:uid}
+				typolink.additionalParams.insertData = 1
+				typolink.useCacheHash = 1
+				typolink.returnLast = url
+				typolink.forceAbsoluteUrl = 1
+			}
+		}
 	}
 }
