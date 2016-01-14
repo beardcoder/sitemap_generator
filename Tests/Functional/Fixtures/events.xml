@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dataset>
+	<events>
+		<uid>1</uid>
+		<pid>3</pid>
+		<title>First event</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<tstamp>1450797120</tstamp>
+		<datetime>1450797120</datetime>
+		<sitemap_priority>5</sitemap_priority>
+	</events>
+	<events>
+		<uid>2</uid>
+		<pid>3</pid>
+		<title>Second event</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<tstamp>0</tstamp>
+		<datetime>0</datetime>
+		<sitemap_priority>8</sitemap_priority>
+		<sitemap_changefreq>never</sitemap_changefreq>
+	</events>
+	<events>
+		<uid>3</uid>
+		<pid>3</pid>
+		<title>Hidden event</title>
+		<hidden>1</hidden>
+		<deleted>0</deleted>
+		<tstamp>0</tstamp>
+	</events>
+	<events>
+		<uid>4</uid>
+		<pid>3</pid>
+		<title>Deleted event</title>
+		<hidden>0</hidden>
+		<deleted>1</deleted>
+		<tstamp>0</tstamp>
+	</events>
+	<events>
+		<uid>5</uid>
+		<pid>10</pid>
+		<title>event outside storagePid</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<tstamp>0</tstamp>
+	</events>
+	<events>
+		<uid>6</uid>
+		<pid>10</pid>
+		<title>Another hidden event outside storagePid</title>
+		<hidden>1</hidden>
+		<deleted>0</deleted>
+		<tstamp>0</tstamp>
+	</events>
+</dataset>
