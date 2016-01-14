@@ -4,7 +4,11 @@ EXT:sitemap\_generator
 Build Status
 ------------
 
-|Build Status| |Code Climate|
+.. image:: https://travis-ci.org/markussom/sitemap_generator.svg?branch=master
+:target: https://travis-ci.org/markussom/sitemap_generator
+
+.. image:: https://codeclimate.com/github/markussom/sitemap_generator/badges/gpa.svg
+:target: https://codeclimate.com/github/markussom/sitemap_generator
 
 Installation
 ------------
@@ -113,8 +117,3 @@ RealURL for beautiful sitemap\_news.xml url
             ]
         ]
     ];
-
-.. |Build Status| image:: https://travis-ci.org/markussom/sitemap_generator.svg?branch=travis-ci
-:target: https://travis-ci.org/markussom/sitemap_generator
-.. |Code Climate| image:: https://codeclimate.com/github/markussom/sitemap_generator/badges/gpa.svg
-:target: https://codeclimate.com/github/markussom/sitemap_generator
