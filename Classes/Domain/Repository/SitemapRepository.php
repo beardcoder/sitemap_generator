@@ -16,6 +16,7 @@ namespace Markussom\SitemapGenerator\Domain\Repository;
 
 use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
+use Markussom\SitemapGenerator\Service\AdditionalWhereService;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -75,9 +76,9 @@ class SitemapRepository
             $GLOBALS['TSFE']->tmpl->setup
         );
 
-        if (isset($this->pluginConfig['1']['urlEntries.']['pages.']['additionalWhere'])) {
-            $this->pageAdditionalWhere = ' AND ' . $this->pluginConfig['1']['urlEntries.']['pages.']['additionalWhere'];
-        }
+        $this->pageAdditionalWhere = AdditionalWhereService::getWhereString(
+            $this->pluginConfig['1']['urlEntries.']['pages.']['additionalWhere']
+        );
     }
 
     /**
@@ -286,7 +287,9 @@ class SitemapRepository
         return $this->getDatabaseConnection()->exec_SELECTquery(
             '*',
             $typoScriptUrlEntry['table'],
-            'pid!=0 ' . $typoScriptUrlEntry['additionalWhere'] . $this->pageRepo->enableFields(
+            'pid!=0 ' . AdditionalWhereService::getWhereString(
+                $typoScriptUrlEntry['additionalWhere']
+            ) . $this->pageRepo->enableFields(
                 $typoScriptUrlEntry['table']
             )
         );
@@ -304,7 +307,9 @@ class SitemapRepository
             $startPageId,
             '*',
             'sorting',
-            $this->pageRepo->enableFields('pages') . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere
+            $this->pageRepo->enableFields(
+                'pages'
+            ) . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere
         );
     }
 
