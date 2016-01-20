@@ -92,4 +92,15 @@
 		<doktype>255</doktype>
 		<sitemap_priority>5</sitemap_priority>
 	</pages>
+	<pages>
+		<uid>11</uid>
+		<pid>1</pid>
+		<title>Nav Hide</title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<tstamp>1450797120</tstamp>
+		<doktype>1</doktype>
+		<sitemap_priority>0</sitemap_priority>
+		<nav_hide>1</nav_hide>
+	</pages>
 </dataset>

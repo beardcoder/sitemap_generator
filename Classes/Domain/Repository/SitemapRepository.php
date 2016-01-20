@@ -57,6 +57,11 @@ class SitemapRepository
     protected $pluginConfig = [];
 
     /**
+     * @var string
+     */
+    protected $pageAdditionalWhere = '';
+
+    /**
      * SitemapRepository constructor.
      *
      * @SuppressWarnings(superglobals)
@@ -69,6 +74,10 @@ class SitemapRepository
             'plugin.tx_sitemapgenerator',
             $GLOBALS['TSFE']->tmpl->setup
         );
+
+        if (isset($this->pluginConfig['1']['urlEntries.']['pages.']['additionalWhere'])) {
+            $this->pageAdditionalWhere = ' AND ' . $this->pluginConfig['1']['urlEntries.']['pages.']['additionalWhere'];
+        }
     }
 
     /**
@@ -295,7 +304,7 @@ class SitemapRepository
             $startPageId,
             '*',
             'sorting',
-            $this->pageRepo->enableFields('pages') . 'AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1'
+            $this->pageRepo->enableFields('pages') . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere
         );
     }
 
