@@ -33,6 +33,7 @@ plugin.tx_sitemapgenerator {
 		pages = 1
 		pages {
 			rootPageId = 1
+			additionalWhere = nav_hide!=1
 		}
 	}
 }
