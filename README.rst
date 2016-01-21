@@ -29,7 +29,7 @@ Pages
             pages = 1
             pages {
                 rootPageId = 1
-                additionalWhere = doktype!=6
+                additionalWhere = AND doktype!=6
             }
         }
     }
@@ -45,7 +45,7 @@ Plugin integration
             news {
                 active = 1
                 table = tx_news_domain_model_news
-                additionalWhere = pid!=0
+                additionalWhere = AND pid!=0
                 lastmod = tstamp
                 url = TEXT
                 url {
