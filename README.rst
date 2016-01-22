@@ -5,10 +5,10 @@ Build Status
 ------------
 
 .. image:: https://travis-ci.org/markussom/sitemap_generator.svg?branch=master
-:target: https://travis-ci.org/markussom/sitemap_generator
+   :target: https://travis-ci.org/markussom/sitemap_generator
 
 .. image:: https://codeclimate.com/github/markussom/sitemap_generator/badges/gpa.svg
-:target: https://codeclimate.com/github/markussom/sitemap_generator
+   :target: https://codeclimate.com/github/markussom/sitemap_generator
 
 Installation
 ------------
@@ -29,7 +29,7 @@ Pages
             pages = 1
             pages {
                 rootPageId = 1
-                additionalWhere = AND doktype!=6
+                additionalWhere = doktype!=6
             }
         }
     }
@@ -45,7 +45,7 @@ Plugin integration
             news {
                 active = 1
                 table = tx_news_domain_model_news
-                additionalWhere = AND pid!=0
+                additionalWhere = pid!=0
                 lastmod = tstamp
                 url = TEXT
                 url {
@@ -67,7 +67,7 @@ Additional fields
 
     plugin.tx_sitemapgenerator.urlEntries.news {
         changefreq = dbfield_for_changefreq
-        priority = dbfield_for_priority_as_float
+        priority = dbfield_for_priority
     }
 
 RealURL for beautiful sitemap.xml url
