@@ -31,7 +31,7 @@ class UrlEntry
     protected $lastmod = '';
 
     /**
-     * Change frequenz
+     * Change frequency
      * always
      * hourly
      * daily
