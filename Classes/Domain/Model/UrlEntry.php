@@ -11,12 +11,10 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 namespace Markussom\SitemapGenerator\Domain\Model;
 
 /**
  * Class UrlEntry
- * @package Markussom\SitemapGenerator\Domain\Model
  */
 class UrlEntry
 {

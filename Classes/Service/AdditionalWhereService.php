@@ -11,14 +11,12 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 namespace Markussom\SitemapGenerator\Service;
 
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 
 /**
  * Class AdditionalWhereService
- * @package Markussom\SitemapGenerator\Service
  */
 class AdditionalWhereService
 {

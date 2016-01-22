@@ -13,12 +13,10 @@ namespace Markussom\SitemapGenerator\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
  * Class SitemapController
- * @package Markussom\SitemapGenerator\Controller
  */
 class SitemapController extends ActionController
 {

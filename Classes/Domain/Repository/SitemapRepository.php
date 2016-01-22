@@ -11,7 +11,6 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 namespace Markussom\SitemapGenerator\Domain\Repository;
 
 use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
@@ -24,7 +23,6 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 
 /**
  * Class SitemapRepository
- * @package Markussom\SitemapGenerator\Domain\Repository
  */
 class SitemapRepository
 {

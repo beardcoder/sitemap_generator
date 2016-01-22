@@ -19,7 +19,6 @@ use TYPO3\CMS\Core\Tests\FunctionalTestCase;
 /**
  * Class SitemapControllerTest
  *
- * @package Markussom\SitemapGenerator\Tests\Unit
  */
 class SitemapControllerTest extends FunctionalTestCase
 {

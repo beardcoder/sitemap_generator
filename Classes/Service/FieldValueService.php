@@ -11,7 +11,6 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 namespace Markussom\SitemapGenerator\Service;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -19,7 +18,6 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * Class UrlService
- * @package Markussom\SitemapGenerator\Service
  */
 class FieldValueService
 {
