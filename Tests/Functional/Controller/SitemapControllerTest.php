@@ -22,6 +22,17 @@ use TYPO3\CMS\Core\Tests\FunctionalTestCase;
  */
 class SitemapControllerTest extends FunctionalTestCase
 {
+
+    /**
+     * Load Core Extensions
+     *
+     * @var array
+     */
+    protected $coreExtensionsToLoad = [
+        'fluid'
+    ];
+
+
     /**
      * @var array
      */
