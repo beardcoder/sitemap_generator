@@ -6,6 +6,7 @@ php:
 
 env:
   matrix:
+    - TYPO3_VERSION="6.2.0"
     - TYPO3_VERSION="7.4.0"
     - TYPO3_VERSION="^7.0"
     - TYPO3_VERSION="dev-master"
@@ -20,8 +21,6 @@ notifications:
     on_failure: always
 
 addons:
-  code_climate:
-    repo_token: 8a55c2767eff0cdbad895a523f65d797dfbcf40a9abd8b11ea452f32c129668f
   apt:
     packages:
       - parallel
@@ -45,18 +44,13 @@ after_script:
   - .Build/bin/test-reporter
 
 script:
-  # Für Unittests
-  # - >
-  #  echo;
-  #  echo "Running unit tests";
-  #  .Build/bin/phpunit -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
-
   - >
     echo;
     echo "Running php lint";
     find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
 
   - >
+    cd $TYPO3_PATH_WEB;
     echo;
     export typo3DatabaseName="typo3";
     export typo3DatabaseHost="localhost";
