@@ -6,3 +6,5 @@ defined('TYPO3_MODE') or die();
     'Pi1',
     ['Sitemap' => 'list, googleNewsList']
 );
+
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = 'Markussom\\SitemapGenerator\\Command\\TaskCommandController';
