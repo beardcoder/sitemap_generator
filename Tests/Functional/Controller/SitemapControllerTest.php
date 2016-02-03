@@ -13,7 +13,6 @@ namespace Markussom\SitemapGenerator\Tests\Functional\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
-
 use TYPO3\CMS\Core\Tests\FunctionalTestCase;
 
 /**
@@ -31,7 +30,6 @@ class SitemapControllerTest extends FunctionalTestCase
     protected $coreExtensionsToLoad = [
         'fluid'
     ];
-
 
     /**
      * @var array
@@ -66,8 +64,7 @@ class SitemapControllerTest extends FunctionalTestCase
             0,
             0,
             0,
-            true,
-            0
+            true
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/pages.xml', $response->getContent());
     }
@@ -88,8 +85,7 @@ class SitemapControllerTest extends FunctionalTestCase
             0,
             0,
             0,
-            true,
-            0
+            true
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/emptyPages.xml', $response->getContent());
     }
@@ -110,8 +106,7 @@ class SitemapControllerTest extends FunctionalTestCase
             0,
             0,
             0,
-            true,
-            0
+            true
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/plugin.xml', $response->getContent());
     }
@@ -132,8 +127,7 @@ class SitemapControllerTest extends FunctionalTestCase
             0,
             0,
             0,
-            true,
-            0
+            true
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/emptyNews.xml', $response->getContent());
     }
@@ -154,8 +148,7 @@ class SitemapControllerTest extends FunctionalTestCase
             0,
             0,
             0,
-            true,
-            0
+            true
         );
         $this->assertXmlStringEqualsXmlFile(
             __DIR__ . '/../Fixtures/OutputXml/googleNewsSitemap.xml',
@@ -179,8 +172,7 @@ class SitemapControllerTest extends FunctionalTestCase
             0,
             0,
             0,
-            true,
-            0
+            true
         );
         $this->assertXmlStringEqualsXmlFile(
             __DIR__ . '/../Fixtures/OutputXml/emptyGoogleNewsSitemap.xml',
@@ -204,8 +196,7 @@ class SitemapControllerTest extends FunctionalTestCase
             0,
             0,
             0,
-            true,
-            0
+            true
         );
         $xml = new \DOMDocument();
         $xml->loadXML($response->getContent());
