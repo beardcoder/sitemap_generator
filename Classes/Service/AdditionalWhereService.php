@@ -1,4 +1,6 @@
 <?php
+namespace Markussom\SitemapGenerator\Service;
+
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -11,8 +13,6 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-namespace Markussom\SitemapGenerator\Service;
-
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 
 /**
@@ -21,6 +21,8 @@ use TYPO3\CMS\Core\Database\DatabaseConnection;
 class AdditionalWhereService
 {
     /**
+     * Returns the where statement for database connection
+     *
      * @param string $additionalWhere
      * @return string
      */

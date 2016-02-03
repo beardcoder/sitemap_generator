@@ -1,4 +1,6 @@
 <?php
+namespace Markussom\SitemapGenerator\Domain\Model;
+
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -11,7 +13,6 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-namespace Markussom\SitemapGenerator\Domain\Model;
 
 /**
  * Class UrlEntryNews

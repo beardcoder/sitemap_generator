@@ -1,4 +1,6 @@
 <?php
+namespace Markussom\SitemapGenerator\Domain\Model;
+
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -11,7 +13,6 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-namespace Markussom\SitemapGenerator\Domain\Model;
 
 /**
  * Class UrlEntry
@@ -19,13 +20,21 @@ namespace Markussom\SitemapGenerator\Domain\Model;
 class UrlEntry
 {
 
-    const EXCLUDE_FROM_SITEMAP = 'exclude_from_sitemap';
     /**
+     * The database field to exclude the entry from sitemap
+     */
+    const EXCLUDE_FROM_SITEMAP = 'exclude_from_sitemap';
+
+    /**
+     * Location For example: http://www.example.com/site1
+     *
      * @var string
      */
     protected $loc = '';
 
     /**
+     * Last modification date of entry
+     *
      * @var string
      */
     protected $lastmod = '';

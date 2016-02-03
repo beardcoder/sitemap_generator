@@ -1,4 +1,6 @@
 <?php
+namespace Markussom\SitemapGenerator\Domain\Repository;
+
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -11,8 +13,6 @@
  *
  * The TYPO3 project - inspiring people to share!
  */
-namespace Markussom\SitemapGenerator\Domain\Repository;
-
 use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use Markussom\SitemapGenerator\Service\AdditionalWhereService;
@@ -255,18 +255,6 @@ class SitemapRepository
     }
 
     /**
-     * Returns the database connection
-     *
-     * @SuppressWarnings(superglobals)
-     *
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    protected function getDatabaseConnection()
-    {
-        return $GLOBALS['TYPO3_DB'];
-    }
-
-    /**
      * Get records from database
      *
      * @param $typoScriptUrlEntry
@@ -343,5 +331,17 @@ class SitemapRepository
 
         $entries = $this->mapGoogleNewsEntries($this->pluginConfig[1]['googleNewsUrlEntry.']);
         return $entries;
+    }
+
+    /**
+     * Returns the database connection
+     *
+     * @SuppressWarnings(superglobals)
+     *
+     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     */
+    protected function getDatabaseConnection()
+    {
+        return $GLOBALS['TYPO3_DB'];
     }
 }
