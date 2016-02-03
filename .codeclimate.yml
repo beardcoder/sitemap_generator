@@ -10,6 +10,9 @@ engines:
     enabled: false
   phpmd:
     enabled: true
+    checks:
+      CleanCode/StaticAccess:
+        enabled: false
   duplication:
     enabled: true
     config:
