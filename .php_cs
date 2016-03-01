@@ -54,6 +54,7 @@ return Symfony\CS\Config\Config::create()
         'single_array_no_trailing_comma',
         'spaces_before_semicolon',
         'unused_use',
+        'short_array_syntax',
         'concat_with_spaces',
         'whitespacy_lines',
         'ordered_use',
