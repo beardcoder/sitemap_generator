@@ -37,6 +37,6 @@ class GoogleSitemapServiceTest extends FunctionalTestCase
      */
     public function requestTest()
     {
-        $this->assertEquals($this->googleSitemapService->sendRequest(), 200);
+        $this->assertEquals($this->googleSitemapService->sendRequest(), 200, 'Service not available');
     }
 }
