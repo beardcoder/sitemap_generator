@@ -28,7 +28,7 @@ class AdditionalWhereService
      */
     public static function getWhereString($additionalWhere)
     {
-        if (isset($additionalWhere)) {
+        if (isset($additionalWhere) && !empty($additionalWhere)) {
             return ' ' . DatabaseConnection::AND_Constraint . ' ' . $additionalWhere;
         }
         return '';
