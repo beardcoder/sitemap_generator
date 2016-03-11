@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>http://localhost/index.php?id=1</loc>
+    <image:image>
+      <image:loc>http://localhost/test_image_1.jpg</image:loc>
+      <image:caption>image caption</image:caption>
+      <image:geo_location>Germany</image:geo_location>
+      <image:title>image title</image:title>
+      <image:license>http://localhost/index.php?id=1</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>http://localhost/test_image_2.jpg</image:loc>
+      <image:caption>image 2 caption</image:caption>
+      <image:geo_location>Germany</image:geo_location>
+      <image:title>image 2 title</image:title>
+      <image:license>http://localhost/index.php?id=1</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>http://localhost/index.php?id=2</loc>
+    <image:image>
+      <image:loc>http://localhost/test_image_3.jpg</image:loc>
+      <image:caption>image 3 caption</image:caption>
+      <image:title>image 3 title</image:title>
+    </image:image>
+  </url>
+</urlset>
