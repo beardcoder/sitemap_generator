@@ -10,14 +10,14 @@
     </loc>
     <news:news>
       <news:publication>
-        <news:name>{urlEntry.name}</news:name>
+        <news:name>{urlEntry.name -> f:format.htmlspecialchars()}</news:name>
         <news:language>{urlEntry.language}</news:language>
       </news:publication>
       <f:if condition="{urlEntry.access}"><news:access>{urlEntry.access}</news:access></f:if>
-      <f:if condition="{urlEntry.genres}"><news:genres>{urlEntry.genres}</news:genres></f:if>
+      <f:if condition="{urlEntry.genres}"><news:genres>{urlEntry.genres -> f:format.htmlspecialchars()}</news:genres></f:if>
       <news:publication_date>{urlEntry.publicationDate}</news:publication_date>
-      <news:title>{urlEntry.title}</news:title>
-      <f:if condition="{urlEntry.keywords}"><news:keywords>{urlEntry.keywords}</news:keywords></f:if>
+      <news:title>{urlEntry.title -> f:format.htmlspecialchars()}</news:title>
+      <f:if condition="{urlEntry.keywords}"><news:keywords>{urlEntry.keywords -> f:format.htmlspecialchars()}</news:keywords></f:if>
       <f:if condition="{urlEntry.stockTickers}"><news:stock_tickers>{urlEntry.stockTickers}</news:stock_tickers></f:if>
     </news:news>
   </url>

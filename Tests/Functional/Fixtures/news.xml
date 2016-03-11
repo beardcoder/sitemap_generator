@@ -18,6 +18,7 @@
 		<deleted>0</deleted>
 		<tstamp>0</tstamp>
 		<datetime>0</datetime>
+		<keywords>News <![CDATA[ & ]]> fun</keywords>
 		<sitemap_priority>8</sitemap_priority>
 		<sitemap_changefreq>never</sitemap_changefreq>
 	</news>
@@ -52,5 +53,16 @@
 		<hidden>1</hidden>
 		<deleted>0</deleted>
 		<tstamp>0</tstamp>
+	</news>
+	<news>
+		<uid>7</uid>
+		<pid>3</pid>
+		<title>News with special chars :) &amp; äöü ^&gt;&lt; <![CDATA[ &<<><dsf<!-- ]]></title>
+		<hidden>0</hidden>
+		<deleted>0</deleted>
+		<tstamp>0</tstamp>
+		<datetime>0</datetime>
+		<sitemap_priority>8</sitemap_priority>
+		<sitemap_changefreq>never</sitemap_changefreq>
 	</news>
 </dataset>
