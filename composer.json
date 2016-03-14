@@ -38,7 +38,7 @@
     }
   },
   "replace": {
-    "sitemap-generator": "self.version",
+    "sitemap_generator": "self.version",
     "typo3-ter/sitemap-generator": "self.version"
   },
   "config": {
