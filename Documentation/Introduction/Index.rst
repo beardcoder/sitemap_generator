@@ -23,7 +23,14 @@ Build Status
 Installation
 ------------
 
--  Include TypoScript to root page
+**Preparation: Include static TypoScript**
+*The extension ships some TypoScript code which needs to be included.*
+
+-  Switch to the root page of your site.
+-  Switch to the Template module and select Info/Modify.
+-  Press the link Edit the whole template record and switch to the tab Includes.
+-  Select Sitemap Generator (sitemap_generator) at the field Include static (from extensions)
+
 -  You can override the root page ID
    plugin.tx\_sitemapgenerator.settings.urlEntries.pages.rootPageId
 -  sitemap is available on rootpage with pagetype 1449874941
