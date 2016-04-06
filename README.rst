@@ -14,6 +14,7 @@ Installation
 ------------
 
 **Preparation: Include static TypoScript**
+
 *The extension ships some TypoScript code which needs to be included.*
 
 -  Switch to the root page of your site.
