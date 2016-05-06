@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2016-05-06T12:19:11Z">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="sitemap_generator.extmng.activate_goggle_news_sitemap" approved="yes">
+			<source>Google News Sitemap</source>
+			<target>Google News-Sitemap</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.exclude_from_sitemap" approved="yes">
+			<source>Exclude from sitemap</source>
+			<target>Von Sitemap ausschließen</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.exclude_from_sitemap.label" approved="yes">
+			<source>Exclude</source>
+			<target>Ausschließen</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.please_choose" approved="yes">
+			<source>Please choose</source>
+			<target>Bitte wählen</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq" approved="yes">
+			<source>Sitemap change frequency</source>
+			<target>Sitemap Änderungsfrequenz</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.always" approved="yes">
+			<source>always</source>
+			<target>Immer</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.daily" approved="yes">
+			<source>Daily</source>
+			<target>Täglich</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.hourly" approved="yes">
+			<source>Hourly</source>
+			<target>Stündlich</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.monthly" approved="yes">
+			<source>monthly</source>
+			<target>Monatlich</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.never" approved="yes">
+			<source>never</source>
+			<target>Nie</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.weekly" approved="yes">
+			<source>Weekly</source>
+			<target>Wöchentlich</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.yearly" approved="yes">
+			<source>yearly</source>
+			<target>Jährlich</target>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_priority" approved="yes">
+			<source>Sitemap priority</source>
+			<target>Sitemap Priorität</target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>
