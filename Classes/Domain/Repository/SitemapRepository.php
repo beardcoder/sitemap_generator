@@ -155,9 +155,11 @@ class SitemapRepository
                     }
                     if ($typoScriptUrlEntry['priority']) {
                         $urlEntry->setPriority(
-                            sprintf(
-                                '%01.1f',
-                                $this->fieldValueService->getFieldValue('priority', $typoScriptUrlEntry, $row) / 10
+                            number_format(
+                                $this->fieldValueService->getFieldValue('priority', $typoScriptUrlEntry, $row) / 10,
+                                1,
+                                '.',
+                                ''
                             )
                         );
                     }
@@ -243,7 +245,7 @@ class SitemapRepository
                 $urlEntry->setLoc($uri);
                 $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
                 if (isset($page['sitemap_priority'])) {
-                    $urlEntry->setPriority(sprintf('%01.1f', $page['sitemap_priority'] / 10));
+                    $urlEntry->setPriority(number_format($page['sitemap_priority'] / 10, 1, '.', ''));
                 }
                 if (isset($page['sitemap_changefreq'])) {
                     $urlEntry->setChangefreq($page['sitemap_changefreq']);
