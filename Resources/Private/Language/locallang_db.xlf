@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-05-06T12:19:11Z">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="sitemap_generator.extmng.activate_goggle_news_sitemap">
+			<source>Google News Sitemap</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.exclude_from_sitemap">
+			<source>Exclude from sitemap</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.exclude_from_sitemap.label">
+			<source>Exclude</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.please_choose">
+			<source>Please choose</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq">
+			<source>Sitemap change frequency</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.always">
+			<source>always</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.daily">
+			<source>Daily</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.hourly">
+			<source>Hourly</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.monthly">
+			<source>monthly</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.never">
+			<source>never</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.weekly">
+			<source>Weekly</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_changefreq.yearly">
+			<source>yearly</source>
+		</trans-unit>
+		<trans-unit id="sitemap_generator.tca.pages.sitemap_priority">
+			<source>Sitemap priority</source>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

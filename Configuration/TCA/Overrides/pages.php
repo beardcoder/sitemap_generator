@@ -1,7 +1,7 @@
 <?php
 defined('TYPO3_MODE') or die();
 
-$languageFilePrefix = 'LLL:EXT:sitemap_generator/Resources/Private/Language/Database.xlf:';
+$languageFilePrefix = 'LLL:EXT:sitemap_generator/Resources/Private/Language/locallang_db.xlf:';
 
 $tca = [
     'columns' => [
@@ -11,7 +11,7 @@ $tca = [
             'config' => [
                 'type' => 'check',
                 'items' => [
-                    ['Exclude', 1],
+                    [$languageFilePrefix . 'sitemap_generator.tca.pages.exclude_from_sitemap.label', 1],
                 ],
             ],
         ],
