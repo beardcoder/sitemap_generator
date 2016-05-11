@@ -13,6 +13,7 @@ namespace Markussom\SitemapGenerator\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use Markussom\SitemapGenerator\Domain\Repository\SitemapRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 /**
@@ -23,8 +24,7 @@ class SitemapController extends ActionController
 
     /**
      * SitemapRepository
-     * @var \Markussom\SitemapGenerator\Domain\Repository\SitemapRepository
-     * @inject
+     * @var SitemapRepository
      */
     protected $sitemapRepo = null;
 
@@ -59,5 +59,14 @@ class SitemapController extends ActionController
     {
         $urlEntries = $this->sitemapRepo->findAllGoogleNewsEntries();
         $this->view->assign('urlEntries', $urlEntries);
+    }
+
+    /**
+     * Inject sitemap reposetory
+     *
+     * @param SitemapRepository $sitemapRepo
+     */
+    public function injectSitemapRepo(SitemapRepository $sitemapRepo){
+        $this->sitemapRepo = $sitemapRepo;
     }
 }
