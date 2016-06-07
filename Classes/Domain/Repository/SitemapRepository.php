@@ -16,10 +16,13 @@ namespace Markussom\SitemapGenerator\Domain\Repository;
 use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use Markussom\SitemapGenerator\Service\AdditionalWhereService;
+use Markussom\SitemapGenerator\Service\FieldValueService;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
  * Class SitemapRepository
@@ -28,20 +31,17 @@ class SitemapRepository
 {
 
     /**
-     * @var \TYPO3\CMS\Frontend\Page\PageRepository
-     * @inject
+     * @var PageRepository
      */
-    protected $pageRepo = null;
+    protected $pageRepository = null;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder
-     * @inject
+     * @var UriBuilder
      */
     protected $uriBuilder = null;
 
     /**
-     * @var \Markussom\SitemapGenerator\Service\FieldValueService
-     * @inject
+     * @var FieldValueService
      */
     protected $fieldValueService = null;
 
@@ -68,7 +68,7 @@ class SitemapRepository
     public function __construct()
     {
         $this->typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
-
+        $this->fieldValueService = new FieldValueService();
         $this->pluginConfig = $this->typoScriptParser->getVal(
             'plugin.tx_sitemapgenerator',
             $GLOBALS['TSFE']->tmpl->setup
@@ -224,7 +224,7 @@ class SitemapRepository
     private function getPages()
     {
         $rootPageId = $this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId'];
-        $rootPage = $this->pageRepo->getPage($rootPageId);
+        $rootPage = $this->pageRepository->getPage($rootPageId);
         $pages = $this->getSubPagesRecursive($rootPageId);
 
         return array_merge([$rootPage], $pages);
@@ -277,7 +277,7 @@ class SitemapRepository
             $typoScriptUrlEntry['table'],
             'pid!=0 ' . AdditionalWhereService::getWhereString(
                 $typoScriptUrlEntry['additionalWhere']
-            ) . $this->pageRepo->enableFields(
+            ) . $this->pageRepository->enableFields(
                 $typoScriptUrlEntry['table']
             )
         );
@@ -291,11 +291,11 @@ class SitemapRepository
      */
     private function getSubPages($startPageId)
     {
-        return $this->pageRepo->getMenu(
+        return $this->pageRepository->getMenu(
             $startPageId,
             '*',
             'sorting',
-            $this->pageRepo->enableFields(
+            $this->pageRepository->enableFields(
                 'pages'
             ) . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere
         );
@@ -345,5 +345,25 @@ class SitemapRepository
     protected function getDatabaseConnection()
     {
         return $GLOBALS['TYPO3_DB'];
+    }
+
+    /**
+     * Inject PageRepository
+     *
+     * @param PageRepository $pageRepository
+     */
+    public function injectPageRepository(PageRepository $pageRepository)
+    {
+        $this->pageRepository = $pageRepository;
+    }
+
+    /**
+     * Inject UriBuilder
+     *
+     * @param UriBuilder $uriBuilder
+     */
+    public function injectUriBuilder(UriBuilder $uriBuilder)
+    {
+        $this->uriBuilder = $uriBuilder;
     }
 }
