@@ -66,7 +66,8 @@ class SitemapController extends ActionController
      *
      * @param SitemapRepository $sitemapRepo
      */
-    public function injectSitemapRepo(SitemapRepository $sitemapRepo){
+    public function injectSitemapRepo(SitemapRepository $sitemapRepo)
+    {
         $this->sitemapRepo = $sitemapRepo;
     }
 }
