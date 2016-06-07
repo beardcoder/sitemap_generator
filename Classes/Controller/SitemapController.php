@@ -40,7 +40,7 @@ class SitemapController extends ActionController
     }
 
     /**
-     * List action
+     * List action for sitemap.xml
      *
      * @return void
      */
@@ -62,7 +62,7 @@ class SitemapController extends ActionController
     }
 
     /**
-     * Inject sitemap reposetory
+     * Inject sitemap repository
      *
      * @param SitemapRepository $sitemapRepo
      */
