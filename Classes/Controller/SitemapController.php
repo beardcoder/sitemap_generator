@@ -26,7 +26,7 @@ class SitemapController extends ActionController
      * SitemapRepository
      * @var SitemapRepository
      */
-    protected $sitemapRepo = null;
+    protected $sitemapRepository = null;
 
     /**
      * Initializes the current action
@@ -46,7 +46,7 @@ class SitemapController extends ActionController
      */
     public function listAction()
     {
-        $urlEntries = $this->sitemapRepo->findAllEntries();
+        $urlEntries = $this->sitemapRepository->findAllEntries();
         $this->view->assign('urlEntries', $urlEntries);
     }
 
@@ -57,7 +57,7 @@ class SitemapController extends ActionController
      */
     public function googleNewsListAction()
     {
-        $urlEntries = $this->sitemapRepo->findAllGoogleNewsEntries();
+        $urlEntries = $this->sitemapRepository->findAllGoogleNewsEntries();
         $this->view->assign('urlEntries', $urlEntries);
     }
 
@@ -68,6 +68,6 @@ class SitemapController extends ActionController
      */
     public function injectSitemapRepo(SitemapRepository $sitemapRepo)
     {
-        $this->sitemapRepo = $sitemapRepo;
+        $this->sitemapRepository = $sitemapRepo;
     }
 }

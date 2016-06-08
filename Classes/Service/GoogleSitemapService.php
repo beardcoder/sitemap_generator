@@ -50,14 +50,14 @@ class GoogleSitemapService
      */
     public function sendRequest()
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->getGoogleSitemapToolUrl());
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_NOBODY, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
+        $curlInit = curl_init();
+        curl_setopt($curlInit, CURLOPT_URL, $this->getGoogleSitemapToolUrl());
+        curl_setopt($curlInit, CURLOPT_HEADER, true);
+        curl_setopt($curlInit, CURLOPT_NOBODY, true);
+        curl_setopt($curlInit, CURLOPT_RETURNTRANSFER, true);
+        curl_exec($curlInit);
+        $httpCode = curl_getinfo($curlInit, CURLINFO_HTTP_CODE);
+        curl_close($curlInit);
 
         return $httpCode;
     }
