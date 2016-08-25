@@ -46,8 +46,8 @@ class SitemapController extends ActionController
      */
     public function listAction()
     {
-        $urlEntries = $this->sitemapRepository->findAllEntries();
-        $this->view->assign('urlEntries', $urlEntries);
+        $sitemap = $this->sitemapRepository->generateSitemap();
+        $this->view->assign('sitemap', $sitemap);
     }
 
     /**

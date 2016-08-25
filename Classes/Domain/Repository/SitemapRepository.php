@@ -14,6 +14,7 @@ namespace Markussom\SitemapGenerator\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
+use Markussom\SitemapGenerator\Domain\Model\Sitemap;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use Markussom\SitemapGenerator\Service\AdditionalWhereService;
 use Markussom\SitemapGenerator\Service\FieldValueService;
@@ -22,6 +23,7 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
@@ -61,12 +63,18 @@ class SitemapRepository
     protected $pageAdditionalWhere = '';
 
     /**
+     * @var ObjectStorage
+     */
+    protected $entryStorage = null;
+
+    /**
      * SitemapRepository constructor.
      *
      * @SuppressWarnings(superglobals)
      */
     public function __construct()
     {
+        $this->entryStorage = new ObjectStorage();
         $this->typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
         $this->fieldValueService = new FieldValueService();
         $this->pluginConfig = $this->typoScriptParser->getVal(
@@ -79,32 +87,38 @@ class SitemapRepository
         );
     }
 
+    public function generateSitemap()
+    {
+        if ($this->findAllEntries()) {
+            $sitemap = new Sitemap();
+            $sitemap->setEntries($this->entryStorage);
+            return $sitemap;
+        };
+        return null;
+    }
+
     /**
      * Find all pages
-     *
-     * @return array
      */
     public function findAllPages()
     {
         if (empty($this->pluginConfig['1']['urlEntries.']['pages'])) {
-            return [];
+            return;
         }
         $pages = $this->getPages();
-        $urlEntries = $this->getEntriesFromPages($pages);
-
-        return $urlEntries;
+        $this->getEntriesFromPages($pages);
     }
 
     /**
      * Find all entries
      *
-     * @return array
+     * @return bool
      */
     public function findAllEntries()
     {
-        $entries = $this->findAllPages();
-        $typoScript = $this->generateEntriesFromTypoScript();
-        return array_merge($entries, $typoScript);
+        $this->findAllPages();
+        $this->generateEntriesFromTypoScript();
+        return true;
     }
 
     /**
@@ -136,7 +150,6 @@ class SitemapRepository
     {
         if ($typoScriptUrlEntry['table'] && $typoScriptUrlEntry['active'] == 1) {
             $records = $this->getRecordsFromDatabase($typoScriptUrlEntry);
-            $urlEntries = [];
             if ($this->getDatabaseConnection()->sql_num_rows($records)) {
                 while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
                     $urlEntry = new UrlEntry();
@@ -163,12 +176,10 @@ class SitemapRepository
                             )
                         );
                     }
-                    $urlEntries[] = $urlEntry;
+                    $this->entryStorage->attach($urlEntry);
                 }
             }
-            return $urlEntries;
         }
-        return [];
     }
 
     /**
@@ -232,12 +243,9 @@ class SitemapRepository
 
     /**
      * @param $pages
-     *
-     * @return array
      */
     public function getEntriesFromPages($pages)
     {
-        $urlEntries = [];
         foreach ($pages as $page) {
             if ($page['doktype'] == 1) {
                 $urlEntry = new UrlEntry();
@@ -250,10 +258,9 @@ class SitemapRepository
                 if (isset($page['sitemap_changefreq'])) {
                     $urlEntry->setChangefreq($page['sitemap_changefreq']);
                 }
-                $urlEntries[] = $urlEntry;
+                $this->entryStorage->attach($urlEntry);
             }
         }
-        return $urlEntries;
     }
 
     /**

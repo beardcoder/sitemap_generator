@@ -1,5 +1,4 @@
 <?php
-
 namespace Markussom\SitemapGenerator\Tests\Unit\Controller;
 
 /**
