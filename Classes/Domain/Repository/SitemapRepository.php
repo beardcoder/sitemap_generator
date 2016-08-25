@@ -22,8 +22,8 @@ use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
-use TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
@@ -31,26 +31,10 @@ use TYPO3\CMS\Frontend\Page\PageRepository;
  */
 class SitemapRepository
 {
-
-    /**
-     * @var PageRepository
-     */
-    protected $pageRepository = null;
-
-    /**
-     * @var UriBuilder
-     */
-    protected $uriBuilder = null;
-
     /**
      * @var FieldValueService
      */
     protected $fieldValueService = null;
-
-    /**
-     * @var TypoScriptParser
-     */
-    protected $typoScriptParser;
 
     /**
      * @var array
@@ -68,16 +52,24 @@ class SitemapRepository
     protected $entryStorage = null;
 
     /**
+     * @var PageRepository
+     */
+    protected $pageRepository = null;
+
+    /**
      * SitemapRepository constructor.
      *
      * @SuppressWarnings(superglobals)
      */
     public function __construct()
     {
+        /** @var PageRepository $pageSelector */
+        $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
         $this->entryStorage = new ObjectStorage();
-        $this->typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
         $this->fieldValueService = new FieldValueService();
-        $this->pluginConfig = $this->typoScriptParser->getVal(
+
+        $typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
+        $this->pluginConfig = $typoScriptParser->getVal(
             'plugin.tx_sitemapgenerator',
             $GLOBALS['TSFE']->tmpl->setup
         );
@@ -123,19 +115,15 @@ class SitemapRepository
 
     /**
      * Generate entries from TypoScript
-     *
-     * @return array
      */
     public function generateEntriesFromTypoScript()
     {
         $urlEntries = $this->pluginConfig[1]['urlEntries.'];
-        $entries = [];
         foreach ($urlEntries as $urlEntry) {
-            if (is_array($urlEntry)) {
-                $entries = array_merge($entries, $this->mapToEntries($urlEntry));
+            if (!empty($urlEntry['active'])) {
+                $this->mapToEntries($urlEntry);
             }
         }
-        return $entries;
     }
 
     /**
@@ -144,7 +132,6 @@ class SitemapRepository
      * @param array $typoScriptUrlEntry
      * @SuppressWarnings(superglobals)
      *
-     * @return array
      */
     protected function mapToEntries(array $typoScriptUrlEntry)
     {
@@ -156,17 +143,17 @@ class SitemapRepository
                     $urlEntry->setLoc(
                         $this->fieldValueService->getFieldValue('url', $typoScriptUrlEntry, $row)
                     );
-                    if ($typoScriptUrlEntry['lastmod']) {
+                    if (isset($typoScriptUrlEntry['lastmod'])) {
                         $urlEntry->setLastmod(
                             date('Y-m-d', $this->fieldValueService->getFieldValue('lastmod', $typoScriptUrlEntry, $row))
                         );
                     }
-                    if ($typoScriptUrlEntry['changefreq']) {
+                    if (isset($typoScriptUrlEntry['changefreq'])) {
                         $urlEntry->setChangefreq(
                             $this->fieldValueService->getFieldValue('changefreq', $typoScriptUrlEntry, $row)
                         );
                     }
-                    if ($typoScriptUrlEntry['priority']) {
+                    if (isset($typoScriptUrlEntry['priority'])) {
                         $urlEntry->setPriority(
                             number_format(
                                 $this->fieldValueService->getFieldValue('priority', $typoScriptUrlEntry, $row) / 10,
@@ -247,9 +234,10 @@ class SitemapRepository
     public function getEntriesFromPages($pages)
     {
         foreach ($pages as $page) {
-            if ($page['doktype'] == 1) {
+            if (intval($page['doktype']) === 1) {
                 $urlEntry = new UrlEntry();
-                $uri = $this->uriBuilder->reset()->setTargetPageUid($page['uid'])->setCreateAbsoluteUri(true)->build();
+
+                $uri = $this->generatePageUrl($page['uid']);
                 $urlEntry->setLoc($uri);
                 $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
                 if (isset($page['sitemap_priority'])) {
@@ -261,6 +249,36 @@ class SitemapRepository
                 $this->entryStorage->attach($urlEntry);
             }
         }
+    }
+
+    /**
+     * Generates the current page's URL.
+     *
+     * Uses the provided GET parameters, page id and language id.
+     *
+     * @return string URL of the current page.
+     */
+    static public function generatePageUrl($uid)
+    {
+        /** @var ContentObjectRenderer $contentObject */
+        $contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+        $typolinkConfiguration = array(
+            'parameter' => intval($uid),
+            'linkAccessRestrictedPages' => '1',
+            'useCacheHash' => 1,
+            'returnLast ' => 'url',
+            'forceAbsoluteUrl' => 1
+        );
+        $language = GeneralUtility::_GET('L');
+        if (!empty($language)) {
+            $typolinkConfiguration['additionalParams'] = '&L=' . $language;
+        }
+        $url = $contentObject->typoLink_URL($typolinkConfiguration);
+        // clean up
+        if ($url == '') {
+            $url = '/';
+        }
+        return $url;
     }
 
     /**
@@ -327,7 +345,7 @@ class SitemapRepository
     }
 
     /**
-     * @return bool|\mysqli_result|object
+     * @return bool|\mysqli_result|object|array
      */
     public function findAllGoogleNewsEntries()
     {
@@ -352,25 +370,5 @@ class SitemapRepository
     protected function getDatabaseConnection()
     {
         return $GLOBALS['TYPO3_DB'];
-    }
-
-    /**
-     * Inject PageRepository
-     *
-     * @param PageRepository $pageRepository
-     */
-    public function injectPageRepository(PageRepository $pageRepository)
-    {
-        $this->pageRepository = $pageRepository;
-    }
-
-    /**
-     * Inject UriBuilder
-     *
-     * @param UriBuilder $uriBuilder
-     */
-    public function injectUriBuilder(UriBuilder $uriBuilder)
-    {
-        $this->uriBuilder = $uriBuilder;
     }
 }
