@@ -1,0 +1,4 @@
+parameters:
+    git_dir: .
+    bin_dir: /Users/markussommer/.composer/vendor/bin
+    tasks: { phpcs: null }

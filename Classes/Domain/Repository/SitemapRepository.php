@@ -258,17 +258,17 @@ class SitemapRepository
      *
      * @return string URL of the current page.
      */
-    static public function generatePageUrl($uid)
+    public static function generatePageUrl($uid)
     {
         /** @var ContentObjectRenderer $contentObject */
         $contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-        $typolinkConfiguration = array(
+        $typolinkConfiguration = [
             'parameter' => intval($uid),
             'linkAccessRestrictedPages' => '1',
             'useCacheHash' => 1,
             'returnLast ' => 'url',
             'forceAbsoluteUrl' => 1
-        );
+        ];
         $language = GeneralUtility::_GET('L');
         if (!empty($language)) {
             $typolinkConfiguration['additionalParams'] = '&L=' . $language;
