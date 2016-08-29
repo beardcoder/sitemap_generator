@@ -97,8 +97,29 @@ class SitemapRepository
         if (empty($this->pluginConfig['1']['urlEntries.']['pages'])) {
             return;
         }
-        $pages = $this->getPages();
+        $pages = $this->hidePagesIfNotTranslated($this->getPages());
+
         $this->getEntriesFromPages($pages);
+    }
+
+    /**
+     * Remove page if not translated
+     *
+     * @param array $pages
+     * @return array
+     */
+    private function hidePagesIfNotTranslated($pages)
+    {
+        if (intval($this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated']) === 1) {
+            $language = GeneralUtility::_GET('L');
+            foreach ($pages as $key => $page) {
+                $pageOverlay = $this->pageRepository->getPageOverlay($page, $language);
+                if (empty($pageOverlay['_PAGES_OVERLAY'])) {
+                    unset($pages[$key]);
+                }
+            }
+        }
+        return $pages;
     }
 
     /**
