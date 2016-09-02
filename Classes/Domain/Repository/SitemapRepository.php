@@ -110,8 +110,8 @@ class SitemapRepository
      */
     private function hidePagesIfNotTranslated($pages)
     {
-        if (intval($this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated']) === 1) {
-            $language = GeneralUtility::_GET('L');
+        $language = GeneralUtility::_GET('L');
+        if (intval($language) !== 0 && intval($this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated']) === 1) {
             foreach ($pages as $key => $page) {
                 $pageOverlay = $this->pageRepository->getPageOverlay($page, $language);
                 if (empty($pageOverlay['_PAGES_OVERLAY'])) {
@@ -120,6 +120,24 @@ class SitemapRepository
             }
         }
         return $pages;
+    }
+
+    /**
+     * @param $recordConfig
+     * @param $record
+     * @return mixed
+     */
+    private function hideRecordIfNotTranslated($recordConfig, $record)
+    {
+        $language = GeneralUtility::_GET('L');
+        if ($record['sys_language_uid'] !== '-1' && intval($language) !== 0 && intval($recordConfig['hideIfNotTranslated']) === 1) {
+            $record = $this->pageRepository->getRecordOverlay($recordConfig['table'], $record, $language);
+            if (intval($record['l10n_parent']) !== 0) {
+                return $record;
+            }
+            return null;
+        }
+        return $record;
     }
 
     /**
@@ -160,31 +178,37 @@ class SitemapRepository
             $records = $this->getRecordsFromDatabase($typoScriptUrlEntry);
             if ($this->getDatabaseConnection()->sql_num_rows($records)) {
                 while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
-                    $urlEntry = new UrlEntry();
-                    $urlEntry->setLoc(
-                        $this->fieldValueService->getFieldValue('url', $typoScriptUrlEntry, $row)
-                    );
-                    if (isset($typoScriptUrlEntry['lastmod'])) {
-                        $urlEntry->setLastmod(
-                            date('Y-m-d', $this->fieldValueService->getFieldValue('lastmod', $typoScriptUrlEntry, $row))
+                    $row = $this->hideRecordIfNotTranslated($typoScriptUrlEntry, $row);
+                    if (!empty($row)) {
+                        $urlEntry = new UrlEntry();
+                        $urlEntry->setLoc(
+                            $this->fieldValueService->getFieldValue('url', $typoScriptUrlEntry, $row)
                         );
+                        if (isset($typoScriptUrlEntry['lastmod'])) {
+                            $urlEntry->setLastmod(
+                                date(
+                                    'Y-m-d',
+                                    $this->fieldValueService->getFieldValue('lastmod', $typoScriptUrlEntry, $row)
+                                )
+                            );
+                        }
+                        if (isset($typoScriptUrlEntry['changefreq'])) {
+                            $urlEntry->setChangefreq(
+                                $this->fieldValueService->getFieldValue('changefreq', $typoScriptUrlEntry, $row)
+                            );
+                        }
+                        if (isset($typoScriptUrlEntry['priority'])) {
+                            $urlEntry->setPriority(
+                                number_format(
+                                    $this->fieldValueService->getFieldValue('priority', $typoScriptUrlEntry, $row) / 10,
+                                    1,
+                                    '.',
+                                    ''
+                                )
+                            );
+                        }
+                        $this->entryStorage->attach($urlEntry);
                     }
-                    if (isset($typoScriptUrlEntry['changefreq'])) {
-                        $urlEntry->setChangefreq(
-                            $this->fieldValueService->getFieldValue('changefreq', $typoScriptUrlEntry, $row)
-                        );
-                    }
-                    if (isset($typoScriptUrlEntry['priority'])) {
-                        $urlEntry->setPriority(
-                            number_format(
-                                $this->fieldValueService->getFieldValue('priority', $typoScriptUrlEntry, $row) / 10,
-                                1,
-                                '.',
-                                ''
-                            )
-                        );
-                    }
-                    $this->entryStorage->attach($urlEntry);
                 }
             }
         }
@@ -204,6 +228,7 @@ class SitemapRepository
         $urlEntries = [];
         if ($this->getDatabaseConnection()->sql_num_rows($records)) {
             while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
+                $row = $this->hideRecordIfNotTranslated($typoScriptUrlEntry, $row);
                 $urlEntry = new GoogleNewsUrlEntry();
                 $urlEntry->setLoc($this->fieldValueService->getFieldValue('url', $typoScriptUrlEntry, $row));
                 $urlEntry->setName($row[$typoScriptUrlEntry['name']]);
@@ -318,10 +343,15 @@ class SitemapRepository
             return false;
         }
 
+        $language = '';
+        if (intval($typoScriptUrlEntry['hideIfNotTranslated']) === 1) {
+            $language = 'AND (sys_language_uid=\'-1\' OR sys_language_uid="' . intval(GeneralUtility::_GET('L')) . '") ';
+        }
+
         return $this->getDatabaseConnection()->exec_SELECTquery(
             '*',
             $typoScriptUrlEntry['table'],
-            'pid!=0 ' . AdditionalWhereService::getWhereString(
+            'pid!=0 ' . $language . ' ' . AdditionalWhereService::getWhereString(
                 $typoScriptUrlEntry['additionalWhere']
             ) . $this->pageRepository->enableFields(
                 $typoScriptUrlEntry['table']

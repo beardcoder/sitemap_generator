@@ -24,12 +24,15 @@ plugin.tx_sitemapgenerator {
 		news {
 			active = 0
 			table = tx_news_domain_model_news
+			hideIfNotTranslated = 0
 			lastmod = tstamp
 			url = TEXT
 			url {
 				typolink.parameter = 9
 				typolink.additionalParams = &tx_news_pi1[controller]=News&tx_news_pi1[action]=detail&tx_news_pi1[news]={field:uid}
 				typolink.additionalParams.insertData = 1
+				typolink.addQueryString = 1
+				typolink.addQueryString.exclude = type, no_cache
 				typolink.useCacheHash = 1
 				typolink.returnLast = url
 				typolink.forceAbsoluteUrl = 1
@@ -39,6 +42,7 @@ plugin.tx_sitemapgenerator {
 
 	googleNewsUrlEntry = 0
 	googleNewsUrlEntry {
+		hideIfNotTranslated = 0
 		table = tx_news_domain_model_news
 		name = title
 		language = TEXT
@@ -54,6 +58,8 @@ plugin.tx_sitemapgenerator {
 			typolink.parameter = 9
 			typolink.additionalParams = &tx_news_pi1[controller]=News&tx_news_pi1[action]=detail&tx_news_pi1[news]={field:uid}
 			typolink.additionalParams.insertData = 1
+			typolink.addQueryString = 1
+			typolink.addQueryString.exclude = type, no_cache
 			typolink.useCacheHash = 1
 			typolink.returnLast = url
 			typolink.forceAbsoluteUrl = 1
