@@ -1,8 +1,6 @@
-          #!/usr/bin/env bash
-
-REPRONAME="ext-solr"
-EXTENSION_KEY="solr"
+#!/usr/bin/env bash
 TAG="$(git describe --abbrev=0 --tags)"
+REPO_URL="$(git config --get remote.origin.url)"
 
 # This script is triggered by travis when a build has been triggered and was tagged
 #
@@ -15,14 +13,14 @@ if [ -n "$TAG" ] && [ -n "$TYPO3_ORG_USERNAME" ] && [ -n "$TYPO3_ORG_PASSWORD" ]
   if [ $? -eq 0 ]; then
       echo -e "Preparing upload of release ${TAG} to TER\n"
       if [ $? -eq 0 ]; then
+         mkdir release;
+         cd release && git clone $REPO_URL
          # Link the git checkout directory to a directory called like the extension key, because the uploader requires that.
-         git reset --hard HEAD && git clean -fx
-         echo "Files in this package"
-         ls -l
 
-         TAG_MESSAGE=`git tag -n10 -l $TAG | sed 's/^[0-9.]*[ ]*//g'`
-         echo "Uploading release ${TAG} to TER"
-         upload . "$TYPO3_ORG_USERNAME" "$TYPO3_ORG_PASSWORD" "$TAG_MESSAGE"
+         TAG_MESSAGE=`git tag -n10 -l $TAG | sed 's/^[0-9.]*[ ]*//g'`;
+         echo "Uploading release ${TAG} to TER";
+         upload ./sitemap_generator/ "$TYPO3_ORG_USERNAME" "$TYPO3_ORG_PASSWORD" "$TAG_MESSAGE";
+         cd .. && rm -rf release;
       fi;
    fi;
 else
