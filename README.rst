@@ -93,6 +93,18 @@ Additional fields
         priority = dbfield_for_priority
     }
 
+Custom value for fields
+~~~~~~~~~~~~~~~~~~~~~~~
+
+You can use the TYPO3 TypoScript syntax to fill fields
+
+::
+
+    plugin.tx_sitemapgenerator.urlEntries.news {
+        changefreq = TEXT
+        changefreq.value = daily
+    }
+
 RealURL for beautiful sitemap.xml url
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
