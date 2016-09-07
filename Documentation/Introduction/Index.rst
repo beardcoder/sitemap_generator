@@ -78,6 +78,21 @@ Plugin integration
         }
     }
 
+Hide if not translated
+~~~~~~~~~~~~~~~~~~~~~~
+
+A record that has no translation will not be shown.
+
+::
+
+    plugin.tx_sitemapgenerator.urlEntries.pages {
+        hideIfNotTranslated = 1
+    }
+
+    plugin.tx_sitemapgenerator.urlEntries.news {
+        hideIfNotTranslated = 1
+    }
+
 Additional fields
 ~~~~~~~~~~~~~~~~~
 
