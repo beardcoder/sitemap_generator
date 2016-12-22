@@ -280,7 +280,7 @@ class SitemapRepository
     public function getEntriesFromPages($pages)
     {
         foreach ($pages as $page) {
-            if (intval($page['doktype']) === 1) {
+            if (GeneralUtility::inList($this->pluginConfig['1']['urlEntries.']['pages.']['allowedDoktypes'], $page['doktype'])) {
                 $urlEntry = new UrlEntry();
 
                 $uri = $this->generatePageUrl($page['uid']);
