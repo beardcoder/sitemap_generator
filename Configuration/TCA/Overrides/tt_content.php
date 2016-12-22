@@ -6,4 +6,3 @@ TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
     'Configuration/TypoScript',
     'Sitemap Generator'
 );
-

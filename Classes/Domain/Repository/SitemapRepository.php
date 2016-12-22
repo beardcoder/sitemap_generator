@@ -85,7 +85,7 @@ class SitemapRepository
             $sitemap = new Sitemap();
             $sitemap->setEntries($this->entryStorage);
             return $sitemap;
-        };
+        }
         return null;
     }
 

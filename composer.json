@@ -11,13 +11,13 @@
   "support": {
     "issues": "https://github.com/markussom/sitemap-generator/issues"
   },
-  "homepage": "http://www.creativeworkspace.de",
+  "homepage": "https://www.creativeworkspace.de",
   "authors": [
     {
       "name": "Markus Sommer",
       "email": "info@creativeworkspace.de",
       "role": "Developer",
-      "homepage": "http://www.creativeworkspace.de"
+      "homepage": "https://www.creativeworkspace.de"
     }
   ],
   "license": "GPL-2.0+",
@@ -49,7 +49,12 @@
   "config": {
     "optimize-autoloader": true,
     "vendor-dir": "Web/vendor",
-    "bin-dir": "Web/bin"
+    "bin-dir": "Web/bin",
+    "preferred-install": {
+      "typo3/cms": "source",
+      "typo3/cms-core": "source",
+      "*": "dist"
+    }
   },
   "scripts": {
     "post-autoload-dump": [
