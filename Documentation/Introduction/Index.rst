@@ -5,6 +5,8 @@
 
 .. include:: ../Includes.txt
 
+.. highlight:: typoscript
+
 
 .. _start:
 
@@ -34,6 +36,9 @@ Installation
 
 -  You can override the root page ID
    plugin.tx\_sitemapgenerator.settings.urlEntries.pages.rootPageId
+-  You can add custom doktypes.
+   Per default the sitemap.xml only lists normal pages with "doktype=1". The option takes a comma-separated list of numbers.
+   plugin.tx\_sitemapgenerator.settings.urlEntries.pages.allowedDoktypes
 -  sitemap is available on rootpage with pagetype 1449874941
    "/index.php?id=1&type=1449874941"
 
@@ -47,6 +52,7 @@ Pages
             pages = 1
             pages {
                 rootPageId = 1
+                allowedDoktypes = 1
                 additionalWhere = doktype!=6
             }
         }
@@ -149,7 +155,7 @@ Activate for tx\_news
 RealURL for beautiful sitemap\_news.xml url
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+.. code:: php
 
     $TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT'] = [
         'fileName' => [
