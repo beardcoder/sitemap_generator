@@ -24,8 +24,8 @@ Installation
 
 -  You can override the root page ID
    plugin.tx\_sitemapgenerator.settings.urlEntries.pages.rootPageId
--  You can add pages custom doktypes.
-   Per default the sitemap.xml only lists normal pages with "doktype=1". The option takes a comma seperated list.
+-  You can add custom doktypes.
+   Per default the sitemap.xml only lists normal pages with "doktype=1". The option takes a comma-separated list of numbers.
    plugin.tx\_sitemapgenerator.settings.urlEntries.pages.allowedDoktypes
 -  sitemap is available on rootpage with pagetype 1449874941
    "/index.php?id=1&type=1449874941"
