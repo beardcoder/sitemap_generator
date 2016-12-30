@@ -67,8 +67,8 @@ class SitemapRepository
         $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
         $this->entryStorage = GeneralUtility::makeInstance(ObjectStorage::class);
         $this->fieldValueService = GeneralUtility::makeInstance(FieldValueService::class);
-
         $typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
+
         $this->pluginConfig = $typoScriptParser->getVal(
             'plugin.tx_sitemapgenerator',
             $GLOBALS['TSFE']->tmpl->setup
@@ -112,7 +112,7 @@ class SitemapRepository
     private function hidePagesIfNotTranslated($pages)
     {
         $language = GeneralUtility::_GET('L');
-        if (intval($language) !== 0 && intval($this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated']) === 1) {
+        if ($this->isPageNotTranslated($language)) {
             foreach ($pages as $key => $page) {
                 $pageOverlay = $this->pageRepository->getPageOverlay($page, $language);
                 if (empty($pageOverlay['_PAGES_OVERLAY'])) {
@@ -131,7 +131,7 @@ class SitemapRepository
     private function hideRecordIfNotTranslated($recordConfig, $record)
     {
         $language = GeneralUtility::_GET('L');
-        if ($record['sys_language_uid'] !== '-1' && intval($language) !== 0 && intval($recordConfig['hideIfNotTranslated']) === 1) {
+        if ($this->isRecordNotTranslated($recordConfig, $record, $language)) {
             $record = $this->pageRepository->getRecordOverlay($recordConfig['table'], $record, $language);
             if (intval($record['l10n_parent']) !== 0) {
                 return $record;
@@ -283,7 +283,7 @@ class SitemapRepository
     public function getEntriesFromPages($pages)
     {
         foreach ($pages as $page) {
-            if (GeneralUtility::inList($this->pluginConfig['1']['urlEntries.']['pages.']['allowedDoktypes'], $page['doktype'])) {
+            if ($this->hasPageAnAllowedDoktype($page)) {
                 $urlEntry = GeneralUtility::makeInstance(UrlEntry::class);
                 $uri = $this->generatePageUrl($page['uid']);
                 $urlEntry->setLoc($uri);
@@ -423,5 +423,34 @@ class SitemapRepository
     protected function getDatabaseConnection()
     {
         return $GLOBALS['TYPO3_DB'];
+    }
+
+    /**
+     * @param $recordConfig
+     * @param $record
+     * @param $language
+     * @return bool
+     */
+    private function isRecordNotTranslated($recordConfig, $record, $language)
+    {
+        return $record['sys_language_uid'] !== '-1' && intval($language) !== 0 && intval($recordConfig['hideIfNotTranslated']) === 1;
+    }
+
+    /**
+     * @param $language
+     * @return bool
+     */
+    private function isPageNotTranslated($language)
+    {
+        return intval($language) !== 0 && intval($this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated']) === 1;
+    }
+
+    /**
+     * @param $page
+     * @return bool
+     */
+    private function hasPageAnAllowedDoktype($page)
+    {
+        return GeneralUtility::inList($this->pluginConfig['1']['urlEntries.']['pages.']['allowedDoktypes'], $page['doktype']);
     }
 }
