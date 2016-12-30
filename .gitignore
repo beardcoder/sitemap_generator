@@ -1,7 +1,6 @@
 .DS_Store
 .idea
-.Build
-Web
+.build
 composer.lock
 vendor
 bin
