@@ -14,6 +14,7 @@ namespace Markussom\SitemapGenerator\Command;
  * The TYPO3 project - inspiring people to share!
  */
 use Markussom\SitemapGenerator\Service\GoogleSitemapService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 
 /**
@@ -28,7 +29,7 @@ class TaskCommandController extends CommandController
      */
     public function googleSitemapToolCommand($xmlSiteUrl)
     {
-        $googleSitemapPing = new GoogleSitemapService($xmlSiteUrl);
+        $googleSitemapPing = GeneralUtility::makeInstance(GoogleSitemapService::class, $xmlSiteUrl);
         $httpCode = $googleSitemapPing->sendRequest();
 
         if ($httpCode === 200) {

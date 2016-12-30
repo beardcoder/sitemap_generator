@@ -65,8 +65,8 @@ class SitemapRepository
     {
         /** @var PageRepository $pageSelector */
         $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
-        $this->entryStorage = new ObjectStorage();
-        $this->fieldValueService = new FieldValueService();
+        $this->entryStorage = GeneralUtility::makeInstance(ObjectStorage::class);
+        $this->fieldValueService = GeneralUtility::makeInstance(FieldValueService::class);
 
         $typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
         $this->pluginConfig = $typoScriptParser->getVal(
@@ -82,7 +82,8 @@ class SitemapRepository
     public function generateSitemap()
     {
         if ($this->findAllEntries()) {
-            $sitemap = new Sitemap();
+            /** @var Sitemap $sitemap */
+            $sitemap = GeneralUtility::makeInstance(Sitemap::class);
             $sitemap->setEntries($this->entryStorage);
             return $sitemap;
         }
@@ -180,7 +181,8 @@ class SitemapRepository
                 while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
                     $row = $this->hideRecordIfNotTranslated($typoScriptUrlEntry, $row);
                     if (!empty($row)) {
-                        $urlEntry = new UrlEntry();
+                        /** @var UrlEntry $urlEntry */
+                        $urlEntry = GeneralUtility::makeInstance(UrlEntry::class);
                         $urlEntry->setLoc(
                             $this->fieldValueService->getFieldValue('url', $typoScriptUrlEntry, $row)
                         );
@@ -229,7 +231,8 @@ class SitemapRepository
         if ($this->getDatabaseConnection()->sql_num_rows($records)) {
             while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
                 $row = $this->hideRecordIfNotTranslated($typoScriptUrlEntry, $row);
-                $urlEntry = new GoogleNewsUrlEntry();
+
+                $urlEntry = GeneralUtility::makeInstance(GoogleNewsUrlEntry::class);
                 $urlEntry->setLoc($this->fieldValueService->getFieldValue('url', $typoScriptUrlEntry, $row));
                 $urlEntry->setName($row[$typoScriptUrlEntry['name']]);
                 $urlEntry->setTitle($row[$typoScriptUrlEntry['title']]);
@@ -281,8 +284,7 @@ class SitemapRepository
     {
         foreach ($pages as $page) {
             if (GeneralUtility::inList($this->pluginConfig['1']['urlEntries.']['pages.']['allowedDoktypes'], $page['doktype'])) {
-                $urlEntry = new UrlEntry();
-
+                $urlEntry = GeneralUtility::makeInstance(UrlEntry::class);
                 $uri = $this->generatePageUrl($page['uid']);
                 $urlEntry->setLoc($uri);
                 $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
