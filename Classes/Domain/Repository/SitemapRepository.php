@@ -18,12 +18,12 @@ use Markussom\SitemapGenerator\Domain\Model\Sitemap;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use Markussom\SitemapGenerator\Service\AdditionalWhereService;
 use Markussom\SitemapGenerator\Service\FieldValueService;
+use Markussom\SitemapGenerator\Service\PageUrlService;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
@@ -285,7 +285,7 @@ class SitemapRepository
         foreach ($pages as $page) {
             if ($this->hasPageAnAllowedDoktype($page)) {
                 $urlEntry = GeneralUtility::makeInstance(UrlEntry::class);
-                $uri = $this->generatePageUrl($page['uid']);
+                $uri = PageUrlService::generatePageUrl($page['uid']);
                 $urlEntry->setLoc($uri);
                 $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
                 if (isset($page['sitemap_priority'])) {
@@ -297,36 +297,6 @@ class SitemapRepository
                 $this->entryStorage->attach($urlEntry);
             }
         }
-    }
-
-    /**
-     * Generates the current page's URL.
-     *
-     * Uses the provided GET parameters, page id and language id.
-     *
-     * @return string URL of the current page.
-     */
-    public static function generatePageUrl($uid)
-    {
-        /** @var ContentObjectRenderer $contentObject */
-        $contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-        $typolinkConfiguration = [
-            'parameter' => intval($uid),
-            'linkAccessRestrictedPages' => '1',
-            'useCacheHash' => 1,
-            'returnLast ' => 'url',
-            'forceAbsoluteUrl' => 1
-        ];
-        $language = GeneralUtility::_GET('L');
-        if (!empty($language)) {
-            $typolinkConfiguration['additionalParams'] = '&L=' . $language;
-        }
-        $url = $contentObject->typoLink_URL($typolinkConfiguration);
-        // clean up
-        if ($url == '') {
-            $url = '/';
-        }
-        return $url;
     }
 
     /**
