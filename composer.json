@@ -23,13 +23,13 @@
   "license": "GPL-2.0+",
   "require": {
     "php": ">=5.5.0",
-    "typo3/cms": ">=6.2.20,<8.9.99",
+    "typo3/cms": "^7.6",
     "typo3/cms-core": ">=6.2.20,<8.9.99"
   },
   "require-dev": {
     "namelesscoder/typo3-repository-client": "^1.2.0",
     "mikey179/vfsStream": "~1.6.0",
-    "phpunit/phpunit": "^5.7.0"
+    "phpunit/phpunit": ">=4.8.31,>5.99"
   },
   "autoload": {
     "psr-4": {

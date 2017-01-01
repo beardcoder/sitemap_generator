@@ -33,6 +33,8 @@ plugin.tx_sitemapgenerator {
 		pages = 1
 		pages {
 			rootPageId = 100
+			hidePagesIfNotTranslated = 0
+			allowedDoktypes = 1
 		}
 	}
 }

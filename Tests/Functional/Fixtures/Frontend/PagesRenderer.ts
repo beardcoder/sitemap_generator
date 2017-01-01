@@ -34,6 +34,8 @@ plugin.tx_sitemapgenerator {
 		pages {
 			rootPageId = 1
 			additionalWhere = nav_hide!=1
+			hidePagesIfNotTranslated = 0
+			allowedDoktypes = 1
 		}
 	}
 }
