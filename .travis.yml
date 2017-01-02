@@ -7,9 +7,9 @@ php:
 
 env:
   matrix:
-  - TYPO3_VERSION="^6.2.0"
-  - TYPO3_VERSION="^7.6.0"
-  - TYPO3_VERSION="^8.5"
+    - TYPO3_VERSION="^6.2.0"
+    - TYPO3_VERSION="^7.6.0"
+    - TYPO3_VERSION="^8.5"
 
 matrix:
   exclude:
@@ -22,6 +22,13 @@ matrix:
 
 sudo: false
 
+notifications:
+  email:
+    recipients:
+      - info@creativeworkspace.de
+    on_success: always
+    on_failure: always
+
 addons:
   apt:
     packages:
@@ -32,25 +39,19 @@ cache:
     - $HOME/.composer/cache
 
 before_install:
-  - phpenv config-rm xdebug.ini
   - composer self-update
 
 before_script:
   - composer require typo3/cms="$TYPO3_VERSION"
   # Restore composer.json
   - git checkout composer.json
-  - export TYPO3_PATH_WEB=$PWD/.build/
+  - export TYPO3_PATH_WEB=$PWD/.Build
 
 script:
   - >
     echo;
-    echo "Running unit tests";
-    .build/bin/phpunit -c .build/vendor/typo3/cms/typo3/sysext/core/Build/UnitTests.xml Tests/Unit/
-
-  - >
-    echo;
     echo "Running php lint";
-    find . -name \*.php ! -path "./.build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
+    find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
 
   - >
     echo;
@@ -58,4 +59,4 @@ script:
     export typo3DatabaseHost="localhost";
     export typo3DatabaseUsername="root";
     export typo3DatabasePassword="";
-    find 'Tests/Functional' -wholename '*Test.php' | parallel --gnu 'echo; echo "Running functional test suite {}"; .build/bin/phpunit --colors  -c .build/vendor/typo3/cms/typo3/sysext/core/Build/FunctionalTests.xml {}'
+    find 'Tests/Functional' -wholename '*Test.php' | parallel --gnu 'echo; echo "Running functional test suite {}"; .Build/bin/phpunit --colors  -c .Build/vendor/typo3/cms/typo3/sysext/core/Build/FunctionalTests.xml {}'
