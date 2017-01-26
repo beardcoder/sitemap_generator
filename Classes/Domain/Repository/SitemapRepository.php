@@ -1,4 +1,5 @@
 <?php
+
 namespace Markussom\SitemapGenerator\Domain\Repository;
 
 /**
@@ -14,7 +15,6 @@ namespace Markussom\SitemapGenerator\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
-use Markussom\SitemapGenerator\Domain\Model\Sitemap;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use Markussom\SitemapGenerator\Service\AdditionalWhereService;
 use Markussom\SitemapGenerator\Service\FieldValueService;
@@ -23,6 +23,7 @@ use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 
@@ -57,19 +58,20 @@ class SitemapRepository
     protected $pageRepository = null;
 
     /**
+     * @var TypoScriptParser
+     */
+    protected $typoScriptParser;
+
+    /**
      * SitemapRepository constructor.
      *
      * @SuppressWarnings(superglobals)
      */
     public function __construct()
     {
-        /** @var PageRepository $pageSelector */
-        $this->pageRepository = GeneralUtility::makeInstance(PageRepository::class);
-        $this->entryStorage = GeneralUtility::makeInstance(ObjectStorage::class);
-        $this->fieldValueService = GeneralUtility::makeInstance(FieldValueService::class);
-        $typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
+        $this->makeClassInstance();
 
-        $this->pluginConfig = $typoScriptParser->getVal(
+        $this->pluginConfig = $this->typoScriptParser->getVal(
             'plugin.tx_sitemapgenerator',
             $GLOBALS['TSFE']->tmpl->setup
         );
@@ -77,17 +79,6 @@ class SitemapRepository
         $this->pageAdditionalWhere = AdditionalWhereService::getWhereString(
             $this->pluginConfig['1']['urlEntries.']['pages.']['additionalWhere']
         );
-    }
-
-    public function generateSitemap()
-    {
-        if ($this->findAllEntries()) {
-            /** @var Sitemap $sitemap */
-            $sitemap = GeneralUtility::makeInstance(Sitemap::class);
-            $sitemap->setEntries($this->entryStorage);
-            return $sitemap;
-        }
-        return null;
     }
 
     /**
@@ -412,7 +403,8 @@ class SitemapRepository
      */
     private function isPageNotTranslated($language)
     {
-        return intval($language) !== 0 && intval($this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated']) === 1;
+        $ifNotTranslated = $this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated'];
+        return intval($language) !== 0 && intval($ifNotTranslated) === 1;
     }
 
     /**
@@ -421,6 +413,21 @@ class SitemapRepository
      */
     private function hasPageAnAllowedDoktype($page)
     {
-        return GeneralUtility::inList($this->pluginConfig['1']['urlEntries.']['pages.']['allowedDoktypes'], $page['doktype']);
+        return GeneralUtility::inList(
+            $this->pluginConfig['1']['urlEntries.']['pages.']['allowedDoktypes'],
+            $page['doktype']
+        );
+    }
+
+    /**
+     * @return object
+     */
+    protected function makeClassInstance()
+    {
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->entryStorage = $objectManager->get(ObjectStorage::class);
+        $this->pageRepository = $objectManager->get(PageRepository::class);
+        $this->fieldValueService = $objectManager->get(FieldValueService::class);
+        $this->typoScriptParser = $objectManager->get(TypoScriptParser::class);
     }
 }
