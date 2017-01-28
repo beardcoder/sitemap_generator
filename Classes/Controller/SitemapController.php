@@ -13,11 +13,8 @@ namespace Markussom\SitemapGenerator\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use Markussom\SitemapGenerator\Domain\Model\Sitemap;
 use Markussom\SitemapGenerator\Domain\Repository\SitemapRepository;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Class SitemapController
@@ -49,7 +46,7 @@ class SitemapController extends ActionController
      */
     public function listAction()
     {
-        $sitemap = $this->generateSitemap();
+        $sitemap = $this->sitemapRepository->generateSitemap();
         $this->view->assign('sitemap', $sitemap);
     }
 
@@ -72,21 +69,5 @@ class SitemapController extends ActionController
     public function injectSitemapRepo(SitemapRepository $sitemapRepo)
     {
         $this->sitemapRepository = $sitemapRepo;
-    }
-
-    /**
-     * Generate sitemap
-     *
-     * @return Sitemap|null
-     */
-    public function generateSitemap()
-    {
-        if ($this->sitemapRepository->findAllEntries()) {
-            $entryStorage = GeneralUtility::makeInstance(ObjectStorage::class);
-            $sitemap = GeneralUtility::makeInstance(Sitemap::class);
-            $sitemap->setEntries($entryStorage);
-            return $sitemap;
-        }
-        return null;
     }
 }

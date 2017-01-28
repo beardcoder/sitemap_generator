@@ -1,5 +1,4 @@
 <?php
-
 namespace Markussom\SitemapGenerator\Domain\Repository;
 
 /**
@@ -15,6 +14,7 @@ namespace Markussom\SitemapGenerator\Domain\Repository;
  * The TYPO3 project - inspiring people to share!
  */
 use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
+use Markussom\SitemapGenerator\Domain\Model\Sitemap;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use Markussom\SitemapGenerator\Service\AdditionalWhereService;
 use Markussom\SitemapGenerator\Service\FieldValueService;
@@ -60,7 +60,7 @@ class SitemapRepository
     /**
      * @var TypoScriptParser
      */
-    protected $typoScriptParser;
+    protected $typoScriptParser = null;
 
     /**
      * SitemapRepository constructor.
@@ -79,6 +79,21 @@ class SitemapRepository
         $this->pageAdditionalWhere = AdditionalWhereService::getWhereString(
             $this->pluginConfig['1']['urlEntries.']['pages.']['additionalWhere']
         );
+    }
+
+    /**
+     * Generate a sitemap
+     *
+     * @return Sitemap|null
+     */
+    public function generateSitemap()
+    {
+        if ($this->findAllEntries()) {
+            $sitemap = GeneralUtility::makeInstance(Sitemap::class);
+            $sitemap->setEntries($this->entryStorage);
+            return $sitemap;
+        }
+        return null;
     }
 
     /**
