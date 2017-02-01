@@ -1,0 +1,8 @@
+title: Sitemap generator
+description: "Easy to use #TYPO3 #CMS Sitemap Generator. "
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-architect
+
+gems:
+  - jekyll-mentions
