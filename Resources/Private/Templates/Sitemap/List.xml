@@ -3,12 +3,12 @@
 <f:section name="main"><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <f:if condition="{sitemap.filled}">
 <f:then>
-  <f:for each="{sitemap.urlEntries}" as="urlEntry"><url>
+  <f:for each="{sitemap.urlEntries}" as="urlEntry"><f:if condition="{urlEntry.loc}"><url>
     <loc>{urlEntry.loc -> f:format.htmlentities()}</loc>
     <f:if condition="{urlEntry.lastmod}"><lastmod>{urlEntry.lastmod}</lastmod></f:if>
     <f:if condition="{urlEntry.changefreq}"><changefreq>{urlEntry.changefreq}</changefreq></f:if>
     <priority>{urlEntry.priority}</priority>
-  </url>
+  </url></f:if>
   </f:for>
 </f:then>
 <f:else>
