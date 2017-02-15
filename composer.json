@@ -24,7 +24,7 @@
   "require": {
     "php": ">=5.5.0",
     "typo3/cms": ">=6.2.20,<8.9.99",
-    "typo3/cms-core": ">=6.2.20,<8.9.99"
+    "typo3/cms-core": ">=6.2.20,<8.5.99"
   },
   "require-dev": {
     "namelesscoder/typo3-repository-client": "^1.2.0",
