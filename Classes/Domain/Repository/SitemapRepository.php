@@ -17,6 +17,8 @@ use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
 use Markussom\SitemapGenerator\Domain\Model\Sitemap;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use Markussom\SitemapGenerator\Service\AdditionalWhereService;
+use Markussom\SitemapGenerator\Service\OrderByService;
+use Markussom\SitemapGenerator\Service\LimitService;
 use Markussom\SitemapGenerator\Service\FieldValueService;
 use Markussom\SitemapGenerator\Service\PageUrlService;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
@@ -333,6 +335,14 @@ class SitemapRepository
                 $typoScriptUrlEntry['additionalWhere']
             ) . $this->pageRepository->enableFields(
                 $typoScriptUrlEntry['table']
+            ),
+            '',
+            OrderByService::getOrderByString(
+                $typoScriptUrlEntry['orderBy'],
+                $typoScriptUrlEntry['table']
+            ),
+            LimitService::getLimitString(
+                $typoScriptUrlEntry['limit']
             )
         );
     }

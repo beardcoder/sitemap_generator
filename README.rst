@@ -58,6 +58,8 @@ Plugin integration
                 active = 1
                 table = tx_news_domain_model_news
                 additionalWhere = pid!=0
+                orderBy = title DESC
+                limit = 0,10
                 lastmod = tstamp
                 url = TEXT
                 url {
