@@ -1,0 +1,10 @@
+# grumphp.yml
+parameters:
+    bin_dir: ".Build/vendor/bin"
+    git_dir: "."
+    tasks:
+        phpunit:
+            config_file: "./Tests/Build/UnitTests.xml"
+            group: []
+            always_execute: false
+    extensions: []
