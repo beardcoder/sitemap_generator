@@ -82,7 +82,7 @@ A record that has no translation will not be shown.
 ::
 
     plugin.tx_sitemapgenerator.urlEntries.pages {
-        hideIfNotTranslated = 1
+        hidePagesIfNotTranslated = 1
     }
 
     plugin.tx_sitemapgenerator.urlEntries.news {
