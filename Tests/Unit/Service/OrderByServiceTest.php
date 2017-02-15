@@ -24,14 +24,7 @@ class OrderByServiceTest extends UnitTestCase
      */
     public function canReturnTheOrderByStatementForDatabaseConnection()
     {
-        $GLOBALS['TCA'] = [
-            'pages' => [
-                'columns' => [
-                    'title' => [],
-                    'created' => []
-                ],
-            ],
-        ];
+
         $actual = OrderByService::getOrderByString('title DESC, created ASC', 'pages');
         $this->assertSame('title DESC,created ASC', $actual);
     }
