@@ -92,7 +92,7 @@ class SitemapRepository
     {
         if ($this->findAllEntries()) {
             $sitemap = GeneralUtility::makeInstance(Sitemap::class);
-            $sitemap->setEntries($this->entryStorage);
+            $sitemap->setUrlEntries($this->entryStorage);
             return $sitemap;
         }
         return null;
