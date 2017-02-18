@@ -45,7 +45,7 @@ class Sitemap
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $urlEntries
      */
-    public function setEntries($urlEntries)
+    public function setUrlEntries($urlEntries)
     {
         $this->urlEntries = $urlEntries;
     }
@@ -53,7 +53,7 @@ class Sitemap
     /**
      * @param UrlEntry $urlEntry
      */
-    public function addEntry(UrlEntry $urlEntry)
+    public function addUrlEntry(UrlEntry $urlEntry)
     {
         $this->urlEntries->attach($urlEntry);
     }
