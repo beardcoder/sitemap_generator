@@ -49,6 +49,7 @@ class PageUrlService
         if ($url == '') {
             $url = '/';
         }
+
         return $url;
     }
 }

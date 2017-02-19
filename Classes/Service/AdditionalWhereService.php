@@ -24,6 +24,7 @@ class AdditionalWhereService
      * Returns the where statement for database connection
      *
      * @param string $additionalWhere
+     *
      * @return string
      */
     public static function getWhereString($additionalWhere)
@@ -31,6 +32,7 @@ class AdditionalWhereService
         if (isset($additionalWhere) && !empty($additionalWhere)) {
             return ' ' . DatabaseConnection::AND_Constraint . ' ' . $additionalWhere;
         }
+
         return '';
     }
 }

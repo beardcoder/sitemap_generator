@@ -54,6 +54,7 @@ class FieldValueService
         // support for cObject if the value is a configuration
         if (!empty($typoScriptUrlEntry[$fieldName . '.'])) {
             $this->contentObject->start($row, $typoScriptUrlEntry['table']);
+
             return $this->contentObject->cObjGetSingle(
                 $typoScriptUrlEntry[$fieldName],
                 $typoScriptUrlEntry[$fieldName . '.']

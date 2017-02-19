@@ -24,6 +24,7 @@ class LimitService
      * Returns the limit statement for database connection
      *
      * @param string $limit
+     *
      * @return string
      */
     public static function getLimitString($limit)
@@ -36,6 +37,7 @@ class LimitService
                 return intval($limitParts[0]) . ',' . intval($limitParts[1]);
             }
         }
+
         return '';
     }
 }

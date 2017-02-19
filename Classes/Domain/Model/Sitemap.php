@@ -63,6 +63,7 @@ class Sitemap
         if (1 <= $this->urlEntries->count()) {
             return true;
         }
+
         return false;
     }
 }

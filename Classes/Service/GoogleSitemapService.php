@@ -36,6 +36,7 @@ class GoogleSitemapService
 
     /**
      * GoogleSitemapService constructor.
+     *
      * @param string $xmlSiteUrl
      */
     public function __construct($xmlSiteUrl)
@@ -71,6 +72,7 @@ class GoogleSitemapService
         if (!GeneralUtility::isValidUrl($url)) {
             return null;
         }
+
         return $url;
     }
 }

@@ -17,9 +17,9 @@ use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
 use Markussom\SitemapGenerator\Domain\Model\Sitemap;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use Markussom\SitemapGenerator\Service\AdditionalWhereService;
-use Markussom\SitemapGenerator\Service\OrderByService;
-use Markussom\SitemapGenerator\Service\LimitService;
 use Markussom\SitemapGenerator\Service\FieldValueService;
+use Markussom\SitemapGenerator\Service\LimitService;
+use Markussom\SitemapGenerator\Service\OrderByService;
 use Markussom\SitemapGenerator\Service\PageUrlService;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
@@ -84,6 +84,18 @@ class SitemapRepository
     }
 
     /**
+     * @return object
+     */
+    protected function makeClassInstance()
+    {
+        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
+        $this->entryStorage = $objectManager->get(ObjectStorage::class);
+        $this->pageRepository = $objectManager->get(PageRepository::class);
+        $this->fieldValueService = $objectManager->get(FieldValueService::class);
+        $this->typoScriptParser = $objectManager->get(TypoScriptParser::class);
+    }
+
+    /**
      * Generate a sitemap
      *
      * @return Sitemap|null
@@ -93,9 +105,24 @@ class SitemapRepository
         if ($this->findAllEntries()) {
             $sitemap = GeneralUtility::makeInstance(Sitemap::class);
             $sitemap->setUrlEntries($this->entryStorage);
+
             return $sitemap;
         }
+
         return null;
+    }
+
+    /**
+     * Find all entries
+     *
+     * @return bool
+     */
+    public function findAllEntries()
+    {
+        $this->findAllPages();
+        $this->generateEntriesFromTypoScript();
+
+        return true;
     }
 
     /**
@@ -115,6 +142,7 @@ class SitemapRepository
      * Remove page if not translated
      *
      * @param array $pages
+     *
      * @return array
      */
     private function hidePagesIfNotTranslated($pages)
@@ -128,37 +156,108 @@ class SitemapRepository
                 }
             }
         }
+
         return $pages;
     }
 
     /**
-     * @param $recordConfig
-     * @param $record
-     * @return mixed
-     */
-    private function hideRecordIfNotTranslated($recordConfig, $record)
-    {
-        $language = GeneralUtility::_GET('L');
-        if ($this->isRecordNotTranslated($recordConfig, $record, $language)) {
-            $record = $this->pageRepository->getRecordOverlay($recordConfig['table'], $record, $language);
-            if (intval($record['l10n_parent']) !== 0) {
-                return $record;
-            }
-            return null;
-        }
-        return $record;
-    }
-
-    /**
-     * Find all entries
+     * @param $language
      *
      * @return bool
      */
-    public function findAllEntries()
+    private function isPageNotTranslated($language)
     {
-        $this->findAllPages();
-        $this->generateEntriesFromTypoScript();
-        return true;
+        $ifNotTranslated = $this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated'];
+
+        return intval($language) !== 0 && intval($ifNotTranslated) === 1;
+    }
+
+    /**
+     * Get pages from Database
+     *
+     * @return array
+     */
+    private function getPages()
+    {
+        $rootPageId = $this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId'];
+        $rootPage = $this->pageRepository->getPage($rootPageId);
+        $pages = $this->getSubPagesRecursive($rootPageId);
+
+        return array_merge([$rootPage], $pages);
+    }
+
+    /**
+     * Get sub pages recursive
+     *
+     * @param $rootPageId
+     *
+     * @return array
+     */
+    private function getSubPagesRecursive($rootPageId)
+    {
+        $pages = $this->getSubPages($rootPageId);
+        foreach ($pages as $page) {
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $pages,
+                $this->getSubPagesRecursive($page['uid'])
+            );
+        }
+
+        return $pages;
+    }
+
+    /**
+     * Get sub pages
+     *
+     * @param int $startPageId
+     *
+     * @return array
+     */
+    private function getSubPages($startPageId)
+    {
+        return $this->pageRepository->getMenu(
+            $startPageId,
+            '*',
+            'sorting',
+            $this->pageRepository->enableFields(
+                'pages'
+            ) . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere
+        );
+    }
+
+    /**
+     * @param $pages
+     */
+    public function getEntriesFromPages($pages)
+    {
+        foreach ($pages as $page) {
+            if ($this->hasPageAnAllowedDoktype($page)) {
+                $urlEntry = GeneralUtility::makeInstance(UrlEntry::class);
+                $uri = PageUrlService::generatePageUrl($page['uid']);
+                $urlEntry->setLoc($uri);
+                $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
+                if (isset($page['sitemap_priority'])) {
+                    $urlEntry->setPriority(number_format($page['sitemap_priority'] / 10, 1, '.', ''));
+                }
+                if (isset($page['sitemap_changefreq'])) {
+                    $urlEntry->setChangefreq($page['sitemap_changefreq']);
+                }
+                $this->entryStorage->attach($urlEntry);
+            }
+        }
+    }
+
+    /**
+     * @param $page
+     *
+     * @return bool
+     */
+    private function hasPageAnAllowedDoktype($page)
+    {
+        return GeneralUtility::inList(
+            $this->pluginConfig['1']['urlEntries.']['pages.']['allowedDoktypes'],
+            $page['doktype']
+        );
     }
 
     /**
@@ -225,6 +324,108 @@ class SitemapRepository
     }
 
     /**
+     * Get records from database
+     *
+     * @param $typoScriptUrlEntry
+     * @SuppressWarnings(superglobals)
+     *
+     * @return bool|\mysqli_result|object
+     */
+    private function getRecordsFromDatabase($typoScriptUrlEntry)
+    {
+        if (!isset($GLOBALS['TCA'][$typoScriptUrlEntry['table']])
+            || !is_array($GLOBALS['TCA'][$typoScriptUrlEntry['table']]['ctrl'])
+        ) {
+            return false;
+        }
+
+        $language = '';
+        if (intval($typoScriptUrlEntry['hideIfNotTranslated']) === 1) {
+            $language = 'AND (sys_language_uid=\'-1\' OR sys_language_uid="' . intval(GeneralUtility::_GET('L')) . '") ';
+        }
+
+        return $this->getDatabaseConnection()->exec_SELECTquery(
+            '*',
+            $typoScriptUrlEntry['table'],
+            'pid!=0 ' . $language . ' ' . AdditionalWhereService::getWhereString(
+                $typoScriptUrlEntry['additionalWhere']
+            ) . $this->pageRepository->enableFields(
+                $typoScriptUrlEntry['table']
+            ),
+            '',
+            OrderByService::getOrderByString(
+                $typoScriptUrlEntry['orderBy'],
+                $typoScriptUrlEntry['table']
+            ),
+            LimitService::getLimitString(
+                $typoScriptUrlEntry['limit']
+            )
+        );
+    }
+
+    /**
+     * Returns the database connection
+     *
+     * @SuppressWarnings(superglobals)
+     *
+     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     */
+    protected function getDatabaseConnection()
+    {
+        return $GLOBALS['TYPO3_DB'];
+    }
+
+    /**
+     * @param $recordConfig
+     * @param $record
+     *
+     * @return mixed
+     */
+    private function hideRecordIfNotTranslated($recordConfig, $record)
+    {
+        $language = GeneralUtility::_GET('L');
+        if ($this->isRecordNotTranslated($recordConfig, $record, $language)) {
+            $record = $this->pageRepository->getRecordOverlay($recordConfig['table'], $record, $language);
+            if (intval($record['l10n_parent']) !== 0) {
+                return $record;
+            }
+
+            return null;
+        }
+
+        return $record;
+    }
+
+    /**
+     * @param $recordConfig
+     * @param $record
+     * @param $language
+     *
+     * @return bool
+     */
+    private function isRecordNotTranslated($recordConfig, $record, $language)
+    {
+        return $record['sys_language_uid'] !== '-1' && intval($language) !== 0 && intval($recordConfig['hideIfNotTranslated']) === 1;
+    }
+
+    /**
+     * @return bool|\mysqli_result|object|array
+     */
+    public function findAllGoogleNewsEntries()
+    {
+        if (!isset($this->pluginConfig[1]['googleNewsUrlEntry'])
+            || !MathUtility::canBeInterpretedAsInteger($this->pluginConfig[1]['googleNewsUrlEntry'])
+            || intval($this->pluginConfig[1]['googleNewsUrlEntry']) === 0
+        ) {
+            return false;
+        }
+
+        $entries = $this->mapGoogleNewsEntries($this->pluginConfig[1]['googleNewsUrlEntry.']);
+
+        return $entries;
+    }
+
+    /**
      * Map to entries
      *
      * @param array $typoScriptUrlEntry
@@ -268,191 +469,7 @@ class SitemapRepository
                 $urlEntries[] = $urlEntry;
             }
         }
+
         return $urlEntries;
-    }
-
-    /**
-     * Get pages from Database
-     *
-     * @return array
-     */
-    private function getPages()
-    {
-        $rootPageId = $this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId'];
-        $rootPage = $this->pageRepository->getPage($rootPageId);
-        $pages = $this->getSubPagesRecursive($rootPageId);
-
-        return array_merge([$rootPage], $pages);
-    }
-
-    /**
-     * @param $pages
-     */
-    public function getEntriesFromPages($pages)
-    {
-        foreach ($pages as $page) {
-            if ($this->hasPageAnAllowedDoktype($page)) {
-                $urlEntry = GeneralUtility::makeInstance(UrlEntry::class);
-                $uri = PageUrlService::generatePageUrl($page['uid']);
-                $urlEntry->setLoc($uri);
-                $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
-                if (isset($page['sitemap_priority'])) {
-                    $urlEntry->setPriority(number_format($page['sitemap_priority'] / 10, 1, '.', ''));
-                }
-                if (isset($page['sitemap_changefreq'])) {
-                    $urlEntry->setChangefreq($page['sitemap_changefreq']);
-                }
-                $this->entryStorage->attach($urlEntry);
-            }
-        }
-    }
-
-    /**
-     * Get records from database
-     *
-     * @param $typoScriptUrlEntry
-     * @SuppressWarnings(superglobals)
-     *
-     * @return bool|\mysqli_result|object
-     */
-    private function getRecordsFromDatabase($typoScriptUrlEntry)
-    {
-        if (!isset($GLOBALS['TCA'][$typoScriptUrlEntry['table']])
-            || !is_array($GLOBALS['TCA'][$typoScriptUrlEntry['table']]['ctrl'])
-        ) {
-            return false;
-        }
-
-        $language = '';
-        if (intval($typoScriptUrlEntry['hideIfNotTranslated']) === 1) {
-            $language = 'AND (sys_language_uid=\'-1\' OR sys_language_uid="' . intval(GeneralUtility::_GET('L')) . '") ';
-        }
-
-        return $this->getDatabaseConnection()->exec_SELECTquery(
-            '*',
-            $typoScriptUrlEntry['table'],
-            'pid!=0 ' . $language . ' ' . AdditionalWhereService::getWhereString(
-                $typoScriptUrlEntry['additionalWhere']
-            ) . $this->pageRepository->enableFields(
-                $typoScriptUrlEntry['table']
-            ),
-            '',
-            OrderByService::getOrderByString(
-                $typoScriptUrlEntry['orderBy'],
-                $typoScriptUrlEntry['table']
-            ),
-            LimitService::getLimitString(
-                $typoScriptUrlEntry['limit']
-            )
-        );
-    }
-
-    /**
-     * Get sub pages
-     *
-     * @param int $startPageId
-     * @return array
-     */
-    private function getSubPages($startPageId)
-    {
-        return $this->pageRepository->getMenu(
-            $startPageId,
-            '*',
-            'sorting',
-            $this->pageRepository->enableFields(
-                'pages'
-            ) . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere
-        );
-    }
-
-    /**
-     * Get sub pages recursive
-     *
-     * @param $rootPageId
-     * @return array
-     */
-    private function getSubPagesRecursive($rootPageId)
-    {
-        $pages = $this->getSubPages($rootPageId);
-        foreach ($pages as $page) {
-            ArrayUtility::mergeRecursiveWithOverrule(
-                $pages,
-                $this->getSubPagesRecursive($page['uid'])
-            );
-        }
-        return $pages;
-    }
-
-    /**
-     * @return bool|\mysqli_result|object|array
-     */
-    public function findAllGoogleNewsEntries()
-    {
-        if (!isset($this->pluginConfig[1]['googleNewsUrlEntry'])
-            || !MathUtility::canBeInterpretedAsInteger($this->pluginConfig[1]['googleNewsUrlEntry'])
-            || intval($this->pluginConfig[1]['googleNewsUrlEntry']) === 0
-        ) {
-            return false;
-        }
-
-        $entries = $this->mapGoogleNewsEntries($this->pluginConfig[1]['googleNewsUrlEntry.']);
-        return $entries;
-    }
-
-    /**
-     * Returns the database connection
-     *
-     * @SuppressWarnings(superglobals)
-     *
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    protected function getDatabaseConnection()
-    {
-        return $GLOBALS['TYPO3_DB'];
-    }
-
-    /**
-     * @param $recordConfig
-     * @param $record
-     * @param $language
-     * @return bool
-     */
-    private function isRecordNotTranslated($recordConfig, $record, $language)
-    {
-        return $record['sys_language_uid'] !== '-1' && intval($language) !== 0 && intval($recordConfig['hideIfNotTranslated']) === 1;
-    }
-
-    /**
-     * @param $language
-     * @return bool
-     */
-    private function isPageNotTranslated($language)
-    {
-        $ifNotTranslated = $this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated'];
-        return intval($language) !== 0 && intval($ifNotTranslated) === 1;
-    }
-
-    /**
-     * @param $page
-     * @return bool
-     */
-    private function hasPageAnAllowedDoktype($page)
-    {
-        return GeneralUtility::inList(
-            $this->pluginConfig['1']['urlEntries.']['pages.']['allowedDoktypes'],
-            $page['doktype']
-        );
-    }
-
-    /**
-     * @return object
-     */
-    protected function makeClassInstance()
-    {
-        $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->entryStorage = $objectManager->get(ObjectStorage::class);
-        $this->pageRepository = $objectManager->get(PageRepository::class);
-        $this->fieldValueService = $objectManager->get(FieldValueService::class);
-        $this->typoScriptParser = $objectManager->get(TypoScriptParser::class);
     }
 }

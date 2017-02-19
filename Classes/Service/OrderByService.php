@@ -25,12 +25,13 @@ class OrderByService
      *
      * @param string $orderBy
      * @param string $tablename
+     *
      * @return string
      */
     public static function getOrderByString($orderBy, $tablename)
     {
         if (isset($orderBy) && !empty($orderBy)) {
-            $cleanOrderByParts = array();
+            $cleanOrderByParts = [];
             $tableColumns = $GLOBALS['TCA'][$tablename]['columns'];
             $orderByParts = GeneralUtility::trimExplode(',', $orderBy);
             foreach ($orderByParts as $part) {
@@ -45,8 +46,10 @@ class OrderByService
                     }
                 }
             }
+
             return implode(',', $cleanOrderByParts);
         }
+
         return '';
     }
 }
