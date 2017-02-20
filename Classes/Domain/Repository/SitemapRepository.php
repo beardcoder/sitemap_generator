@@ -483,19 +483,4 @@ class SitemapRepository
 
         return $urlEntries;
     }
-
-    protected function getCached($value)
-    {
-        $cacheIdentifier = md5($value);
-        // If $entry is null, it hasn't been cached. Calculate the value and store it in the cache:
-        if (($entry = GeneralUtility::makeInstance(CacheManager::class)->getCache('sitemap_generator')
-                ->get($cacheIdentifier)) === false
-        ) {
-            // Save value in cache
-            GeneralUtility::makeInstance(CacheManager::class)->getCache('sitemap_generator')
-                ->set($cacheIdentifier, $value);
-        }
-
-        return $entry;
-    }
 }
