@@ -8,3 +8,7 @@ TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 );
 
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] = Markussom\SitemapGenerator\Command\TaskCommandController::class;
+
+if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['sitemap_generator'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['sitemap_generator'] = [];
+}

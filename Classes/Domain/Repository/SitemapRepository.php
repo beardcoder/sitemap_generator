@@ -21,6 +21,7 @@ use Markussom\SitemapGenerator\Service\FieldValueService;
 use Markussom\SitemapGenerator\Service\LimitService;
 use Markussom\SitemapGenerator\Service\OrderByService;
 use Markussom\SitemapGenerator\Service\PageUrlService;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -64,6 +65,8 @@ class SitemapRepository
      */
     protected $typoScriptParser = null;
 
+    protected $cacheInstance;
+
     /**
      * SitemapRepository constructor.
      *
@@ -72,6 +75,7 @@ class SitemapRepository
     public function __construct()
     {
         $this->makeClassInstance();
+        $this->cacheInstance = GeneralUtility::makeInstance(CacheManager::class)->getCache('sitemap_generator');
 
         $this->pluginConfig = $this->typoScriptParser->getVal(
             'plugin.tx_sitemapgenerator',
@@ -181,7 +185,14 @@ class SitemapRepository
     {
         $rootPageId = $this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId'];
         $rootPage = $this->pageRepository->getPage($rootPageId);
-        $pages = $this->getSubPagesRecursive($rootPageId);
+
+        $cacheIdentifier = md5($rootPageId . '-pagesForSitemap');
+        if ($this->cacheInstance->has($cacheIdentifier)) {
+            $pages = $this->cacheInstance->get($cacheIdentifier);
+        } else {
+            $pages = $this->getSubPagesRecursive($rootPageId);
+            $this->cacheInstance->set($cacheIdentifier, $pages, ['pagesForSitemap']);
+        }
 
         return array_merge([$rootPage], $pages);
     }
@@ -471,5 +482,20 @@ class SitemapRepository
         }
 
         return $urlEntries;
+    }
+
+    protected function getCached($value)
+    {
+        $cacheIdentifier = md5($value);
+        // If $entry is null, it hasn't been cached. Calculate the value and store it in the cache:
+        if (($entry = GeneralUtility::makeInstance(CacheManager::class)->getCache('sitemap_generator')
+                ->get($cacheIdentifier)) === false
+        ) {
+            // Save value in cache
+            GeneralUtility::makeInstance(CacheManager::class)->getCache('sitemap_generator')
+                ->set($cacheIdentifier, $value);
+        }
+
+        return $entry;
     }
 }
