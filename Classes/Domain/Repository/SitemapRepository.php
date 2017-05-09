@@ -397,7 +397,8 @@ class SitemapRepository
         $language = GeneralUtility::_GET('L');
         if ($this->isRecordNotTranslated($recordConfig, $record, $language)) {
             $record = $this->pageRepository->getRecordOverlay($recordConfig['table'], $record, $language);
-            if (intval($record['l10n_parent']) !== 0) {
+            $transOrigPointerField = $GLOBALS['TCA'][$recordConfig['table']]['ctrl']['transOrigPointerField'];
+            if (intval($record[$transOrigPointerField]) !== 0) {
                 return $record;
             }
 
