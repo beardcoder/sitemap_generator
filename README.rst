@@ -29,6 +29,8 @@ Installation
    plugin.tx\_sitemapgenerator.settings.urlEntries.pages.allowedDoktypes
 -  sitemap is available on rootpage with pagetype 1449874941
    "/index.php?id=1&type=1449874941"
+-  You can activate the inclusion of mount points into the sitemap with "allowMountPoints". This way the subpages of the mounted page will be included as well.
+   plugin.tx\_sitemapgenerator.settings.urlEntries.pages.allowMountPoints = 1
 
 Pages
 ~~~~~
@@ -42,6 +44,7 @@ Pages
                 rootPageId = 1
                 allowedDoktypes = 1
                 additionalWhere = doktype!=6
+                allowMountPoints = 0
             }
         }
     }

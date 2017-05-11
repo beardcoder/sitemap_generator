@@ -19,6 +19,7 @@ plugin.tx_sitemapgenerator {
 			rootPageId = 1
 			allowedDoktypes  = 1
 			hidePagesIfNotTranslated = 0
+			allowMountPoints = 0
 		}
 
 		news = 1
