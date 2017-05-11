@@ -208,9 +208,18 @@ class SitemapRepository
     {
         $pages = $this->getSubPages($rootPageId);
         foreach ($pages as $page) {
+            $pageId = $page['uid'];
+
+            if ($this->pluginConfig['1']['urlEntries.']['pages.']['allowMountPoints']
+                && $page['doktype'] == PageRepository::DOKTYPE_MOUNTPOINT
+                && ! is_null($page['mount_pid'])
+            ) {
+                $pageId = $page['mount_pid'];
+            }
+
             ArrayUtility::mergeRecursiveWithOverrule(
                 $pages,
-                $this->getSubPagesRecursive($page['uid'])
+                $this->getSubPagesRecursive($pageId)
             );
         }
 
