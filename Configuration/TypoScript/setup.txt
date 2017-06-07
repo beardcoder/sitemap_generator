@@ -18,6 +18,7 @@ plugin.tx_sitemapgenerator {
 		pages {
 			rootPageId = 1
 			allowedDoktypes  = 1
+			stopPageTreeDoktypes = 6,199
 			hidePagesIfNotTranslated = 0
 		}
 

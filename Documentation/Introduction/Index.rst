@@ -39,6 +39,7 @@ Installation
 -  You can add custom doktypes.
    Per default the sitemap.xml only lists normal pages with "doktype=1". The option takes a comma-separated list of numbers.
    plugin.tx\_sitemapgenerator.settings.urlEntries.pages.allowedDoktypes
+-  You can define doktypes which "end" the page tree, e.g. Backend User Section. Sub pages of pages of this doktype won't get fetched.
 -  sitemap is available on rootpage with pagetype 1449874941
    "/index.php?id=1&type=1449874941"
 
@@ -53,6 +54,7 @@ Pages
             pages {
                 rootPageId = 1
                 allowedDoktypes = 1
+                stopPageTreeDoktypes = 6,199
                 additionalWhere = doktype!=6
             }
         }

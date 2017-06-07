@@ -208,10 +208,12 @@ class SitemapRepository
     {
         $pages = $this->getSubPages($rootPageId);
         foreach ($pages as $page) {
-            ArrayUtility::mergeRecursiveWithOverrule(
-                $pages,
-                $this->getSubPagesRecursive($page['uid'])
-            );
+            if (false === $this->isPageTreeLeaf($page)) {
+                ArrayUtility::mergeRecursiveWithOverrule(
+                    $pages,
+                    $this->getSubPagesRecursive($page['uid'])
+                );
+            }
         }
 
         return $pages;
@@ -267,6 +269,28 @@ class SitemapRepository
     {
         return GeneralUtility::inList(
             $this->pluginConfig['1']['urlEntries.']['pages.']['allowedDoktypes'],
+            $page['doktype']
+        );
+    }
+
+    /**
+     * Determines if the child page tree should not be fetched based on the current page.
+     * This is for example a "Backend User Section" or "Recycler" (configurable) or the
+     * page has "Stop Page Tree" activated (cannot be deactivated).
+     *
+     * A leaf is the last element in a tree.
+     *
+     * @param array $page
+     * @return bool
+     */
+    private function isPageTreeLeaf(array $page)
+    {
+        if ('1' === $page['php_tree_stop']) {
+            return true;
+        }
+
+        return GeneralUtility::inList(
+            $this->pluginConfig['1']['urlEntries.']['pages.']['stopPageTreeDoktypes'],
             $page['doktype']
         );
     }
