@@ -20,6 +20,7 @@ $tca = [
             'label' => $languageFilePrefix . 'sitemap_generator.tca.pages.sitemap_priority',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'items' => [
                     ['0.0', 0],
                     ['0.1', 1],
@@ -40,6 +41,7 @@ $tca = [
             'label' => $languageFilePrefix . 'sitemap_generator.tca.pages.sitemap_changefreq',
             'config' => [
                 'type' => 'select',
+                'renderType' => 'selectSingle',
                 'items' => [
                     [$languageFilePrefix . 'sitemap_generator.tca.pages.please_choose', ''],
                     [$languageFilePrefix . 'sitemap_generator.tca.pages.sitemap_changefreq.always', 'always'],
