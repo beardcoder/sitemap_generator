@@ -14,7 +14,7 @@ namespace Markussom\SitemapGenerator\Tests\Unit\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
-class LimitServiceTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class LimitServiceTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
 {
     /**
      * @test

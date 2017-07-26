@@ -17,7 +17,7 @@ namespace Markussom\SitemapGenerator\Tests\Unit\Controller;
 /**
  *
  */
-class AdditionalWhereServiceTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class AdditionalWhereServiceTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
 {
     /**
      * @var \Markussom\SitemapGenerator\Service\AdditionalWhereService

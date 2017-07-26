@@ -13,13 +13,12 @@ namespace Markussom\SitemapGenerator\Tests\Functional\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use TYPO3\CMS\Core\Tests\FunctionalTestCase;
 
 /**
  * Class SitemapControllerTest
  *
  */
-class SitemapControllerTest extends FunctionalTestCase
+class SitemapControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalTestCase
 {
 
     /**
@@ -138,13 +137,6 @@ class SitemapControllerTest extends FunctionalTestCase
      */
     public function googleNewsSitemap()
     {
-        if ((float)TYPO3_branch >= 8) {
-            // Stop here and mark this test as incomplete.
-            $this->markTestSkipped(
-                'This test is broken in 8.5.'
-            );
-        }
-
         $this->setUpFrontendRootPage(
             1,
             [
@@ -170,13 +162,6 @@ class SitemapControllerTest extends FunctionalTestCase
      */
     public function emptyGoogleNewsSitemap()
     {
-        if ((float)TYPO3_branch >= 8) {
-            // Stop here and mark this test as incomplete.
-            $this->markTestSkipped(
-                'This test is broken in 8.5.'
-            );
-        }
-
         $this->setUpFrontendRootPage(
             1,
             [

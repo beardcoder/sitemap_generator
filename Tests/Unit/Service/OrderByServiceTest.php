@@ -16,7 +16,7 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
 /**
  * Class OrderByService
  */
-class OrderByServiceTest extends UnitTestCase
+class OrderByServiceTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
 {
 
     /**

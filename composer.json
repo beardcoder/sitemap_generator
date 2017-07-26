@@ -22,14 +22,15 @@
   ],
   "license": "GPL-2.0+",
   "require": {
-    "php": ">=5.5.0,<7.2.0",
-    "typo3/cms": ">=6.2.20,<9.1.0",
-    "typo3/cms-core": ">=6.2.20,<9.1.0"
+    "php": ">=5.6.0,<7.2.0",
+    "typo3/cms": ">=7.6.20,<9.1.0",
+    "typo3/cms-core": ">=7.6.20,<9.1.0"
   },
   "require-dev": {
     "namelesscoder/typo3-repository-client": "^2.0.0",
     "mikey179/vfsStream": "~1.6.0",
-    "phpunit/phpunit": ">=4.7.0 <5.0.0"
+    "phpunit/phpunit": "^5.6.0",
+    "nimut/testing-framework": "^1.1"
   },
   "autoload": {
     "psr-4": {
@@ -38,9 +39,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Markussom\\SitemapGenerator\\Tests\\": "Tests",
-      "TYPO3\\CMS\\Core\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/core/Tests/",
-      "TYPO3\\CMS\\Fluid\\Tests\\": ".Build/vendor/typo3/cms/typo3/sysext/fluid/Tests/"
+      "Markussom\\SitemapGenerator\\Tests\\": "Tests"
     }
   },
   "replace": {
@@ -50,12 +49,7 @@
   "config": {
     "optimize-autoloader": true,
     "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/bin",
-    "preferred-install": {
-      "typo3/cms": "source",
-      "typo3/cms-core": "source",
-      "*": "dist"
-    }
+    "bin-dir": ".Build/vendor/bin"
   },
   "scripts": {
     "post-autoload-dump": [

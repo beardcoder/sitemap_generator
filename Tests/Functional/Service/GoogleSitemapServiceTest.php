@@ -18,7 +18,7 @@ use TYPO3\CMS\Core\Tests\FunctionalTestCase;
 /**
  * Class GoogleSitemapServiceTest
  */
-class GoogleSitemapServiceTest extends FunctionalTestCase
+class GoogleSitemapServiceTest extends \Nimut\TestingFramework\TestCase\FunctionalTestCase
 {
 
     /**

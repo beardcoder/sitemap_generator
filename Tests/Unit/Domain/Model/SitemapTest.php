@@ -9,7 +9,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * test class sitemap
  */
-class SitemapTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class SitemapTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
 {
     /**
      * @var \TYPO3\CMS\Core\Tests\AccessibleObjectInterface

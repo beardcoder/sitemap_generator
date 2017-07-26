@@ -7,7 +7,7 @@ use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 /**
  * Class UrlEntry
  */
-class UrlEntryTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
+class UrlEntryTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
 {
     /**
      * @var \TYPO3\CMS\Core\Tests\AccessibleObjectInterface
