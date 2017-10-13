@@ -173,7 +173,7 @@ class SitemapRepository
     {
         $ifNotTranslated = $this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated'];
 
-        return intval($language) !== 0 && intval($ifNotTranslated) === 1;
+        return (int)$language !== 0 && (int)$ifNotTranslated === 1;
     }
 
     /**
@@ -281,6 +281,7 @@ class SitemapRepository
      * A leaf is the last element in a tree.
      *
      * @param array $page
+     *
      * @return bool
      */
     private function isPageTreeLeaf(array $page)
@@ -375,8 +376,8 @@ class SitemapRepository
         }
 
         $language = '';
-        if (intval($typoScriptUrlEntry['hideIfNotTranslated']) === 1) {
-            $language = 'AND (sys_language_uid=\'-1\' OR sys_language_uid="' . intval(GeneralUtility::_GET('L')) . '") ';
+        if ((int)$typoScriptUrlEntry['hideIfNotTranslated'] === 1) {
+            $language = 'AND (sys_language_uid=\'-1\' OR sys_language_uid="' . (int)GeneralUtility::_GET('L') . '") ';
         }
 
         return $this->getDatabaseConnection()->exec_SELECTquery(
@@ -421,7 +422,7 @@ class SitemapRepository
         $language = GeneralUtility::_GET('L');
         if ($this->isRecordNotTranslated($recordConfig, $record, $language)) {
             $record = $this->pageRepository->getRecordOverlay($recordConfig['table'], $record, $language);
-            if (intval($record['l10n_parent']) !== 0) {
+            if ((int)$record['l10n_parent'] !== 0) {
                 return $record;
             }
 
@@ -440,7 +441,7 @@ class SitemapRepository
      */
     private function isRecordNotTranslated($recordConfig, $record, $language)
     {
-        return $record['sys_language_uid'] !== '-1' && intval($language) !== 0 && intval($recordConfig['hideIfNotTranslated']) === 1;
+        return $record['sys_language_uid'] !== '-1' && (int)$language !== 0 && (int)$recordConfig['hideIfNotTranslated'] === 1;
     }
 
     /**
@@ -450,7 +451,7 @@ class SitemapRepository
     {
         if (!isset($this->pluginConfig[1]['googleNewsUrlEntry'])
             || !MathUtility::canBeInterpretedAsInteger($this->pluginConfig[1]['googleNewsUrlEntry'])
-            || intval($this->pluginConfig[1]['googleNewsUrlEntry']) === 0
+            || (int)$this->pluginConfig[1]['googleNewsUrlEntry'] === 0
         ) {
             return false;
         }
