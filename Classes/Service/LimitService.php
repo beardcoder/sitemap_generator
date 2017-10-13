@@ -33,7 +33,8 @@ class LimitService
             $limitParts = GeneralUtility::trimExplode(',', $limit);
             if (count($limitParts) === 1) {
                 return intval($limitParts[0]);
-            } elseif (count($limitParts) === 2) {
+            }
+            if (count($limitParts) === 2) {
                 return intval($limitParts[0]) . ',' . intval($limitParts[1]);
             }
         }

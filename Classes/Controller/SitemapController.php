@@ -31,8 +31,6 @@ class SitemapController extends ActionController
     /**
      * Initializes the current action
      * Set xml format for FLUID
-     *
-     * @return void
      */
     public function initializeAction()
     {
@@ -41,8 +39,6 @@ class SitemapController extends ActionController
 
     /**
      * List action for sitemap.xml
-     *
-     * @return void
      */
     public function listAction()
     {
@@ -52,8 +48,6 @@ class SitemapController extends ActionController
 
     /**
      * Render Google News Sitemap
-     *
-     * @return void
      */
     public function googleNewsListAction()
     {

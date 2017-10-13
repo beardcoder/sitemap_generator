@@ -74,8 +74,6 @@ class UrlEntry
      * Set Loc
      *
      * @param string $loc
-     *
-     * @return void
      */
     public function setLoc($loc)
     {
@@ -96,8 +94,6 @@ class UrlEntry
      * Set Lastmod
      *
      * @param string $lastmod
-     *
-     * @return void
      */
     public function setLastmod($lastmod)
     {
@@ -118,8 +114,6 @@ class UrlEntry
      * Set Changefreq
      *
      * @param string $changefreq
-     *
-     * @return void
      */
     public function setChangefreq($changefreq)
     {
@@ -140,8 +134,6 @@ class UrlEntry
      * Set Priority
      *
      * @param float $priority
-     *
-     * @return void
      */
     public function setPriority($priority)
     {

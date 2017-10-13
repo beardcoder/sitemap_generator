@@ -89,8 +89,6 @@ class GoogleNewsUrlEntry extends UrlEntry
      * Set Name
      *
      * @param string $name
-     *
-     * @return void
      */
     public function setName($name)
     {
@@ -111,8 +109,6 @@ class GoogleNewsUrlEntry extends UrlEntry
      * Set Language
      *
      * @param string $language
-     *
-     * @return void
      */
     public function setLanguage($language)
     {
@@ -133,8 +129,6 @@ class GoogleNewsUrlEntry extends UrlEntry
      * Set Access
      *
      * @param string $access
-     *
-     * @return void
      */
     public function setAccess($access)
     {
@@ -155,8 +149,6 @@ class GoogleNewsUrlEntry extends UrlEntry
      * Set Genres
      *
      * @param string $genres
-     *
-     * @return void
      */
     public function setGenres($genres)
     {
@@ -177,8 +169,6 @@ class GoogleNewsUrlEntry extends UrlEntry
      * Set PublicationDate
      *
      * @param string $publicationDate
-     *
-     * @return void
      */
     public function setPublicationDate($publicationDate)
     {
@@ -199,8 +189,6 @@ class GoogleNewsUrlEntry extends UrlEntry
      * Set Title
      *
      * @param string $title
-     *
-     * @return void
      */
     public function setTitle($title)
     {
@@ -221,8 +209,6 @@ class GoogleNewsUrlEntry extends UrlEntry
      * Set Keywords
      *
      * @param string $keywords
-     *
-     * @return void
      */
     public function setKeywords($keywords)
     {
@@ -243,8 +229,6 @@ class GoogleNewsUrlEntry extends UrlEntry
      * Set StockTickers
      *
      * @param string $stockTickers
-     *
-     * @return void
      */
     public function setStockTickers($stockTickers)
     {

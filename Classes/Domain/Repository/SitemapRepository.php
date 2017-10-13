@@ -314,7 +314,6 @@ class SitemapRepository
      *
      * @param array $typoScriptUrlEntry
      * @SuppressWarnings(superglobals)
-     *
      */
     protected function mapToEntries(array $typoScriptUrlEntry)
     {
