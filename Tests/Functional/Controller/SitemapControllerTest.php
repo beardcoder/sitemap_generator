@@ -59,11 +59,7 @@ class SitemapControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalT
             ]
         );
         $response = $this->getFrontendResponse(
-            1,
-            0,
-            0,
-            0,
-            true
+            1
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/pages.xml', $response->getContent());
     }
@@ -80,11 +76,7 @@ class SitemapControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalT
             ]
         );
         $response = $this->getFrontendResponse(
-            1,
-            0,
-            0,
-            0,
-            true
+            1
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/emptyPages.xml', $response->getContent());
     }
@@ -101,11 +93,7 @@ class SitemapControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalT
             ]
         );
         $response = $this->getFrontendResponse(
-            1,
-            0,
-            0,
-            0,
-            true
+            1
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/plugin.xml', $response->getContent());
     }
@@ -122,11 +110,7 @@ class SitemapControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalT
             ]
         );
         $response = $this->getFrontendResponse(
-            1,
-            0,
-            0,
-            0,
-            true
+            1
         );
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/../Fixtures/OutputXml/emptyNews.xml', $response->getContent());
     }
@@ -144,11 +128,7 @@ class SitemapControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalT
             ]
         );
         $response = $this->getFrontendResponse(
-            1,
-            0,
-            0,
-            0,
-            true
+            1
         );
 
         $this->assertXmlStringEqualsXmlFile(
@@ -169,11 +149,7 @@ class SitemapControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalT
             ]
         );
         $response = $this->getFrontendResponse(
-            1,
-            0,
-            0,
-            0,
-            true
+            1
         );
         $this->assertXmlStringEqualsXmlFile(
             __DIR__ . '/../Fixtures/OutputXml/emptyGoogleNewsSitemap.xml',
@@ -193,11 +169,7 @@ class SitemapControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalT
             ]
         );
         $response = $this->getFrontendResponse(
-            1,
-            0,
-            0,
-            0,
-            true
+            1
         );
         $xml = new \DOMDocument();
         $xml->loadXML($response->getContent());
