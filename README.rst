@@ -4,11 +4,11 @@ EXT:sitemap\_generator
 Build Status
 ------------
 
-.. image:: https://travis-ci.org/markussom/sitemap_generator.svg?branch=master
-   :target: https://travis-ci.org/markussom/sitemap_generator
+.. image:: https://travis-ci.org/beardcoder/sitemap_generator.svg?branch=master
+   :target: https://travis-ci.org/beardcoder/sitemap_generator
 
-.. image:: https://codeclimate.com/github/markussom/sitemap_generator/badges/gpa.svg
-   :target: https://codeclimate.com/github/markussom/sitemap_generator
+.. image:: https://codeclimate.com/github/beardcoder/sitemap_generator/badges/gpa.svg
+   :target: https://codeclimate.com/github/beardcoder/sitemap_generator
 
 Installation
 ------------
