@@ -65,6 +65,9 @@ class SitemapRepository
      */
     protected $typoScriptParser = null;
 
+    /**
+     * @var \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+     */
     protected $cacheInstance;
 
     /**
@@ -88,7 +91,7 @@ class SitemapRepository
     }
 
     /**
-     * @return object
+     * Make instance of needed classes
      */
     protected function makeClassInstance()
     {

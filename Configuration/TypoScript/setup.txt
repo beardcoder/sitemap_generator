@@ -1,127 +1,127 @@
 plugin.tx_sitemapgenerator {
-	view {
-		templateRootPaths {
-			10 = {$plugin.tx_sitemapgenerator.view.templateRootPath}
-		}
+    view {
+        templateRootPaths {
+            10 = {$plugin.tx_sitemapgenerator.view.templateRootPath}
+        }
 
-		partialRootPaths {
-			10 = {$plugin.tx_sitemapgenerator.view.partialRootPath}
-		}
+        partialRootPaths {
+            10 = {$plugin.tx_sitemapgenerator.view.partialRootPath}
+        }
 
-		layoutRootPaths {
-			10 = {$plugin.tx_sitemapgenerator.view.layoutRootPath}
-		}
-	}
+        layoutRootPaths {
+            10 = {$plugin.tx_sitemapgenerator.view.layoutRootPath}
+        }
+    }
 
-	urlEntries {
-		pages = 1
-		pages {
-			rootPageId = 1
-			allowedDoktypes  = 1
-			stopPageTreeDoktypes = 6,199
-			hidePagesIfNotTranslated = 0
-		}
+    urlEntries {
+        pages = 1
+        pages {
+            rootPageId = 1
+            allowedDoktypes = 1
+            stopPageTreeDoktypes = 6,199
+            hidePagesIfNotTranslated = 0
+        }
 
-		news = 1
-		news {
-			active = 0
-			table = tx_news_domain_model_news
-			hideIfNotTranslated = 0
-			lastmod = tstamp
-			url = TEXT
-			url {
-				typolink.parameter = 9
-				typolink.additionalParams = &tx_news_pi1[controller]=News&tx_news_pi1[action]=detail&tx_news_pi1[news]={field:uid}
-				typolink.additionalParams.insertData = 1
-				typolink.addQueryString = 1
-				typolink.addQueryString.exclude = type, no_cache
-				typolink.useCacheHash = 1
-				typolink.returnLast = url
-				typolink.forceAbsoluteUrl = 1
-			}
-		}
-	}
+        news = 1
+        news {
+            active = 0
+            table = tx_news_domain_model_news
+            hideIfNotTranslated = 0
+            lastmod = tstamp
+            url = TEXT
+            url {
+                typolink.parameter = 9
+                typolink.additionalParams = &tx_news_pi1[controller]=News&tx_news_pi1[action]=detail&tx_news_pi1[news]={field:uid}
+                typolink.additionalParams.insertData = 1
+                typolink.addQueryString = 1
+                typolink.addQueryString.exclude = type, no_cache
+                typolink.useCacheHash = 1
+                typolink.returnLast = url
+                typolink.forceAbsoluteUrl = 1
+            }
+        }
+    }
 
-	googleNewsUrlEntry = 0
-	googleNewsUrlEntry {
-		hideIfNotTranslated = 0
-		table = tx_news_domain_model_news
-		name = title
-		language = TEXT
-		language.value = de
-		access =
-		genres = tags
-		publicationDate = datetime
-		title = title
-		keywords = keywords
-		stockTickers =
-		url = TEXT
-		url {
-			typolink.parameter = 9
-			typolink.additionalParams = &tx_news_pi1[controller]=News&tx_news_pi1[action]=detail&tx_news_pi1[news]={field:uid}
-			typolink.additionalParams.insertData = 1
-			typolink.addQueryString = 1
-			typolink.addQueryString.exclude = type, no_cache
-			typolink.useCacheHash = 1
-			typolink.returnLast = url
-			typolink.forceAbsoluteUrl = 1
-		}
-	}
+    googleNewsUrlEntry = 0
+    googleNewsUrlEntry {
+        hideIfNotTranslated = 0
+        table = tx_news_domain_model_news
+        name = title
+        language = TEXT
+        language.value = de
+        access =
+        genres = tags
+        publicationDate = datetime
+        title = title
+        keywords = keywords
+        stockTickers =
+        url = TEXT
+        url {
+            typolink.parameter = 9
+            typolink.additionalParams = &tx_news_pi1[controller]=News&tx_news_pi1[action]=detail&tx_news_pi1[news]={field:uid}
+            typolink.additionalParams.insertData = 1
+            typolink.addQueryString = 1
+            typolink.addQueryString.exclude = type, no_cache
+            typolink.useCacheHash = 1
+            typolink.returnLast = url
+            typolink.forceAbsoluteUrl = 1
+        }
+    }
 }
 
 lib.tx_sitemapgenerator = USER
 lib.tx_sitemapgenerator {
-	userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-	extensionName = SitemapGenerator
-	pluginName = Pi1
-	vendorName = Markussom
-	controller = Sitemap
-	action = list
-	switchableControllerActions.Sitemap.1 = list
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    extensionName = SitemapGenerator
+    pluginName = Pi1
+    vendorName = Markussom
+    controller = Sitemap
+    action = list
+    switchableControllerActions.Sitemap.1 = list
 
-	view < plugin.tx_sitemapgenerator.view
-	persistence < plugin.tx_sitemapgenerator.persistence
-	settings < plugin.tx_sitemapgenerator.settings
+    view < plugin.tx_sitemapgenerator.view
+    persistence < plugin.tx_sitemapgenerator.persistence
+    settings < plugin.tx_sitemapgenerator.settings
 }
 
 [globalVar = TSFE:type = 1449874941]
-	config {
-		disableAllHeaderCode = 1
-		xhtml_cleaning = none
-		admPanel = 0
-		metaCharset = utf-8
-		additionalHeaders = Content-Type:text/xml;charset=utf-8
-		disablePrefixComment = 1
-	}
+    config {
+        disableAllHeaderCode = 1
+        xhtml_cleaning = none
+        admPanel = 0
+        metaCharset = utf-8
+        additionalHeaders = Content-Type:text/xml;charset=utf-8
+        disablePrefixComment = 1
+    }
 
-	sitemapgeneratorPage = PAGE
-	sitemapgeneratorPage {
-		typeNum = 1449874941
-		10 < lib.tx_sitemapgenerator
-	}
+    sitemapgeneratorPage = PAGE
+    sitemapgeneratorPage {
+        typeNum = 1449874941
+        10 < lib.tx_sitemapgenerator
+    }
 [global]
 
 [globalVar = TSFE:type = 1451160842]
-	config {
-		disableAllHeaderCode = 1
-		xhtml_cleaning = none
-		admPanel = 0
-		metaCharset = utf-8
-		additionalHeaders = Content-Type:text/xml;charset=utf-8
-		disablePrefixComment = 1
-	}
+    config {
+        disableAllHeaderCode = 1
+        xhtml_cleaning = none
+        admPanel = 0
+        metaCharset = utf-8
+        additionalHeaders = Content-Type:text/xml;charset=utf-8
+        disablePrefixComment = 1
+    }
 
-	sitemapgeneratorPage = PAGE
-	sitemapgeneratorPage {
-		typeNum = 1451160842
-		10 < lib.tx_sitemapgenerator
-		10.action = googleNewsList
-		10.switchableControllerActions.Sitemap.1 = googleNewsList
-	}
+    sitemapgeneratorPage = PAGE
+    sitemapgeneratorPage {
+        typeNum = 1451160842
+        10 < lib.tx_sitemapgenerator
+        10.action = googleNewsList
+        10.switchableControllerActions.Sitemap.1 = googleNewsList
+    }
 [global]
 
 [globalVar = TSFE:type = 1451160842] && [compatVersion = 7.6.0] || [globalVar = TSFE:type = 1449874941] && [compatVersion = 7.6.0]
-	config {
-		additionalHeaders.10.header = Content-Type:text/xml;charset=utf-8
-	}
+    config {
+        additionalHeaders.10.header = Content-Type:text/xml;charset=utf-8
+    }
 [global]

@@ -58,6 +58,9 @@ class Sitemap
         $this->urlEntries->attach($urlEntry);
     }
 
+    /**
+     * @return bool
+     */
     public function isFilled()
     {
         if (1 <= $this->urlEntries->count()) {
