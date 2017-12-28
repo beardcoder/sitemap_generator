@@ -5,3 +5,4 @@ composer.lock
 vendor
 bin
 /.env
+Build/data
