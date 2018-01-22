@@ -130,7 +130,7 @@ RealURL for beautiful sitemap.xml url
 
 .. code:: php
 
-    $TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT'] = [
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT'] = [
         'fileName' => [
             'defaultToHTMLsuffixOnPrev' => 0,
             'acceptHTMLsuffix' => 1,
@@ -161,7 +161,7 @@ RealURL for beautiful sitemap\_news.xml url
 
 .. code:: php
 
-    $TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT'] = [
+    $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['realurl']['_DEFAULT'] = [
         'fileName' => [
             'defaultToHTMLsuffixOnPrev' => 0,
             'acceptHTMLsuffix' => 1,
