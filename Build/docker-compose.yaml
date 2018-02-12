@@ -1,57 +1,45 @@
 version: '3'
 services:
-  web:
-    build: 'docker/nginx'
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.development
     volumes:
-      - './etc/nginx/default.template.conf:/etc/nginx/conf.d/default.template'
-      - './etc/ssl:/etc/ssl'
-      - './../:${APP_PATH}:cached'
-    hostname: '${VIRTUAL_HOST}'
+      - './docker/:/docker'
+      - './../:/app/'
+    hostname: ${VIRTUAL_HOST}
     ipc: host
     privileged: true
-    ports:
-      - '80:80'
-      - '443:443'
     environment:
+      VIRTUAL_HOST: .${VIRTUAL_HOST}
+      VIRTUAL_PORT: 80
       TYPO3_CONTEXT: ${TYPO3_CONTEXT}
-      VIRTUAL_HOST: ${VIRTUAL_HOST}
-    command: '/bin/sh -c "envsubst ''$$VIRTUAL_HOST'' < /etc/nginx/conf.d/default.template > /etc/nginx/conf.d/default.conf && nginx -g ''daemon off;''"'
+    env_file:
+      - etc/environment.yml
+      - etc/environment.development.yml
     restart: always
     depends_on:
-      - mysqldb
-      - php
+      - mysql
     networks:
       default:
         aliases:
           - ${VIRTUAL_HOST}
 
-  php:
-    image: webdevops/php:ubuntu-17.04
-    hostname: php
+  mysql:
+    build:
+      context: docker/mysql/
+      dockerfile: MariaDB-10.Dockerfile
+    #ports:
+    #  - 13306:3306
     volumes:
-      - './etc/php/php.ini:/opt/docker/etc/php/conf.d/xxxphp.ini'
-      - './../:${APP_PATH}:cached'
-    environment:
-      TYPO3_CONTEXT: ${TYPO3_CONTEXT}
-
-  mysqldb:
-    image: mysql:5.7
-    restart: always
+      - mysql:/var/lib/mysql
     env_file:
-      - .env
-    environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}'
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - '8989:3306'
-    volumes:
-      - /tmp/debug/:/tmp/debug/
-      - ./data/db/mysql:/var/lib/mysql
-      - ./etc/mysql/my.cnf:/etc/mysql/conf.d/x_99_my.cnf
-
+      - etc/environment.yml
+      - etc/environment.development.yml
   mail:
     image: mailhog/mailhog
     ports:
       - '8025:8025'
+
+volumes:
+  mysql:
