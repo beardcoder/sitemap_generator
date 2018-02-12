@@ -1,9 +1,9 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
+<xml xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
   <f:layout name="Default"/>
 <f:section name="main"><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <f:if condition="{sitemap.filled}"><f:then><f:for each="{sitemap.urlEntries}" as="urlEntry"><f:if condition="{urlEntry.loc}"><url>
   <loc>{urlEntry.loc -> f:format.htmlentities()}</loc>
-  <f:if condition="{urlEntry.lastmod}"><lastmod>{urlEntry.lastmod}</lastmod></f:if>
+  <f:if condition="{urlEntry.lastmod}"><lastmod><f:format.date date="{urlEntry.lastmod}" format="Y-m-d" /></lastmod></f:if>
   <f:if condition="{urlEntry.changefreq}"><changefreq>{urlEntry.changefreq}</changefreq></f:if>
   <priority>{urlEntry.priority}</priority>
 </url></f:if>
@@ -16,4 +16,4 @@
 
 </urlset>
   </f:section>
-</html>
+</xml>

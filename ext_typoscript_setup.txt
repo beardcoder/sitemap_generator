@@ -1,0 +1,16 @@
+plugin.tx_sitemapgenerator {
+    persistence {
+        classes {
+            Markussom\SitemapGenerator\Domain\Model\PageUrlEntry {
+                mapping {
+                    columns {
+                        uid.mapOnProperty = loc
+                        tstamp.mapOnProperty = lastmod
+                        sitemap_priority.mapOnProperty = priority
+                        sitemap_changefreq.mapOnProperty = changefreq
+                    }
+                }
+            }
+        }
+    }
+}

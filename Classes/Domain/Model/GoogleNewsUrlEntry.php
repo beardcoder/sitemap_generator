@@ -17,7 +17,7 @@ namespace Markussom\SitemapGenerator\Domain\Model;
 /**
  * Class UrlEntryNews
  */
-class GoogleNewsUrlEntry extends UrlEntry
+class GoogleNewsUrlEntry extends PageUrlEntry
 {
     /**
      * Name

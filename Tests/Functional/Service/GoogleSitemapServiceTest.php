@@ -13,7 +13,6 @@ namespace Markussom\SitemapGenerator\Service;
  *
  * The TYPO3 project - inspiring people to share!
  */
-use TYPO3\CMS\Core\Tests\FunctionalTestCase;
 
 /**
  * Class GoogleSitemapServiceTest

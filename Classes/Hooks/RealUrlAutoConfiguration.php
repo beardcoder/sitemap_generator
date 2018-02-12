@@ -15,9 +15,8 @@ namespace Markussom\SitemapGenerator\Hooks;
  */
 /**
  * Inspired by the hook from tx_news
- * 
+ *
  */
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * AutoConfiguration-Hook for RealURL

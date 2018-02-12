@@ -22,7 +22,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 class Sitemap
 {
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Markussom\SitemapGenerator\Domain\Model\UrlEntry>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Markussom\SitemapGenerator\Domain\Model\AbstractUrlEntry>
      */
     protected $urlEntries = null;
 
@@ -35,7 +35,7 @@ class Sitemap
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Markussom\SitemapGenerator\Domain\Model\UrlEntry>
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Markussom\SitemapGenerator\Domain\Model\AbstractUrlEntry>
      */
     public function getUrlEntries()
     {
@@ -51,9 +51,9 @@ class Sitemap
     }
 
     /**
-     * @param UrlEntry $urlEntry
+     * @param AbstractUrlEntry $urlEntry
      */
-    public function addUrlEntry(UrlEntry $urlEntry)
+    public function addUrlEntry(AbstractUrlEntry $urlEntry)
     {
         $this->urlEntries->attach($urlEntry);
     }

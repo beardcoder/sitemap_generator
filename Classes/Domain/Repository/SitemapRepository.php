@@ -13,9 +13,10 @@ namespace Markussom\SitemapGenerator\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use Markussom\SitemapGenerator\Domain\Model\AbstractUrlEntry;
 use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
+use Markussom\SitemapGenerator\Domain\Model\PageUrlEntry;
 use Markussom\SitemapGenerator\Domain\Model\Sitemap;
-use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use Markussom\SitemapGenerator\Service\AdditionalWhereService;
 use Markussom\SitemapGenerator\Service\FieldValueService;
 use Markussom\SitemapGenerator\Service\LimitService;
@@ -27,6 +28,8 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 
@@ -35,6 +38,11 @@ use TYPO3\CMS\Frontend\Page\PageRepository;
  */
 class SitemapRepository
 {
+    /**
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     */
+    protected $objectManager = null;
+
     /**
      * @var FieldValueService
      */
@@ -237,7 +245,7 @@ class SitemapRepository
             'sorting',
             $this->pageRepository->enableFields(
                 'pages'
-            ) . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere
+            ) . ' AND ' . PageUrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere
         );
     }
 
@@ -248,16 +256,17 @@ class SitemapRepository
     {
         foreach ($pages as $page) {
             if ($this->hasPageAnAllowedDoktype($page)) {
-                $urlEntry = GeneralUtility::makeInstance(UrlEntry::class);
-                $uri = PageUrlService::generatePageUrl($page['uid']);
-                $urlEntry->setLoc($uri);
-                $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
-                if (isset($page['sitemap_priority'])) {
-                    $urlEntry->setPriority(number_format($page['sitemap_priority'] / 10, 1, '.', ''));
-                }
-                if (isset($page['sitemap_changefreq'])) {
-                    $urlEntry->setChangefreq($page['sitemap_changefreq']);
-                }
+                // @todo: Add property mapper for this
+                $page['sitemap_priority'] = number_format($page['sitemap_priority'] / 10, 1);
+
+                $dataMapper = $this->objectManager->get(DataMapper::class);
+                $urlEntry = $dataMapper->map(PageUrlEntry::class, [$page]);
+
+                /** @var PageUrlEntry $urlEntry */
+                $urlEntry = array_shift($urlEntry);
+
+                // @todo: Add property mapper for this
+                $urlEntry->setLoc(PageUrlService::generatePageUrl($page['uid']));
                 $this->entryStorage->attach($urlEntry);
             }
         }
@@ -326,8 +335,7 @@ class SitemapRepository
                 while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
                     $row = $this->hideRecordIfNotTranslated($typoScriptUrlEntry, $row);
                     if (!empty($row)) {
-                        /** @var UrlEntry $urlEntry */
-                        $urlEntry = GeneralUtility::makeInstance(UrlEntry::class);
+                        $urlEntry = GeneralUtility::makeInstance(AbstractUrlEntry::class);
                         $urlEntry->setLoc(
                             $this->fieldValueService->getFieldValue('url', $typoScriptUrlEntry, $row)
                         );
@@ -432,6 +440,11 @@ class SitemapRepository
         }
 
         return $record;
+    }
+
+    public function injectObjectManager(ObjectManagerInterface $objectManager)
+    {
+        $this->objectManager = $objectManager;
     }
 
     /**

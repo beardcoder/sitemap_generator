@@ -2,7 +2,7 @@
 
 namespace Markussom\SitemapGenerator\Tests\Unit\Domain\Model;
 
-use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
+use Markussom\SitemapGenerator\Domain\Model\PageUrlEntry;
 
 /**
  * Class UrlEntry
@@ -16,7 +16,7 @@ class UrlEntryTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
 
     public function setUp()
     {
-        $this->subject = $this->getAccessibleMock(UrlEntry::class, ['dummy']);
+        $this->subject = $this->getAccessibleMock(PageUrlEntry::class, ['dummy']);
     }
 
     /**

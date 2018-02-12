@@ -2,8 +2,8 @@
 
 namespace Markussom\SitemapGenerator\Tests\Unit\Domain\Model;
 
+use Markussom\SitemapGenerator\Domain\Model\PageUrlEntry;
 use Markussom\SitemapGenerator\Domain\Model\Sitemap;
-use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
@@ -43,8 +43,8 @@ class SitemapTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
     public function canSetUrlEntries()
     {
         $storage = new ObjectStorage();
-        $storage->attach(new UrlEntry());
-        $storage->attach(new UrlEntry());
+        $storage->attach(new PageUrlEntry());
+        $storage->attach(new PageUrlEntry());
         $this->assertSame(2, $storage->count());
 
         $this->subject->_callRef('setUrlEntries', $storage);
@@ -57,7 +57,7 @@ class SitemapTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
      */
     public function canAddSingleEntry()
     {
-        $entry = new UrlEntry();
+        $entry = new PageUrlEntry();
         $this->subject->_callRef('addUrlEntry', $entry);
 
         $this->assertTrue($this->subject->_call('getUrlEntries')->contains($entry));
@@ -70,7 +70,7 @@ class SitemapTest extends \Nimut\TestingFramework\TestCase\UnitTestCase
     {
         $this->assertFalse($this->subject->_call('isFilled'));
 
-        $entry = new UrlEntry();
+        $entry = new PageUrlEntry();
         $this->subject->_callRef('addUrlEntry', $entry);
 
         $this->assertTrue($this->subject->_call('isFilled'));

@@ -13,11 +13,12 @@ namespace Markussom\SitemapGenerator\Domain\Model;
  *
  * The TYPO3 project - inspiring people to share!
  */
+use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
 
 /**
  * Class UrlEntry
  */
-class UrlEntry
+class AbstractUrlEntry extends AbstractDomainObject
 {
 
     /**
@@ -35,9 +36,9 @@ class UrlEntry
     /**
      * Last modification date of entry
      *
-     * @var string
+     * @var \DateTime
      */
-    protected $lastmod = '';
+    protected $lastmod;
 
     /**
      * Change frequency
@@ -83,7 +84,7 @@ class UrlEntry
     /**
      * Get Lastmod
      *
-     * @return string
+     * @return \DateTime
      */
     public function getLastmod()
     {
@@ -93,7 +94,7 @@ class UrlEntry
     /**
      * Set Lastmod
      *
-     * @param string $lastmod
+     * @param \DateTime $lastmod
      */
     public function setLastmod($lastmod)
     {
