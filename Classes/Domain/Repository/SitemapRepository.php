@@ -223,19 +223,17 @@ class SitemapRepository
      * Get sub pages
      *
      * @param int $startPageId
-     *
      * @return array
      */
     private function getSubPages($startPageId)
     {
-        return $this->pageRepository->getMenu(
-            $startPageId,
-            '*',
-            'sorting',
-            $this->pageRepository->enableFields(
-                'pages'
-            ) . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere
-        );
+        $where = $this->pageRepository->enableFields('pages')
+            . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere;
+        try {
+            return $this->pageRepository->getMenu($startPageId, '*', 'sorting', $where);
+        } catch (\Exception $exception) {
+            return [];
+        }
     }
 
     /**
