@@ -6,13 +6,13 @@ $EM_CONF[$_EXTKEY] = array (
   'author' => 'Markus Sommer',
   'author_email' => 'markussom@posteo.de',
   'state' => 'stable',
-  'version' => '1.2.0',
+  'version' => '1.3.0',
   'constraints' =>
   array (
     'depends' =>
     array (
       'typo3' => '7.6.0-8.7.99',
-      'php' => '5.6.0-7.1.99',
+      'php' => '5.6.0-7.2.99',
     ),
     'conflicts' =>
     array (
