@@ -27,11 +27,12 @@ class PageUrlService
      *
      * Uses the provided GET parameters, page id and language id.
      *
+     * @param int $uid
+     *
      * @return string URL of the current page.
      */
     public static function generatePageUrl($uid)
     {
-        /** @var ContentObjectRenderer $contentObject */
         $contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $conf = [
             'parameter' => intval($uid),
@@ -45,6 +46,7 @@ class PageUrlService
             $conf['additionalParams'] = '&L=' . $language;
         }
         $url = $contentObject->typoLink_URL($conf);
+
         // clean up
         if ($url == '') {
             $url = '/';
