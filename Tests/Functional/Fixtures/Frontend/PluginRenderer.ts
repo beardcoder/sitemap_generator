@@ -2,7 +2,7 @@ config {
 	disableAllHeaderCode = 1
 	admPanel = 0
 	metaCharset = utf-8
-	additionalHeaders = Content-Type:text/xml;charset=utf-8
+	additionalHeaders.10.header = Content-Type: text/xml; charset=utf-8
 	disablePrefixComment = 1
 }
 
