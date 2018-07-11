@@ -90,7 +90,7 @@ lib.tx_sitemapgenerator {
         xhtml_cleaning = none
         admPanel = 0
         metaCharset = utf-8
-        additionalHeaders.10.header = header = Content-Type: text/xml; charset=utf-8
+        additionalHeaders.10.header = Content-Type: text/xml; charset=utf-8
         disablePrefixComment = 1
     }
 
@@ -107,7 +107,7 @@ lib.tx_sitemapgenerator {
         xhtml_cleaning = none
         admPanel = 0
         metaCharset = utf-8
-        additionalHeaders.10.header = header = Content-Type: text/xml; charset=utf-8
+        additionalHeaders.10.header = Content-Type: text/xml; charset=utf-8
         disablePrefixComment = 1
     }
 
