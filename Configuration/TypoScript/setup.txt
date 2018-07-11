@@ -90,7 +90,7 @@ lib.tx_sitemapgenerator {
         xhtml_cleaning = none
         admPanel = 0
         metaCharset = utf-8
-        additionalHeaders = Content-Type:text/xml;charset=utf-8
+        additionalHeaders.10.header = Content-Type: text/xml; charset=utf-8
         disablePrefixComment = 1
     }
 
@@ -107,7 +107,7 @@ lib.tx_sitemapgenerator {
         xhtml_cleaning = none
         admPanel = 0
         metaCharset = utf-8
-        additionalHeaders = Content-Type:text/xml;charset=utf-8
+        additionalHeaders.10.header = Content-Type: text/xml; charset=utf-8
         disablePrefixComment = 1
     }
 
@@ -117,11 +117,5 @@ lib.tx_sitemapgenerator {
         10 < lib.tx_sitemapgenerator
         10.action = googleNewsList
         10.switchableControllerActions.Sitemap.1 = googleNewsList
-    }
-[global]
-
-[globalVar = TSFE:type = 1451160842] && [compatVersion = 7.6.0] || [globalVar = TSFE:type = 1449874941] && [compatVersion = 7.6.0]
-    config {
-        additionalHeaders.10.header = Content-Type:text/xml;charset=utf-8
     }
 [global]
