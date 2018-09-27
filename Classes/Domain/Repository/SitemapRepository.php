@@ -141,6 +141,7 @@ class SitemapRepository
             return;
         }
         $pages = $this->hidePagesIfNotTranslated($this->getPages());
+        $pages = $this->hidePagesIfHiddenInDefaultTranslation($pages);
 
         $this->getEntriesFromPages($pages);
     }
@@ -177,6 +178,28 @@ class SitemapRepository
         $ifNotTranslated = $this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated'];
 
         return (int)$language !== 0 && (int)$ifNotTranslated === 1;
+    }
+
+    /**
+     * Remove page if hidden in default translation
+     *
+     * @param array $pages
+     *
+     * @return array
+     */
+    private function hidePagesIfHiddenInDefaultTranslation($pages)
+    {
+        $language = GeneralUtility::_GET('L');
+
+        if ($language == 0) {
+            foreach ($pages as $key => $page) {
+                if ($page['l18n_cfg'] === 1) {
+                    unset($pages[$key]);
+                }
+            }
+        }
+
+        return $pages;
     }
 
     /**
