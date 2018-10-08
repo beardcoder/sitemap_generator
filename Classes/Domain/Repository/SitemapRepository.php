@@ -13,6 +13,7 @@ namespace Markussom\SitemapGenerator\Domain\Repository;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use Markussom\SitemapGenerator\Domain\Model\GoogleNewsUrlEntry;
 use Markussom\SitemapGenerator\Domain\Model\Sitemap;
 use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
@@ -22,7 +23,6 @@ use Markussom\SitemapGenerator\Service\LimitService;
 use Markussom\SitemapGenerator\Service\OrderByService;
 use Markussom\SitemapGenerator\Service\PageUrlService;
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -61,11 +61,6 @@ class SitemapRepository
     protected $pageRepository = null;
 
     /**
-     * @var TypoScriptParser
-     */
-    protected $typoScriptParser = null;
-
-    /**
      * @var \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
      */
     protected $cacheInstance;
@@ -80,13 +75,12 @@ class SitemapRepository
         $this->makeClassInstance();
         $this->cacheInstance = GeneralUtility::makeInstance(CacheManager::class)->getCache('sitemap_generator');
 
-        $this->pluginConfig = $this->typoScriptParser->getVal(
-            'plugin.tx_sitemapgenerator',
-            $GLOBALS['TSFE']->tmpl->setup
+        $this->pluginConfig = GeneralUtility::removeDotsFromTS(
+            $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sitemapgenerator.']
         );
 
         $this->pageAdditionalWhere = AdditionalWhereService::getWhereString(
-            $this->pluginConfig['1']['urlEntries.']['pages.']['additionalWhere']
+            $this->pluginConfig['urlEntries']['pages']['additionalWhere']
         );
     }
 
@@ -99,7 +93,6 @@ class SitemapRepository
         $this->entryStorage = $objectManager->get(ObjectStorage::class);
         $this->pageRepository = $objectManager->get(PageRepository::class);
         $this->fieldValueService = $objectManager->get(FieldValueService::class);
-        $this->typoScriptParser = $objectManager->get(TypoScriptParser::class);
     }
 
     /**
@@ -137,7 +130,7 @@ class SitemapRepository
      */
     public function findAllPages()
     {
-        if (empty($this->pluginConfig['1']['urlEntries.']['pages'])) {
+        if (empty($this->pluginConfig['urlEntries']['pages'])) {
             return;
         }
         $pages = $this->hidePagesIfNotTranslated($this->getPages());
@@ -174,7 +167,7 @@ class SitemapRepository
      */
     private function isPageNotTranslated($language)
     {
-        $ifNotTranslated = $this->pluginConfig['1']['urlEntries.']['pages.']['hidePagesIfNotTranslated'];
+        $ifNotTranslated = $this->pluginConfig['urlEntries']['pages']['hidePagesIfNotTranslated'];
 
         return (int)$language !== 0 && (int)$ifNotTranslated === 1;
     }
@@ -186,7 +179,7 @@ class SitemapRepository
      */
     private function getPages()
     {
-        $rootPageId = $this->pluginConfig['1']['urlEntries.']['pages.']['rootPageId'];
+        $rootPageId = $this->pluginConfig['urlEntries']['pages']['rootPageId'];
         $rootPage = $this->pageRepository->getPage($rootPageId);
 
         $cacheIdentifier = md5($rootPageId . '-pagesForSitemap');
@@ -269,7 +262,7 @@ class SitemapRepository
     private function hasPageAnAllowedDoktype($page)
     {
         return GeneralUtility::inList(
-            $this->pluginConfig['1']['urlEntries.']['pages.']['allowedDoktypes'],
+            $this->pluginConfig['urlEntries']['pages']['allowedDoktypes'],
             $page['doktype']
         );
     }
@@ -292,7 +285,7 @@ class SitemapRepository
         }
 
         return GeneralUtility::inList(
-            $this->pluginConfig['1']['urlEntries.']['pages.']['stopPageTreeDoktypes'],
+            $this->pluginConfig['urlEntries']['pages']['stopPageTreeDoktypes'],
             $page['doktype']
         );
     }
@@ -302,7 +295,7 @@ class SitemapRepository
      */
     public function generateEntriesFromTypoScript()
     {
-        $urlEntries = $this->pluginConfig[1]['urlEntries.'];
+        $urlEntries = $this->pluginConfig['urlEntries'];
         foreach ($urlEntries as $urlEntry) {
             if (!empty($urlEntry['active'])) {
                 $this->mapToEntries($urlEntry);
@@ -449,14 +442,14 @@ class SitemapRepository
      */
     public function findAllGoogleNewsEntries()
     {
-        if (!isset($this->pluginConfig[1]['googleNewsUrlEntry'])
-            || !MathUtility::canBeInterpretedAsInteger($this->pluginConfig[1]['googleNewsUrlEntry'])
-            || (int)$this->pluginConfig[1]['googleNewsUrlEntry'] === 0
+        if (!isset($this->pluginConfig['googleNewsUrlEntry'])
+            || !MathUtility::canBeInterpretedAsInteger($this->pluginConfig['googleNewsUrlEntry'])
+            || (int)$this->pluginConfig['googleNewsUrlEntry'] === 0
         ) {
             return false;
         }
 
-        $entries = $this->mapGoogleNewsEntries($this->pluginConfig[1]['googleNewsUrlEntry.']);
+        $entries = $this->mapGoogleNewsEntries($this->pluginConfig['googleNewsUrlEntry']);
 
         return $entries;
     }
