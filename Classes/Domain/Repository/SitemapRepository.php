@@ -274,7 +274,7 @@ class SitemapRepository
                 $urlEntry = GeneralUtility::makeInstance(UrlEntry::class);
                 $uri = PageUrlService::generatePageUrl($page['uid']);
                 $urlEntry->setLoc($uri);
-                $urlEntry->setLastmod(date('Y-m-d', $page['tstamp']));
+                $urlEntry->setLastmod(date('Y-m-d', $page['SYS_LASTCHANGED']));
                 if (isset($page['sitemap_priority'])) {
                     $urlEntry->setPriority(number_format($page['sitemap_priority'] / 10, 1, '.', ''));
                 }
