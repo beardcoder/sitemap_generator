@@ -191,11 +191,13 @@ class SitemapRepository
     {
         $language = GeneralUtility::_GET('L');
 
-        if ($language == 0) {
-            foreach ($pages as $key => $page) {
-                if ($page['l18n_cfg'] === 1) {
-                    unset($pages[$key]);
-                }
+        if ($language != 0) {
+            return $pages;
+        }
+
+        foreach ($pages as $key => $page) {
+            if ($page['l18n_cfg'] === 1) {
+                unset($pages[$key]);
             }
         }
 
