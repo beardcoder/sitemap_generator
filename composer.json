@@ -19,7 +19,7 @@
     }
   ],
   "require": {
-    "php": ">=5.6.0,<7.2.99",
+    "php": ">=5.6.0,<7.3.99",
     "typo3/cms-core": ">=7.6.20,<10.0.0"
   },
   "replace": {
@@ -28,7 +28,7 @@
   },
   "require-dev": {
     "mikey179/vfsStream": "~1.6.0",
-    "nimut/testing-framework": "^1.1",
+    "nimut/testing-framework": "*",
     "phpunit/phpunit": "^5.6.0"
   },
   "suggest": {
