@@ -8,30 +8,45 @@
     "sitemap",
     "xml"
   ],
-  "support": {
-    "issues": "https://github.com/beardcoder/sitemap_generator/issues"
-  },
   "homepage": "https://www.creativeworkspace.de",
+  "license": "MIT",
   "authors": [
     {
       "name": "Markus Sommer",
       "email": "info@creativeworkspace.de",
-      "role": "Developer",
-      "homepage": "https://www.creativeworkspace.de"
+      "homepage": "https://www.creativeworkspace.de",
+      "role": "Developer"
     }
   ],
-  "license": "MIT",
   "require": {
     "php": ">=5.6.0,<7.2.99",
     "typo3/cms-core": ">=7.6.20,<10.0.0"
   },
-  "suggest": {
-    "dmitryd/typo3-realurl": ">=2"
+  "replace": {
+    "sitemap_generator": "self.version",
+    "typo3-ter/sitemap-generator": "self.version"
   },
   "require-dev": {
     "mikey179/vfsStream": "~1.6.0",
-    "phpunit/phpunit": "^5.6.0",
-    "nimut/testing-framework": "^1.1"
+    "nimut/testing-framework": "^1.1",
+    "phpunit/phpunit": "^5.6.0"
+  },
+  "suggest": {
+    "dmitryd/typo3-realurl": ">=2"
+  },
+  "config": {
+    "bin-dir": ".Build/vendor/bin",
+    "optimize-autoloader": true,
+    "vendor-dir": ".Build/vendor"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "2.0.x-dev"
+    },
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build"
+    }
   },
   "autoload": {
     "psr-4": {
@@ -43,28 +58,13 @@
       "Markussom\\SitemapGenerator\\Tests\\": "Tests"
     }
   },
-  "replace": {
-    "sitemap_generator": "self.version",
-    "typo3-ter/sitemap-generator": "self.version"
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "vendor-dir": ".Build/vendor",
-    "bin-dir": ".Build/vendor/bin"
-  },
   "scripts": {
     "post-autoload-dump": [
       "mkdir -p .Build/typo3conf/ext/",
       "[ -L .Build/typo3conf/ext/sitemap_generator ] || ln -snvf ../../../. .Build/typo3conf/ext/sitemap_generator"
     ]
   },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "2.0.x-dev"
-    },
-    "typo3/cms": {
-      "cms-package-dir": "{$vendor-dir}/typo3/cms",
-      "web-dir": ".Build"
-    }
+  "support": {
+    "issues": "https://github.com/beardcoder/sitemap_generator/issues"
   }
 }
