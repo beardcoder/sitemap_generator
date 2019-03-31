@@ -19,8 +19,10 @@
     }
   ],
   "require": {
-    "php": ">=5.6.0,<7.3.99",
-    "typo3/cms-core": ">=7.6.20,<10.0.0"
+    "php": ">=5.5 <7.3",
+    "typo3/cms-core": "^7.6.23 || ^8.7.10",
+    "typo3/cms-fluid": "^7.6.23 || ^8.7.10",
+    "typo3/cms-frontend": "^7.6.23 || ^8.7.10"
   },
   "replace": {
     "sitemap_generator": "self.version",
@@ -28,7 +30,7 @@
   },
   "require-dev": {
     "mikey179/vfsStream": "~1.6.0",
-    "nimut/testing-framework": "*",
+    "nimut/testing-framework": "^3.0",
     "phpunit/phpunit": "^5.6.0"
   },
   "suggest": {
@@ -41,11 +43,12 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "1.0.x-dev"
     },
     "typo3/cms": {
+      "extension-key": "sitemap_generator",
       "cms-package-dir": "{$vendor-dir}/typo3/cms",
-      "web-dir": ".Build"
+      "web-dir": ".Build/public"
     }
   },
   "autoload": {
@@ -59,9 +62,12 @@
     }
   },
   "scripts": {
+    "link-extension": [
+      "@php -r 'is_dir($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/\") || mkdir($extFolder, 0777, true);'",
+      "@php -r 'file_exists($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/ext_scaffold\") || symlink(__DIR__,$extFolder);'"
+    ],
     "post-autoload-dump": [
-      "mkdir -p .Build/typo3conf/ext/",
-      "[ -L .Build/typo3conf/ext/sitemap_generator ] || ln -snvf ../../../. .Build/typo3conf/ext/sitemap_generator"
+      "@link-extension"
     ]
   },
   "support": {
