@@ -61,7 +61,7 @@ class Sitemap
     /**
      * @return bool
      */
-    public function isFilled()
+    public function isFilled(): bool
     {
         if (1 <= $this->urlEntries->count()) {
             return true;

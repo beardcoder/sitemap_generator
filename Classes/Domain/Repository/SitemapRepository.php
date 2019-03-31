@@ -3,14 +3,11 @@ namespace Markussom\SitemapGenerator\Domain\Repository;
 
 /**
  * This file is part of the TYPO3 CMS project.
- *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
  * of the License, or any later version.
- *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
  * The TYPO3 project - inspiring people to share!
  */
 
@@ -23,6 +20,7 @@ use Markussom\SitemapGenerator\Service\LimitService;
 use Markussom\SitemapGenerator\Service\OrderByService;
 use Markussom\SitemapGenerator\Service\PageUrlService;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -67,7 +65,6 @@ class SitemapRepository
 
     /**
      * SitemapRepository constructor.
-     *
      * @SuppressWarnings(superglobals)
      */
     public function __construct()
@@ -100,7 +97,7 @@ class SitemapRepository
      *
      * @return Sitemap|null
      */
-    public function generateSitemap()
+    public function generateSitemap(): Sitemap
     {
         if ($this->findAllEntries()) {
             $sitemap = GeneralUtility::makeInstance(Sitemap::class);
@@ -117,7 +114,7 @@ class SitemapRepository
      *
      * @return bool
      */
-    public function findAllEntries()
+    public function findAllEntries(): bool
     {
         $this->findAllPages();
         $this->generateEntriesFromTypoScript();
@@ -146,7 +143,7 @@ class SitemapRepository
      *
      * @return array
      */
-    private function hidePagesIfNotTranslated($pages)
+    private function hidePagesIfNotTranslated($pages): array
     {
         $language = GeneralUtility::_GET('L');
         if ($this->isPageNotTranslated($language)) {
@@ -166,7 +163,7 @@ class SitemapRepository
      *
      * @return bool
      */
-    private function isPageNotTranslated($language)
+    private function isPageNotTranslated($language): bool
     {
         $ifNotTranslated = $this->pluginConfig['urlEntries']['pages']['hidePagesIfNotTranslated'];
 
@@ -180,7 +177,7 @@ class SitemapRepository
      *
      * @return array
      */
-    private function hidePagesIfHiddenInDefaultTranslation($pages)
+    private function hidePagesIfHiddenInDefaultTranslation($pages): array
     {
         $language = GeneralUtility::_GET('L');
 
@@ -202,7 +199,7 @@ class SitemapRepository
      *
      * @return array
      */
-    private function getPages()
+    private function getPages(): array
     {
         $rootPageId = $this->pluginConfig['urlEntries']['pages']['rootPageId'];
         $rootPage = $this->pageRepository->getPage($rootPageId);
@@ -225,7 +222,7 @@ class SitemapRepository
      *
      * @return array
      */
-    private function getSubPagesRecursive($rootPageId)
+    private function getSubPagesRecursive($rootPageId): array
     {
         $pages = $this->getSubPages($rootPageId);
         foreach ($pages as $page) {
@@ -244,12 +241,21 @@ class SitemapRepository
      * Get sub pages
      *
      * @param int $startPageId
+     *
      * @return array
      */
-    private function getSubPages($startPageId)
+    private function getSubPages($startPageId): array
     {
-        $where = $this->pageRepository->enableFields('pages')
-            . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere;
+        $where = implode(
+            ' ',
+            [
+                $this->pageRepository->enableFields('pages'),
+                'AND',
+                UrlEntry::EXCLUDE_FROM_SITEMAP,
+                '!=1',
+                $this->pageAdditionalWhere,
+            ]
+        );
         try {
             return $this->pageRepository->getMenu($startPageId, '*', 'sorting', $where);
         } catch (\Exception $exception) {
@@ -284,7 +290,7 @@ class SitemapRepository
      *
      * @return bool
      */
-    private function hasPageAnAllowedDoktype($page)
+    private function hasPageAnAllowedDoktype($page): bool
     {
         return GeneralUtility::inList(
             $this->pluginConfig['urlEntries']['pages']['allowedDoktypes'],
@@ -296,14 +302,13 @@ class SitemapRepository
      * Determines if the child page tree should not be fetched based on the current page.
      * This is for example a "Backend User Section" or "Recycler" (configurable) or the
      * page has "Stop Page Tree" activated (cannot be deactivated).
-     *
      * A leaf is the last element in a tree.
      *
      * @param array $page
      *
      * @return bool
      */
-    private function isPageTreeLeaf(array $page)
+    private function isPageTreeLeaf(array $page): bool
     {
         if ('1' === $page['php_tree_stop']) {
             return true;
@@ -387,9 +392,9 @@ class SitemapRepository
      */
     private function getRecordsFromDatabase($typoScriptUrlEntry)
     {
-        if (!isset($GLOBALS['TCA'][$typoScriptUrlEntry['table']])
-            || !is_array($GLOBALS['TCA'][$typoScriptUrlEntry['table']]['ctrl'])
-        ) {
+        if (!isset($GLOBALS['TCA'][$typoScriptUrlEntry['table']]) || !is_array(
+                $GLOBALS['TCA'][$typoScriptUrlEntry['table']]['ctrl']
+            )) {
             return false;
         }
 
@@ -419,12 +424,11 @@ class SitemapRepository
 
     /**
      * Returns the database connection
-     *
      * @SuppressWarnings(superglobals)
      *
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     * @return DatabaseConnection
      */
-    protected function getDatabaseConnection()
+    private function getDatabaseConnection(): DatabaseConnection
     {
         return $GLOBALS['TYPO3_DB'];
     }
@@ -457,7 +461,7 @@ class SitemapRepository
      *
      * @return bool
      */
-    private function isRecordNotTranslated($recordConfig, $record, $language)
+    private function isRecordNotTranslated($recordConfig, $record, $language): bool
     {
         return $record['sys_language_uid'] !== '-1' && (int)$language !== 0 && (int)$recordConfig['hideIfNotTranslated'] === 1;
     }
@@ -467,10 +471,9 @@ class SitemapRepository
      */
     public function findAllGoogleNewsEntries()
     {
-        if (!isset($this->pluginConfig['googleNewsUrlEntry'])
-            || !MathUtility::canBeInterpretedAsInteger($this->pluginConfig['googleNewsUrlEntry'])
-            || (int)$this->pluginConfig['googleNewsUrlEntry'] === 0
-        ) {
+        if (!isset($this->pluginConfig['googleNewsUrlEntry']) || !MathUtility::canBeInterpretedAsInteger(
+                $this->pluginConfig['googleNewsUrlEntry']
+            ) || (int)$this->pluginConfig['googleNewsUrlEntry'] === 0) {
             return false;
         }
 
@@ -487,7 +490,7 @@ class SitemapRepository
      *
      * @return array
      */
-    protected function mapGoogleNewsEntries(array $typoScriptUrlEntry)
+    private function mapGoogleNewsEntries(array $typoScriptUrlEntry): array
     {
         $records = $this->getRecordsFromDatabase($typoScriptUrlEntry);
         $urlEntries = [];

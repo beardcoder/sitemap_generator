@@ -19,7 +19,7 @@
     }
   ],
   "require": {
-    "php": ">=5.5 <7.3",
+    "php": ">=7.0 <7.3",
     "typo3/cms-core": "^7.6.23 || ^8.7.10",
     "typo3/cms-fluid": "^7.6.23 || ^8.7.10",
     "typo3/cms-frontend": "^7.6.23 || ^8.7.10"
@@ -29,9 +29,7 @@
     "typo3-ter/sitemap-generator": "self.version"
   },
   "require-dev": {
-    "mikey179/vfsStream": "~1.6.0",
-    "nimut/testing-framework": "^3.0",
-    "phpunit/phpunit": "^5.6.0"
+    "nimut/testing-framework": "^3.0"
   },
   "suggest": {
     "dmitryd/typo3-realurl": ">=2"

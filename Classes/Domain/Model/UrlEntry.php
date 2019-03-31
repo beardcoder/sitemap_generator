@@ -65,7 +65,7 @@ class UrlEntry
      *
      * @return string
      */
-    public function getLoc()
+    public function getLoc(): string
     {
         return $this->loc;
     }
@@ -85,7 +85,7 @@ class UrlEntry
      *
      * @return string
      */
-    public function getLastmod()
+    public function getLastmod(): string
     {
         return $this->lastmod;
     }
@@ -105,7 +105,7 @@ class UrlEntry
      *
      * @return string
      */
-    public function getChangefreq()
+    public function getChangefreq(): string
     {
         return $this->changefreq;
     }
@@ -125,7 +125,7 @@ class UrlEntry
      *
      * @return float
      */
-    public function getPriority()
+    public function getPriority(): float
     {
         return $this->priority;
     }
