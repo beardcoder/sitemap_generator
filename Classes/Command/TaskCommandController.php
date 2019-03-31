@@ -1,7 +1,7 @@
 <?php
 namespace Markussom\SitemapGenerator\Command;
 
-/**
+/*
  * This file is part of the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
@@ -13,6 +13,7 @@ namespace Markussom\SitemapGenerator\Command;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use Markussom\SitemapGenerator\Service\GoogleSitemapService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;

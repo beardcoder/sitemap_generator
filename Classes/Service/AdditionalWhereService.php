@@ -1,7 +1,7 @@
 <?php
 namespace Markussom\SitemapGenerator\Service;
 
-/**
+/*
  * This file is part of the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
@@ -13,6 +13,7 @@ namespace Markussom\SitemapGenerator\Service;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 
 /**
@@ -27,7 +28,7 @@ class AdditionalWhereService
      *
      * @return string
      */
-    public static function getWhereString($additionalWhere)
+    public static function getWhereString($additionalWhere): string
     {
         if (isset($additionalWhere) && !empty($additionalWhere)) {
             return ' ' . DatabaseConnection::AND_Constraint . ' ' . $additionalWhere;

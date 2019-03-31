@@ -1,7 +1,7 @@
 <?php
 namespace Markussom\SitemapGenerator\Service;
 
-/**
+/*
  * This file is part of the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
@@ -13,6 +13,7 @@ namespace Markussom\SitemapGenerator\Service;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
@@ -21,25 +22,23 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
  */
 class PageUrlService
 {
-
     /**
      * Generates the current page's URL.
-     *
      * Uses the provided GET parameters, page id and language id.
      *
      * @param int $uid
      *
      * @return string URL of the current page.
      */
-    public static function generatePageUrl($uid)
+    public static function generatePageUrl($uid): string
     {
         $contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $conf = [
-            'parameter' => intval($uid),
+            'parameter'                 => intval($uid),
             'linkAccessRestrictedPages' => '1',
-            'useCacheHash' => 1,
-            'returnLast ' => 'url',
-            'forceAbsoluteUrl' => 1
+            'useCacheHash'              => 1,
+            'returnLast '               => 'url',
+            'forceAbsoluteUrl'          => 1,
         ];
         $language = GeneralUtility::_GET('L');
         if (!empty($language)) {

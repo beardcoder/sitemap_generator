@@ -29,7 +29,7 @@
     "typo3-ter/sitemap-generator": "self.version"
   },
   "require-dev": {
-    "nimut/testing-framework": "^3.0"
+    "nimut/testing-framework": "2.x-dev || 3.x-dev || 4.x-dev"
   },
   "suggest": {
     "dmitryd/typo3-realurl": ">=2"

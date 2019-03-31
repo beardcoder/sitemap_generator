@@ -1,13 +1,16 @@
 <?php
 namespace Markussom\SitemapGenerator\Domain\Repository;
 
-/**
+/*
  * This file is part of the TYPO3 CMS project.
+ *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
  * of the License, or any later version.
+ *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
+ *
  * The TYPO3 project - inspiring people to share!
  */
 
@@ -393,7 +396,7 @@ class SitemapRepository
     private function getRecordsFromDatabase($typoScriptUrlEntry)
     {
         if (!isset($GLOBALS['TCA'][$typoScriptUrlEntry['table']]) || !is_array(
-                $GLOBALS['TCA'][$typoScriptUrlEntry['table']]['ctrl']
+            $GLOBALS['TCA'][$typoScriptUrlEntry['table']]['ctrl']
             )) {
             return false;
         }
@@ -472,7 +475,7 @@ class SitemapRepository
     public function findAllGoogleNewsEntries()
     {
         if (!isset($this->pluginConfig['googleNewsUrlEntry']) || !MathUtility::canBeInterpretedAsInteger(
-                $this->pluginConfig['googleNewsUrlEntry']
+            $this->pluginConfig['googleNewsUrlEntry']
             ) || (int)$this->pluginConfig['googleNewsUrlEntry'] === 0) {
             return false;
         }

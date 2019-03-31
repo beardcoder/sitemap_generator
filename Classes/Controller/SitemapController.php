@@ -1,7 +1,7 @@
 <?php
 namespace Markussom\SitemapGenerator\Controller;
 
-/**
+/*
  * This file is part of the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
@@ -13,6 +13,7 @@ namespace Markussom\SitemapGenerator\Controller;
  *
  * The TYPO3 project - inspiring people to share!
  */
+
 use Markussom\SitemapGenerator\Domain\Repository\SitemapRepository;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
@@ -24,6 +25,7 @@ class SitemapController extends ActionController
 
     /**
      * SitemapRepository
+     *
      * @var SitemapRepository
      */
     protected $sitemapRepository = null;
