@@ -160,3 +160,18 @@ RealURL for beautiful sitemap\_news.xml url
             ]
         ]
     ];
+
+
+Speaking Urls for the sitemap with RealURL
+------------------------------------------
+
+If the speaking urls should not work within the sitemap, the following must be included in the typoscript
+
+Enable for pagetype 1449874941
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+    [globalVar = TSFE:type = 1449874941]
+        config.tx_realurl_enable = 1
+    [global]
