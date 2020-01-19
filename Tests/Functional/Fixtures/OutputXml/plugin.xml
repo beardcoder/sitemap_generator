@@ -1,50 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
   <url>
-    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=1&amp;cHash=a2a503977132ba39a003194927ba3f96</loc>
+    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=1</loc>
     <lastmod>2015-12-22</lastmod>
-    
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=2&amp;cHash=3a6b048da567952154578baec833e728</loc>
+    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=2</loc>
     <lastmod>1970-01-01</lastmod>
     <changefreq>never</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=5&amp;cHash=fbfaf7e40396fa3642f554c5e39aefc9</loc>
+    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=5</loc>
     <lastmod>1970-01-01</lastmod>
-    
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=7&amp;cHash=da4a569fa0c0b5cf225b6e40b53ab814</loc>
+    <loc>http://localhost/index.php?id=2&amp;tx_news%5Bcontroller%5D=News&amp;tx_news%5Baction%5D=detail&amp;tx_news%5Bnews%5D=7</loc>
     <lastmod>1970-01-01</lastmod>
     <changefreq>never</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://localhost/index.php?id=2&amp;tx_events%5Bcontroller%5D=Events&amp;tx_events%5Baction%5D=detail&amp;tx_events%5Bevents%5D=1&amp;cHash=72e35ece97ca4398516a469bd3b62d9d</loc>
+    <loc>http://localhost/index.php?id=2&amp;tx_events%5Bcontroller%5D=Events&amp;tx_events%5Baction%5D=detail&amp;tx_events%5Bevents%5D=1</loc>
     <lastmod>2015-12-22</lastmod>
-    
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>http://localhost/index.php?id=2&amp;tx_events%5Bcontroller%5D=Events&amp;tx_events%5Baction%5D=detail&amp;tx_events%5Bevents%5D=2&amp;cHash=dbf12a5e67d2a698c3aef71d637e3901</loc>
+    <loc>http://localhost/index.php?id=2&amp;tx_events%5Bcontroller%5D=Events&amp;tx_events%5Baction%5D=detail&amp;tx_events%5Bevents%5D=2</loc>
     <lastmod>1970-01-01</lastmod>
     <changefreq>never</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://localhost/index.php?id=2&amp;tx_events%5Bcontroller%5D=Events&amp;tx_events%5Baction%5D=detail&amp;tx_events%5Bevents%5D=5&amp;cHash=e6201e11b7493bad92b319d408540aff</loc>
+    <loc>http://localhost/index.php?id=2&amp;tx_events%5Bcontroller%5D=Events&amp;tx_events%5Baction%5D=detail&amp;tx_events%5Bevents%5D=5</loc>
     <lastmod>1970-01-01</lastmod>
-    
     <priority>0.5</priority>
   </url>
-  
-
-
 </urlset>
-  

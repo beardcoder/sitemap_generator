@@ -6,7 +6,7 @@
 		<title>Root</title>
 		<hidden>0</hidden>
 		<deleted>0</deleted>
-		<tstamp>1450797120</tstamp>
+		<SYS_LASTCHANGED>1450797120</SYS_LASTCHANGED>
 		<doktype>1</doktype>
 		<sitemap_priority>0</sitemap_priority>
 	</pages>
@@ -16,7 +16,7 @@
 		<title>Dummy 1-2</title>
 		<hidden>0</hidden>
 		<deleted>0</deleted>
-		<tstamp>0</tstamp>
+		<SYS_LASTCHANGED>0</SYS_LASTCHANGED>
 		<doktype>1</doktype>
 		<sitemap_priority>8</sitemap_priority>
 		<sitemap_changefreq>always</sitemap_changefreq>

@@ -23,11 +23,11 @@ class AdditionalWhereService
     /**
      * Returns the where statement for database connection
      *
-     * @param string $additionalWhere
+     * @param string|null $additionalWhere
      *
      * @return string
      */
-    public static function getWhereString(string $additionalWhere): string
+    public static function getWhereString($additionalWhere): string
     {
         if (isset($additionalWhere) && !empty($additionalWhere)) {
             return ' ' . DatabaseConnection::AND_Constraint . ' ' . $additionalWhere;

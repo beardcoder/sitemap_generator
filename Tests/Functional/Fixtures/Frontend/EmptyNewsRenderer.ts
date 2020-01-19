@@ -1,4 +1,6 @@
 config {
+	no_cache = 1
+	debug = 0
 	disableAllHeaderCode = 1
 	admPanel = 0
 	metaCharset = utf-8

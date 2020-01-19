@@ -23,12 +23,12 @@ class OrderByService
     /**
      * Returns the orderBy statement for database connection
      *
-     * @param string $orderBy
-     * @param string $tablename
+     * @param string|null $orderBy
+     * @param string|null $tablename
      *
      * @return string
      */
-    public static function getOrderByString(string $orderBy, string $tablename): string
+    public static function getOrderByString($orderBy, $tablename): string
     {
         if (isset($orderBy) && !empty($orderBy)) {
             $cleanOrderByParts = [];

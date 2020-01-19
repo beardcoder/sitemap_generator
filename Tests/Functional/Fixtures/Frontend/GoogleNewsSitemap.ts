@@ -1,4 +1,6 @@
 config {
+	no_cache = 1
+	debug = 0
 	disableAllHeaderCode = 1
 	admPanel = 0
 	metaCharset = utf-8
@@ -46,7 +48,7 @@ plugin.tx_sitemapgenerator {
 			typolink.parameter = 2
 			typolink.additionalParams = &tx_news_pi1[controller]=News&tx_news_pi1[action]=detail&tx_news_pi1[news]={field:uid}
 			typolink.additionalParams.insertData = 1
-			typolink.useCacheHash = 1
+			typolink.useCacheHash = 0
 			typolink.returnLast = url
 			typolink.forceAbsoluteUrl = 1
 		}

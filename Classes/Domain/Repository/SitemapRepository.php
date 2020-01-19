@@ -324,7 +324,7 @@ class SitemapRepository
      */
     public function generateEntriesFromTypoScript(): void
     {
-        $urlEntries = $this->pluginConfig['urlEntries'];
+        $urlEntries = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sitemapgenerator.']['urlEntries.'];
         foreach ($urlEntries as $urlEntry) {
             if (!empty($urlEntry['active'])) {
                 $this->mapToEntries($urlEntry);
@@ -471,14 +471,15 @@ class SitemapRepository
      */
     public function findAllGoogleNewsEntries()
     {
-        if (!isset($this->pluginConfig['googleNewsUrlEntry'])
-            || !MathUtility::canBeInterpretedAsInteger($this->pluginConfig['googleNewsUrlEntry'])
-            || (int)$this->pluginConfig['googleNewsUrlEntry'] === 0
+        $googleNewsUrlEntriesConfig = $urlEntries = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_sitemapgenerator.'];
+        if (!isset($googleNewsUrlEntriesConfig['googleNewsUrlEntry'])
+            || !MathUtility::canBeInterpretedAsInteger($googleNewsUrlEntriesConfig['googleNewsUrlEntry'])
+            || (int)$googleNewsUrlEntriesConfig['googleNewsUrlEntry'] === 0
         ) {
             return false;
         }
 
-        return $this->mapGoogleNewsEntries($this->pluginConfig['googleNewsUrlEntry']);
+        return $this->mapGoogleNewsEntries($googleNewsUrlEntriesConfig['googleNewsUrlEntry.']);
     }
 
     /**

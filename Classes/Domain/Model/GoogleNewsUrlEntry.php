@@ -118,9 +118,9 @@ class GoogleNewsUrlEntry extends UrlEntry
     /**
      * Get Access
      *
-     * @return string
+     * @return string|null
      */
-    public function getAccess(): string
+    public function getAccess(): ?string
     {
         return $this->access;
     }
@@ -130,7 +130,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @param string $access
      */
-    public function setAccess(string $access): void
+    public function setAccess(?string $access): void
     {
         $this->access = $access;
     }
@@ -138,9 +138,9 @@ class GoogleNewsUrlEntry extends UrlEntry
     /**
      * Get Genres
      *
-     * @return string
+     * @return string|null
      */
-    public function getGenres(): string
+    public function getGenres(): ?string
     {
         return $this->genres;
     }
@@ -148,9 +148,9 @@ class GoogleNewsUrlEntry extends UrlEntry
     /**
      * Set Genres
      *
-     * @param string $genres
+     * @param string|null $genres
      */
-    public function setGenres(string $genres): void
+    public function setGenres(?string $genres): void
     {
         $this->genres = $genres;
     }
@@ -158,9 +158,9 @@ class GoogleNewsUrlEntry extends UrlEntry
     /**
      * Get PublicationDate
      *
-     * @return string
+     * @return string|null
      */
-    public function getPublicationDate(): string
+    public function getPublicationDate(): ?string
     {
         return $this->publicationDate;
     }
@@ -168,9 +168,9 @@ class GoogleNewsUrlEntry extends UrlEntry
     /**
      * Set PublicationDate
      *
-     * @param string $publicationDate
+     * @param string|null $publicationDate
      */
-    public function setPublicationDate(string $publicationDate): void
+    public function setPublicationDate(?string $publicationDate): void
     {
         $this->publicationDate = $publicationDate;
     }
@@ -198,9 +198,9 @@ class GoogleNewsUrlEntry extends UrlEntry
     /**
      * Get Keywords
      *
-     * @return string
+     * @return string|null
      */
-    public function getKeywords(): string
+    public function getKeywords(): ?string
     {
         return $this->keywords;
     }
@@ -208,9 +208,9 @@ class GoogleNewsUrlEntry extends UrlEntry
     /**
      * Set Keywords
      *
-     * @param string $keywords
+     * @param string|null $keywords
      */
-    public function setKeywords(string $keywords): void
+    public function setKeywords(?string $keywords): void
     {
         $this->keywords = $keywords;
     }

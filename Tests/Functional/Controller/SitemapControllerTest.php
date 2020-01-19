@@ -14,11 +14,13 @@ namespace Markussom\SitemapGenerator\Tests\Functional\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+
 /**
  * Class SitemapControllerTest
  *
  */
-class SitemapControllerTest extends \Nimut\TestingFramework\TestCase\FunctionalTestCase
+class SitemapControllerTest extends FunctionalTestCase
 {
 
     /**

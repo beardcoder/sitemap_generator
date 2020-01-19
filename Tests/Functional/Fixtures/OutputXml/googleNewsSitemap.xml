@@ -1,77 +1,56 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-                               xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
-
+<?xml version="1.0"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
   <url>
     <loc>
-      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=1&amp;cHash=193331b934059d4c1c35381c026e6b5a
+      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=1
     </loc>
     <news:news>
       <news:publication>
         <news:name>First news</news:name>
         <news:language>de</news:language>
       </news:publication>
-      
-      
       <news:publication_date>2015-12-22</news:publication_date>
       <news:title>First news</news:title>
-      
-      
     </news:news>
   </url>
   <url>
     <loc>
-      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=2&amp;cHash=be0e231cfdea76b9f0ed5e79c72123d7
+      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=2
     </loc>
     <news:news>
       <news:publication>
         <news:name>Second news</news:name>
         <news:language>de</news:language>
       </news:publication>
-      
-      
       <news:publication_date>1970-01-01</news:publication_date>
       <news:title>Second news</news:title>
       <news:keywords>News  &amp;  fun</news:keywords>
-      
     </news:news>
   </url>
   <url>
     <loc>
-      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=5&amp;cHash=f8b809f09d615afc084262169bfa3448
+      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=5
     </loc>
     <news:news>
       <news:publication>
         <news:name>News outside storagePid</news:name>
         <news:language>de</news:language>
       </news:publication>
-      
-      
       <news:publication_date>1970-01-01</news:publication_date>
       <news:title>News outside storagePid</news:title>
-      
-      
     </news:news>
   </url>
   <url>
     <loc>
-      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=7&amp;cHash=dbf711277a609a56eb6323547f6f879e
+      http://localhost/index.php?id=2&amp;tx_news_pi1%5Bcontroller%5D=News&amp;tx_news_pi1%5Baction%5D=detail&amp;tx_news_pi1%5Bnews%5D=7
     </loc>
     <news:news>
       <news:publication>
-        <news:name>News with special chars :) &amp; äöü ^&gt;&lt;  &amp;&lt;&lt;&gt;&lt;dsf&lt;!-- </news:name>
+        <news:name>News with special chars :) &amp; &#xE4;&#xF6;&#xFC; ^&gt;&lt;  &amp;&lt;&lt;&gt;&lt;dsf&lt;!-- </news:name>
         <news:language>de</news:language>
       </news:publication>
-      
-      
       <news:publication_date>1970-01-01</news:publication_date>
-      <news:title>News with special chars :) &amp; äöü ^&gt;&lt;  &amp;&lt;&lt;&gt;&lt;dsf&lt;!-- </news:title>
-      
-      
+      <news:title>News with special chars :) &amp; &#xE4;&#xF6;&#xFC; ^&gt;&lt;  &amp;&lt;&lt;&gt;&lt;dsf&lt;!-- </news:title>
     </news:news>
   </url>
-  
-
-
 </urlset>
-

@@ -1,4 +1,6 @@
 config {
+	no_cache = 1
+	debug = 0
 	disableAllHeaderCode = 1
 	admPanel = 0
 	metaCharset = utf-8
@@ -36,6 +38,7 @@ plugin.tx_sitemapgenerator {
 			additionalWhere = nav_hide!=1
 			hidePagesIfNotTranslated = 0
 			allowedDoktypes = 1
+			lastmod = tstamp
 		}
 	}
 }

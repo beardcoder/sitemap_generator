@@ -47,7 +47,7 @@ plugin.tx_sitemapgenerator {
 				typolink.parameter = 2
 				typolink.additionalParams = &tx_news[controller]=News&tx_news[action]=detail&tx_news[news]={field:uid}
 				typolink.additionalParams.insertData = 1
-				typolink.useCacheHash = 1
+				typolink.useCacheHash = 0
 				typolink.returnLast = url
 				typolink.forceAbsoluteUrl = 1
 			}
@@ -64,7 +64,7 @@ plugin.tx_sitemapgenerator {
 				typolink.parameter = 2
 				typolink.additionalParams = &tx_events[controller]=Events&tx_events[action]=detail&tx_events[events]={field:uid}
 				typolink.additionalParams.insertData = 1
-				typolink.useCacheHash = 1
+				typolink.useCacheHash = 0
 				typolink.returnLast = url
 				typolink.forceAbsoluteUrl = 1
 			}

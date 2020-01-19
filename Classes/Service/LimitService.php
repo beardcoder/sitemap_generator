@@ -23,11 +23,11 @@ class LimitService
     /**
      * Returns the limit statement for database connection
      *
-     * @param string $limit
+     * @param string|null $limit
      *
      * @return int|string
      */
-    public static function getLimitString(string $limit)
+    public static function getLimitString($limit)
     {
         if (isset($limit) && !empty($limit)) {
             $limitParts = GeneralUtility::trimExplode(',', $limit);
