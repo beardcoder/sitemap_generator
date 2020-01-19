@@ -32,7 +32,7 @@ class SitemapController extends ActionController
      * Initializes the current action
      * Set xml format for FLUID
      */
-    public function initializeAction()
+    protected function initializeAction(): void
     {
         $this->request->setFormat('xml');
     }
@@ -40,7 +40,7 @@ class SitemapController extends ActionController
     /**
      * List action for sitemap.xml
      */
-    public function listAction()
+    public function listAction(): void
     {
         $sitemap = $this->sitemapRepository->generateSitemap();
         $this->view->assign('sitemap', $sitemap);
@@ -49,7 +49,7 @@ class SitemapController extends ActionController
     /**
      * Render Google News Sitemap
      */
-    public function googleNewsListAction()
+    public function googleNewsListAction(): void
     {
         $urlEntries = $this->sitemapRepository->findAllGoogleNewsEntries();
         $this->view->assign('urlEntries', $urlEntries);
@@ -60,7 +60,7 @@ class SitemapController extends ActionController
      *
      * @param SitemapRepository $sitemapRepo
      */
-    public function injectSitemapRepo(SitemapRepository $sitemapRepo)
+    public function injectSitemapRepo(SitemapRepository $sitemapRepo): void
     {
         $this->sitemapRepository = $sitemapRepo;
     }

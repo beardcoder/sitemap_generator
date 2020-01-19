@@ -37,15 +37,15 @@ class Sitemap
     /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Markussom\SitemapGenerator\Domain\Model\UrlEntry>
      */
-    public function getUrlEntries()
+    public function getUrlEntries(): ObjectStorage
     {
         return $this->urlEntries;
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $urlEntries
+     * @param ObjectStorage $urlEntries
      */
-    public function setUrlEntries($urlEntries)
+    public function setUrlEntries(ObjectStorage $urlEntries): void
     {
         $this->urlEntries = $urlEntries;
     }
@@ -53,7 +53,7 @@ class Sitemap
     /**
      * @param UrlEntry $urlEntry
      */
-    public function addUrlEntry(UrlEntry $urlEntry)
+    public function addUrlEntry(UrlEntry $urlEntry): void
     {
         $this->urlEntries->attach($urlEntry);
     }
@@ -61,12 +61,8 @@ class Sitemap
     /**
      * @return bool
      */
-    public function isFilled()
+    public function isFilled(): bool
     {
-        if (1 <= $this->urlEntries->count()) {
-            return true;
-        }
-
-        return false;
+        return 1 <= $this->urlEntries->count();
     }
 }

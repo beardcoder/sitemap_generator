@@ -80,7 +80,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -90,7 +90,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @param string $name
      */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -100,7 +100,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @return string
      */
-    public function getLanguage()
+    public function getLanguage(): string
     {
         return $this->language;
     }
@@ -110,7 +110,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @param string $language
      */
-    public function setLanguage($language)
+    public function setLanguage(string $language): void
     {
         $this->language = $language;
     }
@@ -120,7 +120,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @return string
      */
-    public function getAccess()
+    public function getAccess(): string
     {
         return $this->access;
     }
@@ -130,7 +130,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @param string $access
      */
-    public function setAccess($access)
+    public function setAccess(string $access): void
     {
         $this->access = $access;
     }
@@ -140,7 +140,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @return string
      */
-    public function getGenres()
+    public function getGenres(): string
     {
         return $this->genres;
     }
@@ -150,7 +150,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @param string $genres
      */
-    public function setGenres($genres)
+    public function setGenres(string $genres): void
     {
         $this->genres = $genres;
     }
@@ -160,7 +160,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @return string
      */
-    public function getPublicationDate()
+    public function getPublicationDate(): string
     {
         return $this->publicationDate;
     }
@@ -170,7 +170,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @param string $publicationDate
      */
-    public function setPublicationDate($publicationDate)
+    public function setPublicationDate(string $publicationDate): void
     {
         $this->publicationDate = $publicationDate;
     }
@@ -180,7 +180,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -190,7 +190,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @param string $title
      */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
@@ -200,7 +200,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @return string
      */
-    public function getKeywords()
+    public function getKeywords(): string
     {
         return $this->keywords;
     }
@@ -210,7 +210,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @param string $keywords
      */
-    public function setKeywords($keywords)
+    public function setKeywords(string $keywords): void
     {
         $this->keywords = $keywords;
     }
@@ -220,7 +220,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @return string
      */
-    public function getStockTickers()
+    public function getStockTickers(): string
     {
         return $this->stockTickers;
     }
@@ -230,7 +230,7 @@ class GoogleNewsUrlEntry extends UrlEntry
      *
      * @param string $stockTickers
      */
-    public function setStockTickers($stockTickers)
+    public function setStockTickers(string $stockTickers): void
     {
         $this->stockTickers = $stockTickers;
     }

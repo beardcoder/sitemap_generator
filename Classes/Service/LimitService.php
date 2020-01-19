@@ -25,17 +25,17 @@ class LimitService
      *
      * @param string $limit
      *
-     * @return string
+     * @return int|string
      */
-    public static function getLimitString($limit)
+    public static function getLimitString(string $limit)
     {
         if (isset($limit) && !empty($limit)) {
             $limitParts = GeneralUtility::trimExplode(',', $limit);
             if (count($limitParts) === 1) {
-                return intval($limitParts[0]);
+                return (int) $limitParts[0];
             }
             if (count($limitParts) === 2) {
-                return intval($limitParts[0]) . ',' . intval($limitParts[1]);
+                return (int) $limitParts[0] . ',' . (int) $limitParts[1];
             }
         }
 

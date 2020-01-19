@@ -44,12 +44,12 @@ class FieldValueService
      * @param array $row
      * @SuppressWarnings(superglobals)
      *
-     * @return string The field's value.
+     * @return string|mixed The field's value.
      */
     public function getFieldValue(
-        $fieldName,
-        $typoScriptUrlEntry,
-        $row
+        string $fieldName,
+        array $typoScriptUrlEntry,
+        array $row
     ) {
         // support for cObject if the value is a configuration
         if (!empty($typoScriptUrlEntry[$fieldName . '.'])) {

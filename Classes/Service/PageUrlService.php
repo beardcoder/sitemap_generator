@@ -31,11 +31,11 @@ class PageUrlService
      *
      * @return string URL of the current page.
      */
-    public static function generatePageUrl($uid)
+    public static function generatePageUrl(int $uid): string
     {
         $contentObject = GeneralUtility::makeInstance(ContentObjectRenderer::class);
         $conf = [
-            'parameter' => intval($uid),
+            'parameter' => (int) $uid,
             'linkAccessRestrictedPages' => '1',
             'useCacheHash' => 1,
             'returnLast ' => 'url',

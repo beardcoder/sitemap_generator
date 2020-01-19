@@ -1,6 +1,10 @@
 <?php
 namespace Markussom\SitemapGenerator\Domain\Repository;
 
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
+use Exception;
+use mysqli_result;
+use TYPO3\CMS\Core\Database\DatabaseConnection;
 /**
  * This file is part of the TYPO3 CMS project.
  *
@@ -61,7 +65,7 @@ class SitemapRepository
     protected $pageRepository = null;
 
     /**
-     * @var \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+     * @var FrontendInterface
      */
     protected $cacheInstance;
 
@@ -87,7 +91,7 @@ class SitemapRepository
     /**
      * Make instance of needed classes
      */
-    protected function makeClassInstance()
+    protected function makeClassInstance(): void
     {
         $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         $this->entryStorage = $objectManager->get(ObjectStorage::class);
@@ -100,7 +104,7 @@ class SitemapRepository
      *
      * @return Sitemap|null
      */
-    public function generateSitemap()
+    public function generateSitemap(): ?object
     {
         if ($this->findAllEntries()) {
             $sitemap = GeneralUtility::makeInstance(Sitemap::class);
@@ -117,7 +121,7 @@ class SitemapRepository
      *
      * @return bool
      */
-    public function findAllEntries()
+    public function findAllEntries(): bool
     {
         $this->findAllPages();
         $this->generateEntriesFromTypoScript();
@@ -128,7 +132,7 @@ class SitemapRepository
     /**
      * Find all pages
      */
-    public function findAllPages()
+    public function findAllPages(): void
     {
         if (empty($this->pluginConfig['urlEntries']['pages'])) {
             return;
@@ -146,7 +150,7 @@ class SitemapRepository
      *
      * @return array
      */
-    private function hidePagesIfNotTranslated($pages)
+    private function hidePagesIfNotTranslated(array $pages): array
     {
         $language = GeneralUtility::_GET('L');
         if ($this->isPageNotTranslated($language)) {
@@ -166,7 +170,7 @@ class SitemapRepository
      *
      * @return bool
      */
-    private function isPageNotTranslated($language)
+    private function isPageNotTranslated($language): bool
     {
         $ifNotTranslated = $this->pluginConfig['urlEntries']['pages']['hidePagesIfNotTranslated'];
 
@@ -180,7 +184,7 @@ class SitemapRepository
      *
      * @return array
      */
-    private function hidePagesIfHiddenInDefaultTranslation($pages)
+    private function hidePagesIfHiddenInDefaultTranslation(array $pages): array
     {
         $language = GeneralUtility::_GET('L');
 
@@ -202,7 +206,7 @@ class SitemapRepository
      *
      * @return array
      */
-    private function getPages()
+    private function getPages(): array
     {
         $rootPageId = $this->pluginConfig['urlEntries']['pages']['rootPageId'];
         $rootPage = $this->pageRepository->getPage($rootPageId);
@@ -225,11 +229,11 @@ class SitemapRepository
      *
      * @return array
      */
-    private function getSubPagesRecursive($rootPageId)
+    private function getSubPagesRecursive($rootPageId): array
     {
         $pages = $this->getSubPages($rootPageId);
         foreach ($pages as $page) {
-            if (false === $this->isPageTreeLeaf($page)) {
+            if (!$this->isPageTreeLeaf($page)) {
                 ArrayUtility::mergeRecursiveWithOverrule(
                     $pages,
                     $this->getSubPagesRecursive($page['uid'])
@@ -246,13 +250,13 @@ class SitemapRepository
      * @param int $startPageId
      * @return array
      */
-    private function getSubPages($startPageId)
+    private function getSubPages(int $startPageId): array
     {
         $where = $this->pageRepository->enableFields('pages')
             . ' AND ' . UrlEntry::EXCLUDE_FROM_SITEMAP . '!=1' . $this->pageAdditionalWhere;
         try {
             return $this->pageRepository->getMenu($startPageId, '*', 'sorting', $where);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return [];
         }
     }
@@ -260,7 +264,7 @@ class SitemapRepository
     /**
      * @param $pages
      */
-    public function getEntriesFromPages($pages)
+    public function getEntriesFromPages($pages): void
     {
         foreach ($pages as $page) {
             if ($this->hasPageAnAllowedDoktype($page)) {
@@ -284,7 +288,7 @@ class SitemapRepository
      *
      * @return bool
      */
-    private function hasPageAnAllowedDoktype($page)
+    private function hasPageAnAllowedDoktype($page): bool
     {
         return GeneralUtility::inList(
             $this->pluginConfig['urlEntries']['pages']['allowedDoktypes'],
@@ -303,7 +307,7 @@ class SitemapRepository
      *
      * @return bool
      */
-    private function isPageTreeLeaf(array $page)
+    private function isPageTreeLeaf(array $page): bool
     {
         if ('1' === $page['php_tree_stop']) {
             return true;
@@ -318,7 +322,7 @@ class SitemapRepository
     /**
      * Generate entries from TypoScript
      */
-    public function generateEntriesFromTypoScript()
+    public function generateEntriesFromTypoScript(): void
     {
         $urlEntries = $this->pluginConfig['urlEntries'];
         foreach ($urlEntries as $urlEntry) {
@@ -334,11 +338,11 @@ class SitemapRepository
      * @param array $typoScriptUrlEntry
      * @SuppressWarnings(superglobals)
      */
-    protected function mapToEntries(array $typoScriptUrlEntry)
+    protected function mapToEntries(array $typoScriptUrlEntry): void
     {
         if ($typoScriptUrlEntry['table'] && $typoScriptUrlEntry['active'] == 1) {
             $records = $this->getRecordsFromDatabase($typoScriptUrlEntry);
-            if ($this->getDatabaseConnection()->sql_num_rows($records)) {
+            if ($this->getDatabaseConnection()->sql_num_rows($records) !== 0) {
                 while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
                     $row = $this->hideRecordIfNotTranslated($typoScriptUrlEntry, $row);
                     if (!empty($row)) {
@@ -383,7 +387,7 @@ class SitemapRepository
      * @param $typoScriptUrlEntry
      * @SuppressWarnings(superglobals)
      *
-     * @return bool|\mysqli_result|object
+     * @return bool|object
      */
     private function getRecordsFromDatabase($typoScriptUrlEntry)
     {
@@ -422,9 +426,9 @@ class SitemapRepository
      *
      * @SuppressWarnings(superglobals)
      *
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+     * @return DatabaseConnection
      */
-    protected function getDatabaseConnection()
+    protected function getDatabaseConnection(): DatabaseConnection
     {
         return $GLOBALS['TYPO3_DB'];
     }
@@ -433,7 +437,7 @@ class SitemapRepository
      * @param $recordConfig
      * @param $record
      *
-     * @return mixed
+     * @return mixed|null
      */
     private function hideRecordIfNotTranslated($recordConfig, $record)
     {
@@ -457,13 +461,13 @@ class SitemapRepository
      *
      * @return bool
      */
-    private function isRecordNotTranslated($recordConfig, $record, $language)
+    private function isRecordNotTranslated($recordConfig, $record, $language): bool
     {
         return $record['sys_language_uid'] !== '-1' && (int)$language !== 0 && (int)$recordConfig['hideIfNotTranslated'] === 1;
     }
 
     /**
-     * @return bool|\mysqli_result|object|array
+     * @return bool|object[]
      */
     public function findAllGoogleNewsEntries()
     {
@@ -474,9 +478,7 @@ class SitemapRepository
             return false;
         }
 
-        $entries = $this->mapGoogleNewsEntries($this->pluginConfig['googleNewsUrlEntry']);
-
-        return $entries;
+        return $this->mapGoogleNewsEntries($this->pluginConfig['googleNewsUrlEntry']);
     }
 
     /**
@@ -485,13 +487,13 @@ class SitemapRepository
      * @param array $typoScriptUrlEntry
      * @SuppressWarnings(superglobals)
      *
-     * @return array
+     * @return object[]
      */
-    protected function mapGoogleNewsEntries(array $typoScriptUrlEntry)
+    protected function mapGoogleNewsEntries(array $typoScriptUrlEntry): array
     {
         $records = $this->getRecordsFromDatabase($typoScriptUrlEntry);
         $urlEntries = [];
-        if ($this->getDatabaseConnection()->sql_num_rows($records)) {
+        if ($this->getDatabaseConnection()->sql_num_rows($records) !== 0) {
             while ($row = $this->getDatabaseConnection()->sql_fetch_assoc($records)) {
                 $row = $this->hideRecordIfNotTranslated($typoScriptUrlEntry, $row);
 

@@ -27,7 +27,7 @@ class TaskCommandController extends CommandController
      *
      * @param string $xmlSiteUrl http://www.example.com/sitemap.xml
      */
-    public function googleSitemapToolCommand($xmlSiteUrl)
+    public function googleSitemapToolCommand(string $xmlSiteUrl): void
     {
         $googleSitemapPing = GeneralUtility::makeInstance(GoogleSitemapService::class, $xmlSiteUrl);
         $httpCode = $googleSitemapPing->sendRequest();

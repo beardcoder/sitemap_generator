@@ -39,7 +39,7 @@ class GoogleSitemapService
      *
      * @param string $xmlSiteUrl
      */
-    public function __construct($xmlSiteUrl)
+    public function __construct(string $xmlSiteUrl)
     {
         $this->xmlSiteUrl = $xmlSiteUrl;
     }
@@ -49,7 +49,7 @@ class GoogleSitemapService
      *
      * @return int
      */
-    public function sendRequest()
+    public function sendRequest(): int
     {
         $curlInit = curl_init();
         curl_setopt($curlInit, CURLOPT_URL, $this->getGoogleSitemapToolUrl());
@@ -66,7 +66,7 @@ class GoogleSitemapService
     /**
      * Generate Google tool url for sitemap submit
      */
-    protected function getGoogleSitemapToolUrl()
+    protected function getGoogleSitemapToolUrl(): ?string
     {
         $url = $this->toolUrl . urlencode($this->xmlSiteUrl);
         if (!GeneralUtility::isValidUrl($url)) {

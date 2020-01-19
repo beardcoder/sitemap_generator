@@ -28,7 +28,7 @@ class OrderByService
      *
      * @return string
      */
-    public static function getOrderByString($orderBy, $tablename)
+    public static function getOrderByString(string $orderBy, string $tablename): string
     {
         if (isset($orderBy) && !empty($orderBy)) {
             $cleanOrderByParts = [];

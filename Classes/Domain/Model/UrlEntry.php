@@ -22,6 +22,7 @@ class UrlEntry
 
     /**
      * The database field to exclude the entry from sitemap
+     * @var string
      */
     const EXCLUDE_FROM_SITEMAP = 'exclude_from_sitemap';
 
@@ -65,7 +66,7 @@ class UrlEntry
      *
      * @return string
      */
-    public function getLoc()
+    public function getLoc(): string
     {
         return $this->loc;
     }
@@ -75,7 +76,7 @@ class UrlEntry
      *
      * @param string $loc
      */
-    public function setLoc($loc)
+    public function setLoc(string $loc): void
     {
         $this->loc = $loc;
     }
@@ -85,7 +86,7 @@ class UrlEntry
      *
      * @return string
      */
-    public function getLastmod()
+    public function getLastmod(): string
     {
         return $this->lastmod;
     }
@@ -95,7 +96,7 @@ class UrlEntry
      *
      * @param string $lastmod
      */
-    public function setLastmod($lastmod)
+    public function setLastmod(string $lastmod): void
     {
         $this->lastmod = $lastmod;
     }
@@ -105,7 +106,7 @@ class UrlEntry
      *
      * @return string
      */
-    public function getChangefreq()
+    public function getChangefreq(): string
     {
         return $this->changefreq;
     }
@@ -115,7 +116,7 @@ class UrlEntry
      *
      * @param string $changefreq
      */
-    public function setChangefreq($changefreq)
+    public function setChangefreq(string $changefreq): void
     {
         $this->changefreq = $changefreq;
     }
@@ -125,7 +126,7 @@ class UrlEntry
      *
      * @return float
      */
-    public function getPriority()
+    public function getPriority(): float
     {
         return $this->priority;
     }
@@ -135,7 +136,7 @@ class UrlEntry
      *
      * @param float $priority
      */
-    public function setPriority($priority)
+    public function setPriority(float $priority): void
     {
         $this->priority = $priority;
     }

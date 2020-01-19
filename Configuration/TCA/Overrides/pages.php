@@ -1,4 +1,6 @@
 <?php
+use Markussom\SitemapGenerator\Domain\Model\UrlEntry;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 defined('TYPO3_MODE') or die();
 
 $languageFilePrefix = 'LLL:EXT:sitemap_generator/Resources/Private/Language/locallang_db.xlf:';
@@ -8,7 +10,7 @@ $GLOBALS['TCA']['pages'] = array_merge_recursive(
     $GLOBALS['TCA']['pages'],
     [
         'columns' => [
-            \Markussom\SitemapGenerator\Domain\Model\UrlEntry::EXCLUDE_FROM_SITEMAP => [
+            UrlEntry::EXCLUDE_FROM_SITEMAP => [
                 'exclude' => 0,
                 'label' => $languageFilePrefix . 'sitemap_generator.tca.pages.exclude_from_sitemap',
                 'config' => [
@@ -61,8 +63,8 @@ $GLOBALS['TCA']['pages'] = array_merge_recursive(
     ]
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addFieldsToPalette(
+ExtensionManagementUtility::addFieldsToPalette(
     'pages',
     'miscellaneous',
-    \Markussom\SitemapGenerator\Domain\Model\UrlEntry::EXCLUDE_FROM_SITEMAP . ', sitemap_priority, sitemap_changefreq'
+    UrlEntry::EXCLUDE_FROM_SITEMAP . ', sitemap_priority, sitemap_changefreq'
 );

@@ -1,0 +1,16 @@
+parameters:
+  autoload_paths:
+    - './.Build/vendor/autoload.php'
+    - 'Classes/'
+    - './.Build/vendor/typo3/cms/typo3/sysext'
+
+  paths:
+    - 'Classes'
+  php_version_features: '7.3'
+  sets:
+    - 'code-quality'
+    - 'php71'
+    - 'php72'
+    - 'php73'
+    - 'type-declaration'
+    - 'psr-4'
