@@ -13,23 +13,24 @@ env:
 
 sudo: false
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+services:
+  - mysql
+
 addons:
   apt:
     packages:
       - parallel
 
-cache:
-  directories:
-    - $HOME/.composer/cache
-
 before_install:
-  - composer self-update
+  - phpenv config-rm xdebug.ini
 
-before_script:
-  - composer require typo3/cms="$TYPO3_VERSION"
-  # Restore composer.json
-  - git checkout composer.json
-  - export TYPO3_PATH_WEB=$PWD/.Build
+install:
+  - composer require typo3/minimal=$TYPO3_VERSION
+
 
 script:
   - >
